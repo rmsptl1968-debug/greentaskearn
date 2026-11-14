@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenTaskEarn V8.2 - ₹1 Per Ad</title>
+<style>
+body{font-family:Arial;background:#f0f8f0;margin:0;padding:10px}
+.card{background:white;border-radius:12px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #0001}
+.btn{background:#2e7d32;color:white;border:none;padding:12px 20px;border-radius:8px;width:100%;font-size:16px;margin:5px 0}
+.btn:disabled{background:#999}
+.header{background:#2e7d32;color:white;padding:15px;border-radius:12px;text-align:center}
+.ad-box{border:2px dashed #2e7d32;padding:20px;text-align:center;border-radius:10px;background:#e8f5e9}
+</style>
+</head>
+<body>
+<div class="header">
+<h2>🌱 GreenTaskEarn V8.2</h2>
+<p>1 PAN = 1 ID | 50 Ads/Day | ₹1 Per Ad | 15% Admin</p>
+</div>
+<div class="card">
+<h3>💰 Wallet</h3>
+<p>Total: ₹<span id="earn">0</span> | Today: <span id="todayCount">0</span>/50</p>
+<p>Withdrawal (after 15% cut): ₹<span id="afterAdmin">0</span></p>
+<div style="background:#eee;height:10px;border-radius:5px"><div id="progress" style="height:10px;background:#2e7d32;width:0%"></div></div>
+</div>
+<div class="card ad-box">
+<h3>📺 Watch Ad (10 Sec - ₹1)</h3>
+<p id="timerText">Click to Start 10 Sec Ad</p>
+<button class="btn" id="watchBtn" onclick="watchAd()">▶️ Watch Ad Now (₹1.00)</button>
+<p id="limitMsg" style="color:red;display:none;font-weight:bold">⛔ Limit Over - Tomorrow Again! (50/50 Completed)</p>
+</div>
+<div class="card">
+<h3>👥 7 Level (₹200 Joining)</h3>
+<p>L1:₹50, L2:₹20, L3:₹10, L4:₹10, L5:₹10, L6:₹5, L7:₹5</p>
+<button class="btn" style="background:#1565c0" onclick="join()">💳 Join Now ₹200 - Get Receipt</button>
+<div id="receipt" style="display:none;margin-top:10px;padding:10px;border:1px solid #000;background:#fff8e1">
+<b>GreenTaskEarn Receipt</b><br>Receipt No: <span id="rNo"></span><br>PAN: <span id="rPan"></span><br>Amount: ₹200<br>Date: <span id="rDate"></span><br>✅ 1 PAN = 1 ID Verified
+</div>
+</div>
+<script>
+let today=parseInt(localStorage.getItem('gte_today')||'0');
+let total=parseFloat(localStorage.getItem('gte_total')||'0');
+let todayStr=new Date().toDateString();
+if(localStorage.getItem('gte_date')!==todayStr){today=0;localStorage.setItem('gte_date',todayStr);}
+updateUI();
+function updateUI(){
+ document.getElementById('todayCount').innerText=today;
+ document.getElementById('earn').innerText=total.toFixed(2);
+ document.getElementById('afterAdmin').innerText=(total*0.85).toFixed(2);
+ document.getElementById('progress').style.width=(today/50*100)+'%';
+ if(today>=50){document.getElementById('watchBtn').style.display='none';document.getElementById('limitMsg').style.display='block';document.getElementById('timerText').innerText='Daily Limit Completed!';}
+}
+function watchAd(){
+ if(today>=50)return;
+ let btn=document.getElementById('watchBtn');btn.disabled=true;let sec=10;
+ document.getElementById('timerText').innerText='Ad Running: '+sec+' sec...';
+ let iv=setInterval(()=>{sec--;document.getElementById('timerText').innerText='Ad Running: '+sec+' sec... Wait';if(sec<=0){clearInterval(iv);today++;total+=1.00;localStorage.setItem('gte_today',today);localStorage.setItem('gte_total',total);localStorage.setItem('gte_date',todayStr);document.getElementById('timerText').innerText='✅ ₹1.00 Added! Next Ad Ready';btn.disabled=false;updateUI();}},1000);
+}
+function join(){
+ let pan=prompt('Enter PAN Number (1 PAN = 1 ID):');if(!pan)return;
+ if(localStorage.getItem('pan_'+pan)){alert('❌ This PAN already has 1 ID!');return;}
+ localStorage.setItem('pan_'+pan,'1');
+ document.getElementById('rNo').innerText='GTE'+Date.now();
+ document.getElementById('rPan').innerText=pan;
+ document.getElementById('rDate').innerText=new Date().toLocaleString();
+ document.getElementById('receipt').style.display='block';
+ alert('✅ Joining Success! ₹200 Received. Receipt Generated');
+}
+</script>
+</body>
+</html>
