@@ -1,1 +1,43 @@
 
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Green Task Earn</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><style>:root{--dark:#1e2632;--orange:#ff8c00;--green:#5a9a2e;--blue:#2e3a8c}*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}body{background:#eef2f7}.topbar{background:var(--dark);color:#aab8cc;display:flex;justify-content:space-between;align-items:center;padding:12px 15px;position:sticky;top:0;z-index:100}.topbar button{background:none;border:1px solid #fff;color:#fff;padding:6px 18px;letter-spacing:4px;font-weight:bold}.sidebar{position:fixed;left:-300px;top:46px;width:280px;height:100%;background:var(--dark);color:#8ea0b8;transition:0.3s;z-index:99}.sidebar.active{left:0}.sidebar a{display:flex;justify-content:space-between;padding:16px 20px;text-decoration:none;color:#8ea0b8;border-bottom:1px solid #2a3442}.content{padding:15px}.card{border-radius:12px;padding:20px;margin-bottom:15px;color:#fff}.orange{background:var(--orange)}.blue{background:var(--blue)}.darkp{background:#4a4a6a}.green{background:var(--green)}.task-btn{background:#fff;color:#ff8c00;border:none;padding:12px 20px;border-radius:8px;font-weight:bold;width:100%;margin-top:10px}.ad-box{background:#fff;border-radius:12px;padding:20px;margin-bottom:15px}.wallet-strip{background:var(--dark);color:#fff;padding:10px 15px;border-radius:8px;display:flex;justify-content:space-between;margin-bottom:15px}.hidden{display:none}input,select,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin:8px 0}.btn{padding:12px;background:var(--orange);color:#fff;border:none;border-radius:8px;width:100%;font-weight:bold}</style></head>
+<body>
+<div class="topbar"><button id="menuBtn">MENU</button><i class="fa-solid fa-ellipsis-vertical"></i></div>
+<div class="sidebar" id="sidebar">
+<a href="#" onclick="showPage('dashboard')"><span>DASHBOARD</span></a>
+<a href="#" onclick="showPage('profile')"><span>PROFILE</span></a>
+<a href="#" onclick="showPage('epin')"><span>EPIN</span></a>
+<a href="#" onclick="showPage('team')"><span>VIEW TEAM</span></a>
+<a href="#" onclick="showPage('topup')"><span>TOPUP</span></a>
+<a href="#" onclick="showPage('commission')"><span>COMMISSION</span></a>
+<a href="#" onclick="showPage('withdrawal')"><span>WITHDRAWAL</span></a>
+<a href="#" onclick="showPage('support')"><span>SUPPORT</span></a>
+<a href="#" onclick="showPage('dashboard')"><span>LOG OUT</span></a>
+</div>
+<div class="content">
+<div id="dashboard">
+<div class="wallet-strip"><span>Total Wallet: Rs <b id="wallet">1.00</b></span><span>ID: GT7865</span></div>
+<div class="card darkp"><h3>3</h3><p>MY DIRECT</p></div>
+<div class="card darkp"><h3>31</h3><p>MY TEAM</p></div>
+<div class="card orange"><h3>ACTIVE 3 INACTIVE 0</h3><p>OUR PARTNER (DIRECT)</p></div>
+<div class="card green"><h3>Rs <span id="earning">2700.00</span></h3><p>TOTAL EARNING INCOME</p></div>
+<div class="ad-box"><h3>DAILY TASK - ADSTERRA</h3><p>Ad juo ane Rs 1 melvo.</p><button class="task-btn" id="adBtn" onclick="watchAd()">WATCH AD NOW</button><p id="adMsg"></p></div>
+<div class="card blue"><h3>REFER & EARN</h3><input id="refLink" value="https://rmsptl1968-debug.github.io/greentaskearn/v9_final_full_app.html?ref=GT7865" readonly><button class="task-btn" style="color:#2e3a8c" onclick="navigator.clipboard.writeText(document.getElementById('refLink').value);alert('Copied')">COPY LINK</button></div>
+</div>
+<div id="profile" class="hidden ad-box"><h3>PROFILE</h3><input placeholder="Name"><input placeholder="Mobile"><button class="btn">UPDATE</button></div>
+<div id="epin" class="hidden ad-box"><h3>EPIN</h3><select><option>Rs 500</option></select><button class="btn">GENERATE</button></div>
+<div id="team" class="hidden ad-box"><h3>MY TEAM</h3><p>Direct:3 Total:31</p></div>
+<div id="topup" class="hidden ad-box"><h3>TOPUP</h3><input placeholder="User ID"><input placeholder="EPIN"><button class="btn">TOPUP</button></div>
+<div id="commission" class="hidden ad-box"><h3>COMMISSION</h3><p>Rs 2700</p></div>
+<div id="withdrawal" class="hidden ad-box"><h3>WITHDRAWAL</h3><p>Payment Company: Manual UPI - Add thai gayu chhe</p><input placeholder="UPI ID"><input id="wdAmt" placeholder="Amount"><button class="btn" onclick="let a=document.getElementById('wdAmt').value;if(a<200){alert('Min 200');return}document.getElementById('wdMsg').innerText='Request Sent!'">WITHDRAW</button><p id="wdMsg"></p></div>
+<div id="support" class="hidden ad-box"><h3>SUPPORT</h3><input placeholder="Subject"><textarea placeholder="Message"></textarea><button class="btn">SEND</button></div>
+</div>
+<script>
+const adLink="https://www.asiafilm.org/?p=c0c3fdc6e6308c3e3cdd26af6a05bb1b";
+document.getElementById('menuBtn').onclick=()=>{document.getElementById('sidebar').classList.toggle('active')}
+function showPage(p){document.querySelectorAll('.content > div').forEach(d=>d.classList.add('hidden'));document.getElementById(p).classList.remove('hidden');document.getElementById('sidebar').classList.remove('active')}
+function watchAd(){let b=document.getElementById('adBtn');b.innerHTML="10 sec...";window.open(adLink,"_blank");let s=10;let t=setInterval(()=>{s--;b.innerHTML=s+" sec...";if(s<=0){clearInterval(t);let w=parseFloat(document.getElementById('wallet').innerText)+1;document.getElementById('wallet').innerText=w.toFixed(2);document.getElementById('adMsg').innerText="Rs 1 Added!";b.innerHTML="TASK COMPLETE"}},1000)}
+</script>
+</body>
+</html>
