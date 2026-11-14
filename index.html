@@ -3,91 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GreenTaskEarn V7.3 FULL - INR ₹</title>
+<title>GreenTaskEarn V7.3 FULL - INR</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial}
-body{background:#e8f5e9;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.card{background:white;width:100%;max-width:420px;border-radius:28px;padding:32px 24px;box-shadow:0 20px 60px rgba(0,0,0,0.12);text-align:center}
-.logo{width:80px;height:80px;background:#16a34a;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:48px}
-h1{color:#14532d;font-size:28px;font-weight:800}
-.sub{color:#16a34a;font-weight:700;font-size:18px}
-.small{color:#777;font-size:14px;margin:6px 0 20px}
-input{width:100%;padding:14px 16px;border:1.5px solid #d1d5db;border-radius:12px;margin-bottom:12px;font-size:16px;outline:none}
-input:focus{border-color:#16a34a}
-.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:18px;font-weight:700;cursor:pointer;margin-bottom:12px}
-.btn-green{background:#16a34a;color:white}
-.btn-outline{background:white;color:#16a34a;border:2px solid #16a34a}
-.info{background:#f0fdf4;padding:12px;border-radius:12px;text-align:left;font-size:13px;margin-top:8px}
+:root{--green:#16a34a;--dark:#14532d;--light:#f0fdf4;--gold:#f59e0b}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:var(--light);color:#111}
+.card{background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:20px;margin:16px}
+.btn{width:100%;padding:14px;border-radius:14px;border:none;font-weight:700;font-size:16px;cursor:pointer}
+.btn-green{background:var(--green);color:#fff}
+.btn-outline{background:#fff;color:var(--green);border:2px solid var(--green)}
+.header{background:var(--green);color:#fff;padding:18px;text-align:center;border-radius:0 0 24px 24px}
+.balance{font-size:32px;font-weight:900;color:var(--dark)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.task{padding:14px;border-radius:16px;background:#fff;border:1px solid #e5e7eb;text-align:left}
+.task b{color:var(--dark)}
+.badge{background:var(--gold);color:#000;padding:2px 8px;border-radius:20px;font-size:12px}
+input{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:12px;margin:8px 0}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee}
+.nav button{border:none;background:none;font-size:12px;color:#6b7280}
+.nav button.active{color:var(--green);font-weight:800}
+.hidden{display:none}
 </style>
 </head>
 <body>
-<div class="card" id="loginCard">
-<div class="logo">🌱</div>
-<h1>GreenTaskEarn</h1>
-<div class="sub">V7.3 FULL - INR ₹</div>
-<div class="small">Refer | Ad | Tree | QR</div>
-<input id="email" type="email" placeholder="Email" value="admin@greentaskearn.com">
-<input id="pass" type="password" placeholder="Password" value="admin123">
-<button class="btn btn-green" onclick="doLogin()">Login</button>
-<button class="btn btn-outline" onclick="doRegister()">Register</button>
-<div class="info"><b>Admin:</b> admin@greentaskearn.com<br>admin123</div>
-<div id="msg" style="margin-top:10px;color:red;font-size:14px"></div>
+<div id="auth" class="card" style="margin-top:40px;max-width:400px;margin-left:auto;margin-right:auto">
+<div style="text-align:center"><div style="width:80px;height:80px;background:var(--green);border-radius:20px;display:inline-flex;align-items:center;justify-content:center;font-size:40px">🌱</div>
+<h2 style="color:var(--dark);margin-top:10px">GreenTaskEarn</h2><p style="color:var(--green);font-weight:700">V7.3 FULL - INR ₹</p><small>Refer | Ad | Tree | QR | Withdraw</small></div>
+<input id="email" value="admin@greentaskearn.com" placeholder="Email">
+<input id="pass" type="password" value="admin123" placeholder="Password">
+<button class="btn btn-green" onclick="login()">Login</button>
+<button class="btn btn-outline" style="margin-top:8px" onclick="register()">Register</button>
+<p id="msg" style="color:red;text-align:center;margin-top:8px;font-size:13px"></p>
+<div style="background:#f0fdf4;padding:8px;border-radius:10px;margin-top:10px;font-size:12px">Admin: admin@greentaskearn.com / admin123</div>
 </div>
 
-<div class="card" id="dash" style="display:none">
-<h2>🌳 Welcome, <span id="userName">Admin</span>!</h2>
-<p style="margin:20px 0">Balance: <b style="color:#16a34a;font-size:28px">₹ <span id="bal">1250</span></b></p>
-<button class="btn btn-green" style="margin-top:10px" onclick="earn(50)">📺 Watch Ad - ₹50</button>
-<button class="btn btn-green" onclick="earn(100)">🌲 Plant Tree - ₹100</button>
-<button class="btn btn-green" onclick="earn(25)">🔗 Refer - ₹25</button>
-<button class="btn btn-green" onclick="earn(30)">📱 QR Task - ₹30</button>
-<button class="btn btn-outline" onclick="logout()" style="margin-top:20px">Logout</button>
+<div id="app" class="hidden">
+<div class="header">
+<h3>🌳 Welcome, <span id="uname">User</span>!</h3>
+<p>Balance: <span class="balance" style="color:#fff" id="bal">₹ 0</span></p>
+<div class="grid" style="margin-top:10px"><div style="background:rgba(255,255,255,.2);border-radius:12px;padding:8px">Level: <b id="level">1</b></div><div style="background:rgba(255,255,255,.2);border-radius:12px;padding:8px">Total: <b id="total">₹0</b></div></div>
+</div>
+
+<div id="page-home">
+<div class="card">
+<h4>🔥 Today's Tasks</h4>
+<div style="margin-top:12px;display:grid;gap:10px">
+<button class="task" onclick="doTask('ad')">📺 <b>Watch Ad</b> - ₹50 <span class="badge">+50</span><br><small>30 sec ad watch</small></button>
+<button class="task" onclick="doTask('tree')">🌲 <b>Plant Tree Proof</b> - ₹100 <br><small>Upload tree photo</small></button>
+<button class="task" onclick="doTask('refer')">🔗 <b>Refer Friend</b> - ₹25 <br><small id="referLink">https://rmsptl1968-debug.github.io/greentaskearn/?ref=ADMIN</small></button>
+<button class="task" onclick="doTask('qr')">📱 <b>QR Scan Task</b> - ₹30 <br><small>Scan & Earn</small></button>
+</div>
+</div>
+<div class="card">
+<h4>💸 Withdraw</h4>
+<input id="upi" placeholder="UPI ID - e.g. 98765@ybl">
+<input id="wamt" type="number" placeholder="Amount Min ₹500">
+<button class="btn btn-green" onclick="withdraw()">Withdraw Request</button>
+<p style="font-size:12px;color:#666;margin-top:6px">Min Withdraw ₹500 | Payout in 24H</p>
+</div>
+</div>
+
+<div id="page-history" class="hidden"><div class="card"><h4>📜 History</h4><div id="historyList" style="margin-top:10px"></div></div></div>
+<div id="page-profile" class="hidden"><div class="card"><h4>👤 Profile</h4><p>Email: <b id="pemail"></b></p><p>Refer Code: <b id="rcode"></b></p><p>Tasks Done: <b id="tdone">0</b></p><button class="btn btn-outline" onclick="logout()">Logout</button>
+<div id="adminPanel" class="hidden" style="margin-top:15px;background:#fffbeb;padding:12px;border-radius:12px"><h4>👑 Admin Panel</h4><p>Total Users: <span id="aUsers">1</span></p><p>Total Payouts: <span id="aPay">₹0</span></p></div>
+</div></div>
+
+<div class="nav">
+<button id="nHome" class="active" onclick="nav('home')">🏠<br>Home</button>
+<button onclick="nav('history')">📜<br>History</button>
+<button onclick="nav('profile')">👤<br>Profile</button>
+</div>
 </div>
 
 <script>
-let users = JSON.parse(localStorage.getItem('gte_users') || '[]');
-if(!users.find(u=>u.email==='admin@greentaskearn.com')){
-  users.push({email:'admin@greentaskearn.com',pass:'admin123',name:'Admin',bal:1250});
-  localStorage.setItem('gte_users', JSON.stringify(users));
+let user = JSON.parse(localStorage.getItem('gte_v73_user')||'null');
+let users = JSON.parse(localStorage.getItem('gte_v73_users')||'{}');
+let historyArr = JSON.parse(localStorage.getItem('gte_v73_hist')||'[]');
+if(!users['admin@greentaskearn.com']){users['admin@greentaskearn.com']={pass:'admin123',balance:1250,total:1250,tasks:0,ref:'ADMIN'}}
+
+function save(){localStorage.setItem('gte_v73_users',JSON.stringify(users));localStorage.setItem('gte_v73_user',JSON.stringify(user));localStorage.setItem('gte_v73_hist',JSON.stringify(historyArr))}
+
+function register(){
+ let e=email.value.trim().toLowerCase(),p=pass.value;
+ if(!e||!p){msg.innerText='Email Pass લખો';return}
+ if(users[e]){msg.innerText='પહેલાથી Register છે, Login કરો';return}
+ users[e]={pass:p,balance:100,total:100,tasks:0,ref:e.split('@')[0].toUpperCase()};
+ user={email:e,...users[e]}; save(); showApp();
 }
-function doLogin(){
-  const e=document.getElementById('email').value.trim().toLowerCase();
-  const p=document.getElementById('pass').value.trim();
-  const msg=document.getElementById('msg');
-  if(!e||!p){msg.textContent='Email અને Password લખો';return;}
-  let u=users.find(x=>x.email.toLowerCase()===e && x.pass===p);
-  if(u){localStorage.setItem('gte_current',JSON.stringify(u));showDash(u);}
-  else{msg.textContent='ખોટો Email/Password! admin@greentaskearn.com / admin123 વાપરો';}
+function login(){
+ let e=email.value.trim().toLowerCase(),p=pass.value;
+ if(!users[e]||users[e].pass!==p){msg.innerText='ખોટો Email અથવા Password';return}
+ user={email:e,...users[e]}; save(); showApp();
 }
-function doRegister(){
-  const e=document.getElementById('email').value.trim().toLowerCase();
-  const p=document.getElementById('pass').value.trim();
-  const msg=document.getElementById('msg');
-  if(!e||!p){msg.textContent='Email અને Password લખો';return;}
-  if(users.find(x=>x.email.toLowerCase()===e)){msg.textContent='પહેલાથી Register છે, Login કરો';return;}
-  let nu={email:e,pass:p,name:e.split('@')[0],bal:100};
-  users.push(nu);localStorage.setItem('gte_users',JSON.stringify(users));
-  msg.style.color='green';msg.textContent='Register થઈ ગયું! હવે Login કરો';
-  setTimeout(()=>{msg.style.color='red';},2000);
+function showApp(){
+ auth.classList.add('hidden'); app.classList.remove('hidden');
+ uname.innerText=user.email.split('@')[0]; bal.innerText='₹ '+user.balance; total.innerText='₹ '+user.total; level.innerText=Math.floor(user.total/500)+1;
+ pemail.innerText=user.email; rcode.innerText=user.ref; tdone.innerText=user.tasks; referLink.innerText='https://rmsptl1968-debug.github.io/greentaskearn/?ref='+user.ref;
+ historyList.innerHTML=historyArr.filter(h=>h.email==user.email).reverse().map(h=>`<div style="padding:8px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><span>${h.task} ${h.time}</span><b style="color:green">+₹${h.amt}</b></div>`).join('')||'<small>No history</small>';
+ if(user.email=='admin@greentaskearn.com'){adminPanel.classList.remove('hidden'); aUsers.innerText=Object.keys(users).length; aPay.innerText='₹'+historyArr.reduce((s,h)=>h.type=='withdraw'?s+h.amt:s,0)}
 }
-function showDash(u){
-  document.getElementById('loginCard').style.display='none';
-  document.getElementById('dash').style.display='block';
-  document.getElementById('userName').textContent=u.name;
-  document.getElementById('bal').textContent=u.bal;
+function doTask(type){
+ let amt={ad:50,tree:100,refer:25,qr:30}[type];
+ let name={ad:'Watch Ad',tree:'Plant Tree',refer:'Refer',qr:'QR Task'}[type];
+ if(type=='ad'){ if(!confirm('📺 30 Sec Ad જોવા તૈયાર છો?'))return; setTimeout(()=>addBalance(amt,name),1000); return}
+ if(type=='refer'){ navigator.clipboard.writeText(referLink.innerText); alert('🔗 Refer Link Copy થઈ! WhatsApp પર Share કરો!\n'+referLink.innerText); addBalance(amt,name); return}
+ if(type=='qr'){ let code=prompt('QR Code નાખો (TEST123 લખો):'); if(code){addBalance(amt,name)}return}
+ if(type=='tree'){ let f=prompt('Tree Photo નામ લખો અથવા OK દબાવો:'); if(f!==null)addBalance(amt,name); return}
+ addBalance(amt,name);
 }
-function earn(amt){
-  let cur=JSON.parse(localStorage.getItem('gte_current'));
-  cur.bal=(cur.bal||0)+amt;
-  users=users.map(x=>x.email===cur.email?cur:x);
-  localStorage.setItem('gte_users',JSON.stringify(users));
-  localStorage.setItem('gte_current',JSON.stringify(cur));
-  document.getElementById('bal').textContent=cur.bal;
-  alert('₹'+amt+' મળ્યા! Balance: ₹'+cur.bal);
+function addBalance(amt,name){
+ users[user.email].balance+=amt; users[user.email].total+=amt; users[user.email].tasks+=1;
+ user= {email:user.email,...users[user.email]};
+ historyArr.push({email:user.email,task:name,amt:amt,time:new Date().toLocaleTimeString(),type:'earn'});
+ save(); showApp();
+ alert('₹'+amt+' મળ્યા! Balance: ₹'+user.balance);
 }
-function logout(){localStorage.removeItem('gte_current');location.reload();}
-let cur=localStorage.getItem('gte_current');
-if(cur){try{showDash(JSON.parse(cur));}catch(e){}}
+function withdraw(){
+ let a=parseInt(wamt.value), u=upi.value.trim();
+ if(!u){alert('UPI ID લખો');return}
+ if(a<500){alert('Min ₹500');return}
+ if(a>user.balance){alert('Balance ઓછું છે');return}
+ users[user.email].balance-=a; user={email:user.email,...users[user.email]};
+ historyArr.push({email:user.email,task:'Withdraw to '+u,amt:a,time:new Date().toLocaleString(),type:'withdraw'});
+ save(); showApp(); alert('✅ Withdraw Request: ₹'+a+' to '+u+'\n24 કલાક માં આવશે!');
+}
+function nav(p){
+ document.getElementById('page-home').classList.add('hidden');
+ document.getElementById('page-history').classList.add('hidden');
+ document.getElementById('page-profile').classList.add('hidden');
+ document.getElementById('page-'+p).classList.remove('hidden');
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+ document.getElementById('n'+p.charAt(0).toUpperCase()+p.slice(1))?.classList.add('active');
+}
+function logout(){ localStorage.removeItem('gte_v73_user'); location.reload(); }
+if(user){showApp();}
 </script>
 </body>
 </html>
