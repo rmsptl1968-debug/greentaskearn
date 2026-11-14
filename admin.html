@@ -1,46 +1,37 @@
-
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Panel</title>
-<style>body{font-family:Arial;background:#111;color:#fff;margin:0} .top{background:#000;padding:14px;text-align:center;border-bottom:2px solid #2e7d32} .box{background:#222;margin:12px;padding:14px;border-radius:10px} input,select{width:100%;padding:10px;margin:6px 0;border-radius:6px;border:1px solid #555;background:#333;color:#fff} .btn{width:100%;padding:11px;background:#2e7d32;color:#fff;border:none;border-radius:6px;font-weight:bold;margin-top:6px} .btn2{background:#ff9800} table{width:100%;border-collapse:collapse;font-size:13px} th,td{border:1px solid #444;padding:6px;text-align:left} th{background:#2e7d32} .hidden{display:none}</style></head><body>
+<style>body{font-family:Arial;background:#111;color:#fff;margin:0} .top{background:#000;padding:14px;text-align:center;border-bottom:2px solid #2e7d32} .box{background:#222;margin:12px;padding:14px;border-radius:10px} input{width:100%;padding:12px;margin:6px 0;border-radius:6px;border:1px solid #555;background:#333;color:#fff} .btn{width:100%;padding:12px;background:#2e7d32;color:#fff;border:none;border-radius:6px;font-weight:bold;margin-top:6px} .hidden{display:none} table{width:100%;border-collapse:collapse;font-size:13px} th,td{border:1px solid #444;padding:6px}</style></head><body>
 <div class="top">🔐 ADMIN PANEL - Green Task Earn</div>
-
-<div id="aLogin" class="box"><h3>Admin Login</h3><input id="aid" placeholder="Admin ID"><input id="apass" type="password" placeholder="Password"><button class="btn" onclick="aLogin()">LOGIN</button><p style="font-size:11px;color:#888">ID: admin / Pass: admin201</p></div>
-
+<div id="aLoginBox" class="box"><h3>Admin Login</h3><input id="aid" placeholder="Admin ID" value="admin"><input id="apass" type="password" placeholder="Password" value="admin201"><button class="btn" onclick="doAdminLogin()">LOGIN</button><p style="font-size:11px;color:#888;margin-top:8px">ID: admin / Pass: admin201 (Auto Fill છે, LOGIN દબાવો)</p><p id="err" style="color:red;font-size:13px"></p></div>
 <div id="aMain" class="hidden">
-<div class="box"><h3>Dashboard</h3><p>Total Users: <b id="tU">0</b> | Active: <b id="tA">0</b> | Total Earning (₹91 x Active): ₹<b id="tE">0</b></p><p>PINs: Total <b id="tP">0</b> | Used <b id="tPU">0</b> | Unused <b id="tPN">0</b></p></div>
-
-<div class="box"><h3>🎫 PIN Generate</h3><input id="pinCount" type="number" placeholder="કેટલા PIN બનાવવા? Ex: 10"><button class="btn btn2" onclick="genPins()">GENERATE PINS</button><div id="pinList" style="margin-top:10px;max-height:300px;overflow:auto"></div></div>
-
-<div class="box"><h3>💸 Withdrawal Requests (15% કાપી ને)</h3><div id="wdList"></div></div>
-
-<div class="box"><h3>👥 All Users - Edit / Delete / Pay</h3><input id="searchU" placeholder="Search ID / Name / Mobile" onkeyup="renderUsers()"><div id="uList" style="margin-top:10px;overflow:auto"></div></div>
-
-<button class="btn" style="background:#900" onclick="logoutA()">Logout Admin</button>
-</div>
-
+<div class="box"><h3>Dashboard</h3><p>Total Users: <b id="tU">0</b> | Active: <b id="tA">0</b> | Profit (91*Active): ₹<b id="tE">0</b></p><p>PINs: Total <b id="tP">0</b> | Used <b id="tPU">0</b> | Free <b id="tPN">0</b></p></div>
+<div class="box"><h3>🎫 PIN Generate</h3><input id="pinCount" type="number" placeholder="કેટલા PIN? 10"><button class="btn" style="background:#ff9800" onclick="genPins()">GENERATE PINS</button><div id="pinList" style="margin-top:10px;max-height:300px;overflow:auto"></div></div>
+<div class="box"><h3>💸 Withdrawals (15% કાપી ને)</h3><div id="wdList"></div></div>
+<div class="box"><h3>👥 Users</h3><input id="searchU" placeholder="Search" onkeyup="renderUsers()"><div id="uList" style="margin-top:10px;overflow:auto"></div></div>
+<button class="btn" style="background:#900" onclick="logoutA()">Logout</button></div>
 <script>
-const LEVELS=[50,20,10,10,10,5,5]; const getDB=()=>JSON.parse(localStorage.getItem('gt_db')||'{}'); const saveDB=d=>localStorage.setItem('gt_db',JSON.stringify(d));
-const getPins=()=>JSON.parse(localStorage.getItem('gt_pins')||'[]'); const savePins=p=>localStorage.setItem('gt_pins',JSON.stringify(p));
-const getWD=()=>JSON.parse(localStorage.getItem('gt_wd')||'[]'); const saveWD=w=>localStorage.setItem('gt_wd',JSON.stringify(w));
-function aLogin(){if(aid.value=='admin'&&apass.value=='admin201'){localStorage.setItem('gt_admin','1'); showA();}else alert('Wrong Admin ID/Pass')}
-function showA(){aLogin.classList.add('hidden'); aMain.classList.remove('hidden'); renderAll()}
+function getDB(){return JSON.parse(localStorage.getItem('gt_db')||'{}')} function saveDB(d){localStorage.setItem('gt_db',JSON.stringify(d))}
+function getPins(){return JSON.parse(localStorage.getItem('gt_pins')||'[]')} function savePins(p){localStorage.setItem('gt_pins',JSON.stringify(p))}
+function getWD(){return JSON.parse(localStorage.getItem('gt_wd')||'[]')} function saveWD(w){localStorage.setItem('gt_wd',JSON.stringify(w))}
+function doAdminLogin(){
+let id=document.getElementById('aid').value.trim(); let ps=document.getElementById('apass').value.trim();
+console.log(id,ps);
+if(id.toLowerCase()=='admin' && ps=='admin201'){localStorage.setItem('gt_admin','1'); document.getElementById('aLoginBox').classList.add('hidden'); document.getElementById('aMain').classList.remove('hidden'); renderAll();}
+else{document.getElementById('err').innerText='ID Pass ખોટું છે - admin / admin201 લખો';}
+}
 function renderAll(){
 let db=getDB(), pins=getPins(), wd=getWD(); let users=Object.values(db);
-tU.innerText=users.length; tA.innerText=users.filter(u=>u.active).length; tE.innerText=users.filter(u=>u.active).length*91;
-tP.innerText=pins.length; tPU.innerText=pins.filter(p=>p.used).length; tPN.innerText=pins.filter(p=>!p.used).length;
-let ph=""; pins.slice().reverse().forEach(p=>{ph+=`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #444;padding:5px 0"><span>${p.code} ${p.used?` - Used by ${p.usedBy}`:' - <b style="color:#0f0">UNUSED</b>'} </span><button onclick="copyP('${p.code}')" style="padding:3px 6px">Copy</button></div>`}); pinList.innerHTML=ph||"No PINs";
-let wh=""; wd.forEach((w,i)=>{wh+=`<div style="border:1px solid #555;padding:8px;margin:6px 0;border-radius:6px"><b>${w.userId}</b> | Req ₹${w.amount} | Charge ₹${w.charge.toFixed(2)} | <b style="color:#0f0">Pay ₹${w.payable.toFixed(2)}</b> | UPI ${w.upi} | ${w.date} | ${w.status} <br><button onclick="payWD(${i})" style="background:#2e7d32;color:#fff;padding:4px 8px;margin-top:4px">Mark Paid</button> <button onclick="delWD(${i})" style="background:#900;color:#fff;padding:4px 8px">Delete</button></div>`}); wdList.innerHTML=wh||"No Requests";
+document.getElementById('tU').innerText=users.length; document.getElementById('tA').innerText=users.filter(u=>u.active).length; document.getElementById('tE').innerText=users.filter(u=>u.active).length*91;
+document.getElementById('tP').innerText=pins.length; document.getElementById('tPU').innerText=pins.filter(p=>p.used).length; document.getElementById('tPN').innerText=pins.filter(p=>!p.used).length;
+let ph=""; pins.slice().reverse().forEach(p=>{ph+=`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #444;padding:6px 0"><span>${p.code} ${p.used?`- Used ${p.usedBy}`:'<b style=color:#0f0> - FREE</b>'}</span><button onclick="navigator.clipboard.writeText('${p.code}');alert('Copied')">Copy</button></div>`}); document.getElementById('pinList').innerHTML=ph||"No PINs";
+let wh=""; wd.forEach((w,i)=>{wh+=`<div style="border:1px solid #555;padding:8px;margin:6px 0"><b>${w.userId}</b> Req ₹${w.amount} Pay ₹${w.payable.toFixed(2)} UPI ${w.upi} ${w.status} <button onclick="payWD(${i})">Paid</button> <button onclick="delWD(${i})">Del</button></div>`}); document.getElementById('wdList').innerHTML=wh||"No Req";
 renderUsers();
 }
-function genPins(){let n=parseInt(pinCount.value)||10; let pins=getPins(); for(let i=0;i<n;i++){let code="GT-PIN-"+Math.floor(Math.random()*900000+100000); pins.push({code,used:false,usedBy:"",createdAt:new Date().toLocaleString()})} savePins(pins); pinCount.value=""; renderAll(); alert(n+" PINs Generated")}
-function copyP(c){navigator.clipboard.writeText(c); alert('Copied '+c)}
-function renderUsers(){let db=getDB(); let q=searchU.value.toLowerCase(); let users=Object.values(db).filter(u=>!q||u.id.toLowerCase().includes(q)||u.name.toLowerCase().includes(q)||u.mobile.includes(q));
-let h=`<table><tr><th>ID</th><th>Name/Mob</th><th>Wallet</th><th>Pass</th><th>Action</th></tr>`; users.forEach(u=>{
-h+=`<tr><td>${u.id}<br><small>Ref:${u.refBy||'-'}</small></td><td>${u.name}<br>${u.mobile}</td><td><input id="w_${u.id}" value="${u.wallet}" style="width:70px"></td><td><input id="p_${u.id}" value="${u.password}" style="width:70px"></td><td><button onclick="saveU('${u.id}')" style="background:#2e7d32;color:#fff;padding:4px">Save</button> <button onclick="delU('${u.id}')" style="background:#900;color:#fff;padding:4px">Del</button></td></tr>`}); h+=`</table>`; uList.innerHTML=h;
-}
-function saveU(id){let db=getDB(); if(!db[id])return; db[id].wallet=parseFloat(document.getElementById('w_'+id).value)||0; db[id].password=document.getElementById('p_'+id).value; saveDB(db); alert('Saved '+id); renderAll();}
-function delU(id){if(!confirm('Delete '+id+'?'))return; let db=getDB(); delete db[id]; saveDB(db); renderAll();}
-function payWD(i){let wd=getWD(); wd[i].status="Paid"; saveWD(wd); renderAll(); alert('Marked Paid')}
-function delWD(i){if(!confirm('Delete?'))return; let wd=getWD(); wd.splice(i,1); saveWD(wd); renderAll();}
+function genPins(){let n=parseInt(document.getElementById('pinCount').value)||10; let pins=getPins(); for(let i=0;i<n;i++){pins.push({code:"GT-PIN-"+Math.floor(Math.random()*900000+100000),used:false,usedBy:""})} savePins(pins); renderAll(); alert(n+" PINs Done");}
+function renderUsers(){let db=getDB(); let q=(document.getElementById('searchU').value||"").toLowerCase(); let users=Object.values(db).filter(u=>!q||u.id.toLowerCase().includes(q)||u.name.toLowerCase().includes(q));
+let h=`<table><tr><th>ID</th><th>Name</th><th>Wallet</th><th>Action</th></tr>`; users.forEach(u=>{h+=`<tr><td>${u.id}</td><td>${u.name}<br>${u.mobile}</td><td><input id="w_${u.id}" value="${u.wallet}" style="width:60px;background:#333;color:#fff"></td><td><button onclick="saveU('${u.id}')">Save</button> <button onclick="delU('${u.id}')">Del</button></td></tr>`}); h+=`</table>`; document.getElementById('uList').innerHTML=h;}
+function saveU(id){let db=getDB(); db[id].wallet=parseFloat(document.getElementById('w_'+id).value)||0; saveDB(db); alert('Saved')}
+function delU(id){if(!confirm('Delete '+id))return; let db=getDB(); delete db[id]; saveDB(db); renderAll();}
+function payWD(i){let wd=getWD(); wd[i].status="Paid"; saveWD(wd); renderAll();} function delWD(i){let wd=getWD(); wd.splice(i,1); saveWD(wd); renderAll();}
 function logoutA(){localStorage.removeItem('gt_admin'); location.reload()}
-if(localStorage.getItem('gt_admin')) showA();
+if(localStorage.getItem('gt_admin')=='1'){document.getElementById('aLoginBox').classList.add('hidden'); document.getElementById('aMain').classList.remove('hidden'); renderAll();}
 </script></body></html>
