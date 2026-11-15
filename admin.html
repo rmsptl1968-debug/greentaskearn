@@ -3,62 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - GT8167</title>
+<title>Admin - Full Menu</title>
 <style>
-body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
-.card{background:white;padding:15px;border-radius:12px;margin-bottom:12px}
-h2{color:green;text-align:center}
-.btn{background:green;color:white;padding:12px 20px;border:none;border-radius:6px;font-weight:bold}
-input{width:95%;padding:12px;border:2px solid #ccc;border-radius:6px}
-.user{border-left:4px solid green;padding:10px;margin:8px 0;background:#f1f8e9}
+body{font-family:Arial;background:#e8f5e9;margin:0;padding:0}
+.header{background:green;color:white;padding:15px;text-align:center}
+.menu{display:flex;overflow-x:auto;background:white;box-shadow:0 2px 4px #0001;padding:5px}
+.menu button{flex:1;min-width:90px;padding:12px 8px;margin:3px;border:none;background:#f1f8e9;border-radius:6px;font-weight:bold}
+.menu button.active{background:green;color:white}
+.card{background:white;margin:10px;padding:15px;border-radius:10px;display:none}
+.card.active{display:block}
+.user{border-left:4px solid green;padding:10px;margin:8px 0;background:#f1f8e9;border-radius:5px}
+.btn{padding:10px 15px;border:none;border-radius:5px;font-weight:bold;cursor:pointer}
+.green{background:green;color:white} .red{background:red;color:white} .blue{background:#2196f3;color:white}
+input,select,textarea{width:95%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px}
 </style>
 </head>
 <body>
-<h2>🌱 Admin - GT8167 System</h2>
-<div class="card" id="loginBox">
+<div class="header"><h2>🌱 Green Task - Full Admin</h2><p id="topId">GT8167 System</p></div>
+
+<div id="loginBox" class="card active" style="display:block">
 <h3>Admin Login</h3>
-<input type="text" id="pass" placeholder="Password type karo">
-<button class="btn" onclick="login()" style="margin-top:10px">Login</button>
-<p>Pass: admin123 (small letters)</p>
+<input type="text" id="pass" placeholder="admin123">
+<button class="btn green" onclick="login()">Login</button>
 </div>
 
-<div id="main" style="display:none">
-<div class="card">
-<h3>📊 Live Stats</h3>
-<p>Total: <b id="total">0</b></p>
-<p>ID: <b id="myid" style="color:green;font-size:20px">-</b></p>
-<p>Balance: ₹<b id="mybal" style="font-size:24px">0</b></p>
-<button class="btn" onclick="load()">🔄 Refresh</button>
+<div id="mainArea" style="display:none">
+<div class="menu">
+<button onclick="showTab(0)" class="active">📊 Dash</button>
+<button onclick="showTab(1)">👥 Users</button>
+<button onclick="showTab(2)">🔗 7 Level</button>
+<button onclick="showTab(3)">📝 Tasks</button>
+<button onclick="showTab(4)">💰 Withdraw</button>
+<button onclick="showTab(5)">⚙️ Setting</button>
 </div>
-<div class="card"><h3>💰 Withdraw</h3><div id="wList"></div></div>
-<div class="card"><h3>🔍 Debug</h3><div id="allData" style="background:#eee;padding:10px;font-size:13px"></div>
-<button class="btn" style="background:red;margin-top:10px" onclick="localStorage.clear();alert('Clear');load()">Clear All</button>
+
+<div id="tab0" class="card active">
+<h3>📊 Dashboard</h3>
+<p>Your ID: <b id="myid">GT8167</b></p>
+<p>Balance: ₹<b id="mybal" style="font-size:26px;color:green">0</b></p>
+<p>Total Local Data: <b id="total">0</b></p>
+<p>Refer Link: <small id="rlink"></small></p>
+<button class="btn green" onclick="load()">Refresh</button>
+</div>
+
+<div id="tab1" class="card">
+<h3>👥 Users List</h3>
+<div id="users">No Data - User App થી Join કરાવો</div>
+</div>
+
+<div id="tab2" class="card">
+<h3>🔗 7 Level Team Menu</h3>
+<p>Level 1: ₹50 | Level 2-7: ₹10-₹2</p>
+<div id="team">અહીં તમારી ટીમ દેખાશે</div>
+<button class="btn blue" onclick="addTestUser()">+ Test User Add કરો</button>
+</div>
+
+<div id="tab3" class="card">
+<h3>📝 Tasks Menu</h3>
+<p>Daily Tasks Control</p>
+<div class="user">Task 1: Watch Ad - ₹10 <button class="btn green">Edit</button></div>
+<div class="user">Task 2: Visit Site - ₹15 <button class="btn green">Edit</button></div>
+<div class="user">Task 3: Share - ₹20 <button class="btn green">Edit</button></div>
+<input placeholder="New Task Name"><input placeholder="Amount">
+<button class="btn green">Add New Task</button>
+</div>
+
+<div id="tab4" class="card">
+<h3>💰 Withdrawal Menu</h3>
+<div id="wList">No Request</div>
+<h4>QR Code Payment Approve</h4>
+<div class="user">UPI QR Upload + Approve System (આગળ Firebase માં આવશે)</div>
+</div>
+
+<div id="tab5" class="card">
+<h3>⚙️ Settings Menu</h3>
+<label>Min Withdraw</label><input value="200">
+<label>Refer Bonus</label><input value="50">
+<label>Admin Password</label><input value="admin123">
+<button class="btn green">Save Settings</button>
+<hr>
+<button class="btn red" onclick="if(confirm('Clear?')){localStorage.clear();load();}">🗑️ Clear All Data</button>
+<div id="debug" style="background:#eee;padding:10px;margin-top:10px;font-size:11px;word-break:break-all"></div>
 </div>
 </div>
 
 <script>
 function login(){
- let p = document.getElementById('pass').value.trim().toLowerCase();
- // trim + lowercase - space ની ભૂલ નહિ આવે
+ let p=document.getElementById('pass').value.trim().toLowerCase();
  if(p==='admin123'){
   document.getElementById('loginBox').style.display='none';
-  document.getElementById('main').style.display='block';
+  document.getElementById('mainArea').style.display='block';
   load();
- }else{
-  alert('Password: admin123 - નાના અક્ષર માં, Space વગર લખો. તમે લખ્યું: ['+p+']');
- }
+ }else alert('Pass: admin123');
+}
+function showTab(n){
+ document.querySelectorAll('.card').forEach((c,i)=>{if(i>0) c.classList.remove('active')});
+ document.querySelectorAll('#mainArea .card').forEach(c=>c.classList.remove('active'));
+ document.getElementById('tab'+n).classList.add('active');
+ document.querySelectorAll('.menu button').forEach((b,i)=>{b.classList.toggle('active',i===n)});
 }
 function load(){
- let myId = localStorage.getItem('gt_myId') || localStorage.getItem('my_code') || 'GT8167';
- let myBal = localStorage.getItem('gt_bal') || localStorage.getItem('my_bal') || '0';
- document.getElementById('myid').innerText=myId;
- document.getElementById('mybal').innerText=myBal;
+ let id=localStorage.getItem('gt_myId')||localStorage.getItem('my_code')||'GT8167';
+ let bal=localStorage.getItem('gt_bal')||localStorage.getItem('my_bal')||'0';
+ document.getElementById('myid').innerText=id;
+ document.getElementById('mybal').innerText=bal;
+ document.getElementById('topId').innerText=id+' System';
  document.getElementById('total').innerText=localStorage.length;
- let w = localStorage.getItem('gt_withdraw')||'[]';
- document.getElementById('wList').innerText=w;
- let all=''; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); all+=k+': '+localStorage.getItem(k)+'<br>';}
- document.getElementById('allData').innerHTML=all;
+ document.getElementById('rlink').innerText=location.origin+'/greentaskearn/?ref='+id;
+ document.getElementById('users').innerHTML='<div class=user>ID: '+id+'<br>Bal: ₹'+bal+'<br>Status: Active</div>';
+ document.getElementById('team').innerHTML='<div class=user>Level 1 Team: 0 users (લિંક Share કરો એટલે વધશે)</div>';
+ let w=localStorage.getItem('gt_withdraw')||'No Request'; document.getElementById('wList').innerText=w;
+ let all=''; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); all+=k+':'+localStorage.getItem(k).substring(0,100)+'<br>';}
+ document.getElementById('debug').innerHTML=all;
 }
-</script>
-</body>
-</html>
+function addTestUser(){
+ let n='GT'+Math.floor(Math.random()*900
