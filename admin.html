@@ -3,45 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn</title>
+<title>Green Task - Admin Panel</title>
 <style>
-body{font-family:system-ui;background:#f0fdf4;margin:0}
-.header{background:#16a34a;color:#fff;padding:20px;text-align:center;font-weight:900;font-size:22px}
-.card{background:#fff;margin:14px;border-radius:16px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
-.task{display:flex;justify-content:space-between;align-items:center;padding:14px;border:1.5px solid #dcfce7;border-radius:12px;margin-bottom:12px}
-.btn{background:#16a34a;color:#fff;border:none;padding:11px 20px;border-radius:24px;font-weight:900}
-.btn-gold{background:#f59e0b}.balance{font-size:30px;font-weight:900;color:#16a34a}
-.native-wrap{background:#fff;margin:14px;border-radius:12px;padding:8px;border:1px solid #eee}
+body{font-family:Arial;background:#f0f8f0;margin:0;padding:15px}
+.card{background:white;padding:15px;border-radius:10px;box-shadow:0 2px 5px #0001;margin-bottom:15px}
+h2{color:green;text-align:center}
+button{background:green;color:white;padding:10px 15px;border:none;border-radius:5px;cursor:pointer}
+input{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px}
+.user-box{border-bottom:1px solid #eee;padding:10px 0}
 </style>
-<script data-cfasync="false" src="https://afders.org/1/d3d99431adc338a4df304d497bf2d249"></script>
 </head>
 <body>
-<div class="header">🌿 GREEN TASK EARN - ₹500 Daily</div>
-<div class="card">Balance: <span class="balance">₹<span id="bal">0</span></span> <button class="btn btn-gold" onclick="withdraw()">WITHDRAW</button></div>
-<div class="native-wrap">
-<script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
-<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
+<h2>🌱 Green Task - ADMIN</h2>
+<div class="card">
+<h3>Login</h3>
+<input type="password" id="pass" placeholder="Admin Password">
+<button onclick="login()">Login</button>
+</div>
+
+<div id="panel" style="display:none">
+<div class="card">
+<h3>All Users Data</h3>
+<div id="users"></div>
+<button onclick="clearAll()">Clear All Data</button>
 </div>
 <div class="card">
-<div class="task"><div><b>💎 Special Offer BEST</b><br><small>+ ₹40</small></div><button class="btn btn-gold" onclick="doTask()">EARN NOW</button></div>
-<div class="task"><div><b>📱 App Install</b><br><small>+ ₹25</small></div><button class="btn" onclick="doTask()">START</button></div>
-<div class="task"><div><b>🌐 Visit Site</b><br><small>+ ₹15</small></div><button class="btn" onclick="doTask()">VISIT</button></div>
+<h3>Withdrawal Requests</h3>
+<div id="withdraw"></div>
 </div>
+</div>
+
 <script>
-const SMARTLINK = "https://arwf.org/4/71c629698b098809841a9971deed43dc";
-let bal = parseInt(localStorage.getItem('gt_all_bal')||'0');
-document.getElementById('bal').innerText = bal;
-function doTask(){
-  bal+=25; localStorage.setItem('gt_all_bal',bal);
-  document.getElementById('bal').innerText=bal;
-  window.open(SMARTLINK,'_blank');
-  setTimeout(()=>window.open(SMARTLINK,'_blank'),1000);
+function login(){
+if(document.getElementById('pass').value==='admin123'){
+document.getElementById('panel').style.display='block';
+loadData();
+}else{alert('Wrong Password!')}
 }
-function withdraw(){
-  if(bal<100){ alert('Min ₹100 Need ₹'+(100-bal)); doTask(); return; }
-  alert('Withdraw ₹'+bal+' Done!'); window.open(SMARTLINK,'_blank');
+function loadData(){
+let users = JSON.parse(localStorage.getItem('gt_users')||'[]');
+let html='';
+users.forEach((u,i)=>{
+html+=`<div class="user-box"><b>${u.name||'User'+i}</b> - ₹${u.balance||0} - Refer: ${u.refer||0} Users <br> Mobile: ${u.mobile||''}</div>`;
+});
+document.getElementById('users').innerHTML=html||'No Users Yet';
+let w = JSON.parse(localStorage.getItem('gt_withdraw')||'[]');
+let wh='';
+w.forEach(x=>{wh+=`<div class="user-box">${x.mobile} - ₹${x.amount} - ${x.status}</div>`});
+document.getElementById('withdraw').innerHTML=wh||'No Request';
 }
+function clearAll(){if(confirm('Sure?')){localStorage.clear();alert('Cleared');loadData()}}
 </script>
-<script data-cfasync="false" src="https://bicea.org/14/12ea438ebd8b91048ace7cbd4fbfa34f"></script>
 </body>
 </html>
