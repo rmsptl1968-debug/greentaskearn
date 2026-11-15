@@ -1,60 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="gu">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn</title>
+<title>Green Task Earn - Step 2 Refer</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#e8f5e9}
-.top{background:#2e7d32;color:#fff;padding:15px;text-align:center;font-weight:bold}
-.box{background:#fff;margin:15px;padding:20px;border-radius:12px;text-align:center;box-shadow:0 2px 8px #0001}
-.btn{width:100%;padding:14px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-weight:bold;font-size:16px;margin-top:10px}
-.btn-watch{background:#1976d2}
-.btn:disabled{background:#aaa}
-#timer{margin-top:10px;color:#d32f2f;font-weight:bold;display:none}
+body{font-family:Arial; background:#e8f5e9; margin:0; text-align:center;}
+.header{background:#2e7d32; color:white; padding:15px;}
+.card{background:white; margin:12px; padding:14px; border-radius:15px; text-align:left;}
+.balance{font-size:28px; color:#2e7d32; font-weight:bold; text-align:center;}
+.btn{padding:13px; border:none; border-radius:25px; width:95%; margin:6px 0; font-size:15px; cursor:pointer;}
+.btn-green{background:#2e7d32; color:white;}
+.btn-blue{background:#1976d2; color:white;}
+.btn-orange{background:#ff6f00; color:white;}
+.ref-box{background:#e8f5e9; padding:10px; border-radius:10px; border:1px dashed green; word-break:break-all; text-align:center;}
+.tree{font-size:13px; background:#f5f5f5; padding:8px; border-radius:8px; margin-top:8px;}
 </style>
 </head>
 <body>
-<div class="top">🌿 GREEN TASK EARN - WATCH & EARN ₹1</div>
-<div class="box">
-<div>Your Balance</div>
-<div style="font-size:36px;color:#2e7d32;font-weight:bold">₹<span id="b">0</span></div>
 
-<button class="btn btn-watch" id="watchBtn" onclick="watchAd()">▶️ WATCH AD + ₹1</button>
-<div id="timer">Please wait <span id="sec">10</span> sec... Don't close</div>
+<div class="header">🌿 Green Task Earn - STEP 2</div>
 
-<button class="btn" style="background:#ff9800" onclick="alert('Min ₹100 for Withdraw - Contact Admin')">WITHDRAW</button>
+<div class="card" style="text-align:center;">
+<div class="balance">₹<span id="bal">0.00</span></div>
+<p style="font-size:12px;">ID: <span id="myId">-</span></p>
+<button class="btn btn-green" onclick="watchAd()">▶️ VIDEO AD જુઓ - ₹0.20</button>
+</div>
+
+<!-- REFER SYSTEM -->
+<div class="card">
+<h3 style="margin:0;">🔗 તમારી Refer Link</h3>
+<p style="font-size:12px; color:gray;">આ લિંક મિત્રો ને મોકલો, એ Join થશે એટલે તમને Level Income મળશે</p>
+<div class="ref-box" id="refLink">Loading...</div>
+<button class="btn btn-blue" onclick="shareLink()">📲 WhatsApp પર Share કરો</button>
+<button class="btn" style="background:#eee;" onclick="copyLink()">📋 Copy Link</button>
+</div>
+
+<!-- TEAM TREE -->
+<div class="card">
+<h3 style="margin:0;">🌳 તમારી 7 Level ટીમ</h3>
+<div id="teamTree" class="tree">હજુ કોઈ Join નથી થયું, લિંક Share કરો!</div>
+</div>
+
+<!-- VIDEO AD -->
+<div class="card" style="border:2px solid #ff6f00;">
+<p style="font-weight:bold; color:#ff6f00; margin:0;">🎥 ગુજરાત બિઝનેસ Video Ad</p>
+<video id="bizVideo" style="width:100%; border-radius:10px; background:black;" controls muted loop playsinline><source src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
+<h4 id="bizName" style="margin:8px 0;">ગણેશ મોબાઈલ, અમદાવાદ</h4>
+<button class="btn btn-orange" onclick="contactBiz()">📞 WhatsApp કરો + ₹0.20 કમાઓ</button>
 </div>
 
 <script>
-let bal = parseInt(localStorage.getItem('gt_bal')||'0');
-document.getElementById('b').innerText = bal;
+// === REFER LOGIC ===
+let urlParams = new URLSearchParams(window.location.search);
+let refBy = urlParams.get('ref'); // કોણે Refer કર્યું
+
+let myId = localStorage.getItem("gt_myId");
+if(!myId){
+  myId = "GT" + Math.floor(1000 + Math.random()*9000);
+  localStorage.setItem("gt_myId", myId);
+  // જો કોઈ ની લિંક થી આવ્યો હોય તો Save કરો
+  if(refBy){
+    localStorage.setItem("gt_refBy", refBy);
+    // 7 Level ની Chain બનાવો
+    let chain = JSON.parse(localStorage.getItem("gt_chain_"+refBy) || "[]");
+    // આ Demo માટે localStorage માં જ Team Save કરીએ છીએ
+    alert("તમે "+refBy+" ની લિંક થી Join થયા! હવે તમે એમની ટીમ માં છો!");
+  }
+}
+document.getElementById("myId").innerText = myId;
+
+// મારી Refer Link
+let myLink = window.location.origin + window.location.pathname + "?ref=" + myId;
+document.getElementById("refLink").innerText = myLink;
+
+function copyLink(){ navigator.clipboard.writeText(myLink); alert("Link Copy થઈ!"); }
+function shareLink(){ window.open("https://wa.me/?text="+encodeURIComponent("આવો, Free માં Join થાઓ અને Video Ad જોઈને કમાઓ! મારી લિંક: "+myLink), "_blank"); }
+
+// Team Tree Demo
+let team = JSON.parse(localStorage.getItem("gt_myTeam_"+myId) || "[]");
+if(team.length>0){
+  document.getElementById("teamTree").innerHTML = team.map((t,i)=>`Level ${i+1}: ${t} - Active`).join("<br>");
+}
+
+// જો નવો યુઝર હોય તો Refer કરનાર ની ટીમ માં ઉમેરો
+if(refBy && myId){
+  let refTeamKey = "gt_myTeam_"+refBy;
+  let refTeam = JSON.parse(localStorage.getItem(refTeamKey) || "[]");
+  if(!refTeam.includes(myId)){
+    refTeam.push(myId);
+    localStorage.setItem(refTeamKey, JSON.stringify(refTeam));
+  }
+}
+
+// Balance + Earn
+let bal = parseFloat(localStorage.getItem("gt_balance")||"0");
+document.getElementById("bal").innerText = bal.toFixed(2);
 
 function watchAd(){
-// YOUR ADSTERRA SMARTLINK
-window.open('https://asiafilm.org/4/9dac62fd7ae9732b34ebc01618e5d030','_blank');
-
-let btn = document.getElementById('watchBtn');
-let timerDiv = document.getElementById('timer');
-let secSpan = document.getElementById('sec');
-btn.disabled = true;
-timerDiv.style.display='block';
-let s=10;
-let intv = setInterval(()=>{
-s--;
-secSpan.innerText=s;
-if(s<=0){
-clearInterval(intv);
-bal+=1;
-localStorage.setItem('gt_bal',bal);
-document.getElementById('b').innerText=bal;
-alert('✅ Task Complete! ₹1 Added to Balance');
-btn.disabled=false;
-timerDiv.style.display='none';
-secSpan.innerText=10;
+  window.open("https://www.asiafilm.org/Tv18/Starplus/Mahabharat","_blank");
+  earn();
 }
-},1000);
+function contactBiz(){ earn(); window.open("https://wa.me/919999999999?text=Green Task Ad જોઈ","_blank"); }
+
+function earn(){
+  setTimeout(()=>{
+    bal+=0.20;
+    localStorage.setItem("gt_balance", bal);
+    document.getElementById("bal").innerText = bal.toFixed(2);
+    alert("✅ ₹0.20 મળ્યા!\nLevel Income: ઉપર વાળા 6 લોકો ને 10%,5%,5%,5%,2.5%,2.5% વહેંચાયું (Demo માં Message જ આવશે, Firebase માં ખરેખર જમા થશે)");
+  },1200);
 }
 </script>
 </body>
