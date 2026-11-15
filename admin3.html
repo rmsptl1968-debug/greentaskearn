@@ -45,5 +45,34 @@ function make(){let qty=parseInt(document.getElementById('qty').value)||20;let p
 function send(){let uid=document.getElementById('uid').value;let code=document.getElementById('psel').value;if(!uid||!code) return alert('ID અને Pin પસંદ કરો!');let pins=JSON.parse(localStorage.getItem(KEY)||'[]');let idx=pins.findIndex(p=>p.code==code);if(idx>-1){pins[idx].status='Sent';pins[idx].to=uid;pins[idx].date=new Date().toLocaleString();localStorage.setItem(KEY,JSON.stringify(pins));load();alert(code+' -> '+uid+' મોકલાયો!');}}
 load();
 </script>
+<!-- ===== MERCHANT AD MANAGER - 7 LEVEL 20%,10%,5%,5%,5%,2.5%,2.5% ===== -->
+<div style="background:white; padding:15px; border-radius:12px; margin:15px; border:2px solid green;">
+<h3>🏪 વેપારી Ad ઉમેરો - 7 Level Income</h3>
+<input id="shopName" placeholder="દુકાન નું નામ" style="width:95%; padding:10px; margin:5px 0;">
+<input id="adImage" placeholder="Ad ફોટા ની લિંક" style="width:95%; padding:10px; margin:5px 0;">
+<input id="adPrice" type="number" placeholder="Ad નો ભાવ Rs - દા.ત. 500" style="width:95%; padding:10px; margin:5px 0;">
+<button onclick="addMerchantAd()" style="width:100%; background:green; color:white; padding:12px; border:none; border-radius:8px; font-weight:bold; margin-top:10px;">Ad Save કરો - 7 Level માં વહેંચાશે</button>
+<div id="adList" style="margin-top:15px;"></div>
+</div>
+<script>
+function addMerchantAd(){
+let shop=document.getElementById('shopName').value;
+let img=document.getElementById('adImage').value;
+let price=parseFloat(document.getElementById('adPrice').value);
+if(!shop||!price) return alert('નામ અને ભાવ લખો!');
+let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
+ads.push({shop:shop, img:img, price:price, id:Date.now()});
+localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));
+alert('✅ '+shop+' ની Ad Save!\n\n₹'+price+' માંથી વહેંચણી:\nL1 20% = ₹'+(price*0.20)+'\nL2 10% = ₹'+(price*0.10)+'\nL3 5% = ₹'+(price*0.05)+'\nL4 5% = ₹'+(price*0.05)+'\nL5 5% = ₹'+(price*0.05)+'\nL6 2.5% = ₹'+(price*0.025)+'\nL7 2.5% = ₹'+(price*0.025));
+showAds();
+}
+function showAds(){
+let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
+let html='';
+ads.forEach(a=>{html+=`<div style="background:#e8f5e9; padding:8px; margin:5px 0; border-radius:8px;">🏪 ${a.shop} - ₹${a.price} - 7 Level Active</div>`});
+document.getElementById('adList').innerHTML=html;
+}
+showAds();
+</script>
 </body>
 </html>
