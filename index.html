@@ -7,9 +7,12 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#e8f5e9}
-.top{background:#2e7d32;color:#fff;padding:15px;text-align:center;font-weight:bold;font-size:18px}
+.top{background:#2e7d32;color:#fff;padding:15px;text-align:center;font-weight:bold}
 .box{background:#fff;margin:15px;padding:20px;border-radius:12px;text-align:center;box-shadow:0 2px 8px #0001}
-.btn{width:100%;padding:14px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-weight:bold;font-size:16px}
+.btn{width:100%;padding:14px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-weight:bold;font-size:16px;margin-top:10px}
+.btn-watch{background:#1976d2}
+.btn:disabled{background:#aaa}
+#timer{margin-top:10px;color:#d32f2f;font-weight:bold;display:none}
 </style>
 </head>
 <body>
@@ -17,19 +20,42 @@ body{background:#e8f5e9}
 <div class="box">
 <div>Your Balance</div>
 <div style="font-size:36px;color:#2e7d32;font-weight:bold">₹<span id="b">0</span></div>
-<br>
-<button class="btn" onclick="add()">✅ COMPLETE TASK + ₹25</button>
-<br><br>
-<button class="btn" style="background:#ff9800" onclick="alert('Min Withdraw ₹100')">WITHDRAW</button>
+
+<button class="btn btn-watch" id="watchBtn" onclick="watchAd()">▶️ WATCH AD + ₹25</button>
+<div id="timer">Ad જોવાઈ રહી છે... <span id="sec">10</span> sec</div>
+
+<button class="btn" style="background:#ff9800" onclick="alert('Min ₹100 for Withdraw')">WITHDRAW</button>
+<p style="margin-top:10px;font-size:12px;color:#666">Watch Ad પર Click કરો, 10 સેકન્ડ રાહ જુઓ, પછી ₹25 મળશે</p>
 </div>
+
 <script>
 let bal = parseInt(localStorage.getItem('gt_bal')||'0');
 document.getElementById('b').innerText = bal;
-function add(){
+
+function watchAd(){
+// અહીં તમારી સારી Ad ની Link નાખી શકો છો - હમણાં માટે Demo Link
+window.open('https://www.google.com','_blank');
+
+let btn = document.getElementById('watchBtn');
+let timerDiv = document.getElementById('timer');
+let secSpan = document.getElementById('sec');
+btn.disabled = true;
+timerDiv.style.display='block';
+let s=10;
+let intv = setInterval(()=>{
+s--;
+secSpan.innerText=s;
+if(s<=0){
+clearInterval(intv);
 bal+=25;
 localStorage.setItem('gt_bal',bal);
 document.getElementById('b').innerText=bal;
-alert('Task Completed! ₹25 Added');
+alert('✅ Task Complete! ₹25 Added');
+btn.disabled=false;
+timerDiv.style.display='none';
+secSpan.innerText=10;
+}
+},1000);
 }
 </script>
 </body>
