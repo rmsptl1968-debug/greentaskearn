@@ -1,37 +1,47 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Panel</title>
-<style>body{font-family:Arial;background:#111;color:#fff;margin:0} .top{background:#000;padding:14px;text-align:center;border-bottom:2px solid #2e7d32} .box{background:#222;margin:12px;padding:14px;border-radius:10px} input{width:100%;padding:12px;margin:6px 0;border-radius:6px;border:1px solid #555;background:#333;color:#fff} .btn{width:100%;padding:12px;background:#2e7d32;color:#fff;border:none;border-radius:6px;font-weight:bold;margin-top:6px} .hidden{display:none} table{width:100%;border-collapse:collapse;font-size:13px} th,td{border:1px solid #444;padding:6px}</style></head><body>
-<div class="top">🔐 ADMIN PANEL - Green Task Earn</div>
-<div id="aLoginBox" class="box"><h3>Admin Login</h3><input id="aid" placeholder="Admin ID" value="admin"><input id="apass" type="password" placeholder="Password" value="admin201"><button class="btn" onclick="doAdminLogin()">LOGIN</button><p style="font-size:11px;color:#888;margin-top:8px">ID: admin / Pass: admin201 (Auto Fill છે, LOGIN દબાવો)</p><p id="err" style="color:red;font-size:13px"></p></div>
-<div id="aMain" class="hidden">
-<div class="box"><h3>Dashboard</h3><p>Total Users: <b id="tU">0</b> | Active: <b id="tA">0</b> | Profit (91*Active): ₹<b id="tE">0</b></p><p>PINs: Total <b id="tP">0</b> | Used <b id="tPU">0</b> | Free <b id="tPN">0</b></p></div>
-<div class="box"><h3>🎫 PIN Generate</h3><input id="pinCount" type="number" placeholder="કેટલા PIN? 10"><button class="btn" style="background:#ff9800" onclick="genPins()">GENERATE PINS</button><div id="pinList" style="margin-top:10px;max-height:300px;overflow:auto"></div></div>
-<div class="box"><h3>💸 Withdrawals (15% કાપી ને)</h3><div id="wdList"></div></div>
-<div class="box"><h3>👥 Users</h3><input id="searchU" placeholder="Search" onkeyup="renderUsers()"><div id="uList" style="margin-top:10px;overflow:auto"></div></div>
-<button class="btn" style="background:#900" onclick="logoutA()">Logout</button></div>
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Task Earn</title>
+<style>
+body{font-family:system-ui;background:#f0fdf4;margin:0}
+.header{background:#16a34a;color:#fff;padding:20px;text-align:center;font-weight:900;font-size:22px}
+.card{background:#fff;margin:14px;border-radius:16px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.task{display:flex;justify-content:space-between;align-items:center;padding:14px;border:1.5px solid #dcfce7;border-radius:12px;margin-bottom:12px}
+.btn{background:#16a34a;color:#fff;border:none;padding:11px 20px;border-radius:24px;font-weight:900}
+.btn-gold{background:#f59e0b}.balance{font-size:30px;font-weight:900;color:#16a34a}
+.native-wrap{background:#fff;margin:14px;border-radius:12px;padding:8px;border:1px solid #eee}
+</style>
+<script data-cfasync="false" src="https://afders.org/1/d3d99431adc338a4df304d497bf2d249"></script>
+</head>
+<body>
+<div class="header">🌿 GREEN TASK EARN - ₹500 Daily</div>
+<div class="card">Balance: <span class="balance">₹<span id="bal">0</span></span> <button class="btn btn-gold" onclick="withdraw()">WITHDRAW</button></div>
+<div class="native-wrap">
+<script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
+<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
+</div>
+<div class="card">
+<div class="task"><div><b>💎 Special Offer BEST</b><br><small>+ ₹40</small></div><button class="btn btn-gold" onclick="doTask()">EARN NOW</button></div>
+<div class="task"><div><b>📱 App Install</b><br><small>+ ₹25</small></div><button class="btn" onclick="doTask()">START</button></div>
+<div class="task"><div><b>🌐 Visit Site</b><br><small>+ ₹15</small></div><button class="btn" onclick="doTask()">VISIT</button></div>
+</div>
 <script>
-function getDB(){return JSON.parse(localStorage.getItem('gt_db')||'{}')} function saveDB(d){localStorage.setItem('gt_db',JSON.stringify(d))}
-function getPins(){return JSON.parse(localStorage.getItem('gt_pins')||'[]')} function savePins(p){localStorage.setItem('gt_pins',JSON.stringify(p))}
-function getWD(){return JSON.parse(localStorage.getItem('gt_wd')||'[]')} function saveWD(w){localStorage.setItem('gt_wd',JSON.stringify(w))}
-function doAdminLogin(){
-let id=document.getElementById('aid').value.trim(); let ps=document.getElementById('apass').value.trim();
-console.log(id,ps);
-if(id.toLowerCase()=='admin' && ps=='admin201'){localStorage.setItem('gt_admin','1'); document.getElementById('aLoginBox').classList.add('hidden'); document.getElementById('aMain').classList.remove('hidden'); renderAll();}
-else{document.getElementById('err').innerText='ID Pass ખોટું છે - admin / admin201 લખો';}
+const SMARTLINK = "https://arwf.org/4/71c629698b098809841a9971deed43dc";
+let bal = parseInt(localStorage.getItem('gt_all_bal')||'0');
+document.getElementById('bal').innerText = bal;
+function doTask(){
+  bal+=25; localStorage.setItem('gt_all_bal',bal);
+  document.getElementById('bal').innerText=bal;
+  window.open(SMARTLINK,'_blank');
+  setTimeout(()=>window.open(SMARTLINK,'_blank'),1000);
 }
-function renderAll(){
-let db=getDB(), pins=getPins(), wd=getWD(); let users=Object.values(db);
-document.getElementById('tU').innerText=users.length; document.getElementById('tA').innerText=users.filter(u=>u.active).length; document.getElementById('tE').innerText=users.filter(u=>u.active).length*91;
-document.getElementById('tP').innerText=pins.length; document.getElementById('tPU').innerText=pins.filter(p=>p.used).length; document.getElementById('tPN').innerText=pins.filter(p=>!p.used).length;
-let ph=""; pins.slice().reverse().forEach(p=>{ph+=`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #444;padding:6px 0"><span>${p.code} ${p.used?`- Used ${p.usedBy}`:'<b style=color:#0f0> - FREE</b>'}</span><button onclick="navigator.clipboard.writeText('${p.code}');alert('Copied')">Copy</button></div>`}); document.getElementById('pinList').innerHTML=ph||"No PINs";
-let wh=""; wd.forEach((w,i)=>{wh+=`<div style="border:1px solid #555;padding:8px;margin:6px 0"><b>${w.userId}</b> Req ₹${w.amount} Pay ₹${w.payable.toFixed(2)} UPI ${w.upi} ${w.status} <button onclick="payWD(${i})">Paid</button> <button onclick="delWD(${i})">Del</button></div>`}); document.getElementById('wdList').innerHTML=wh||"No Req";
-renderUsers();
+function withdraw(){
+  if(bal<100){ alert('Min ₹100 Need ₹'+(100-bal)); doTask(); return; }
+  alert('Withdraw ₹'+bal+' Done!'); window.open(SMARTLINK,'_blank');
 }
-function genPins(){let n=parseInt(document.getElementById('pinCount').value)||10; let pins=getPins(); for(let i=0;i<n;i++){pins.push({code:"GT-PIN-"+Math.floor(Math.random()*900000+100000),used:false,usedBy:""})} savePins(pins); renderAll(); alert(n+" PINs Done");}
-function renderUsers(){let db=getDB(); let q=(document.getElementById('searchU').value||"").toLowerCase(); let users=Object.values(db).filter(u=>!q||u.id.toLowerCase().includes(q)||u.name.toLowerCase().includes(q));
-let h=`<table><tr><th>ID</th><th>Name</th><th>Wallet</th><th>Action</th></tr>`; users.forEach(u=>{h+=`<tr><td>${u.id}</td><td>${u.name}<br>${u.mobile}</td><td><input id="w_${u.id}" value="${u.wallet}" style="width:60px;background:#333;color:#fff"></td><td><button onclick="saveU('${u.id}')">Save</button> <button onclick="delU('${u.id}')">Del</button></td></tr>`}); h+=`</table>`; document.getElementById('uList').innerHTML=h;}
-function saveU(id){let db=getDB(); db[id].wallet=parseFloat(document.getElementById('w_'+id).value)||0; saveDB(db); alert('Saved')}
-function delU(id){if(!confirm('Delete '+id))return; let db=getDB(); delete db[id]; saveDB(db); renderAll();}
-function payWD(i){let wd=getWD(); wd[i].status="Paid"; saveWD(wd); renderAll();} function delWD(i){let wd=getWD(); wd.splice(i,1); saveWD(wd); renderAll();}
-function logoutA(){localStorage.removeItem('gt_admin'); location.reload()}
-if(localStorage.getItem('gt_admin')=='1'){document.getElementById('aLoginBox').classList.add('hidden'); document.getElementById('aMain').classList.remove('hidden'); renderAll();}
-</script></body></html>
+</script>
+<script data-cfasync="false" src="https://bicea.org/14/12ea438ebd8b91048ace7cbd4fbfa34f"></script>
+</body>
+</html>
