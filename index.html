@@ -1,0 +1,24 @@
+<div style="background:#fff3cd;padding:15px;border-radius:10px;border:2px solid green;margin:10px">
+<h3 style="color:green">🔑 PIN થી ID Active કરો - 200 Rs</h3>
+<input id="userPinInput" placeholder="PIN નાખો - GT200..." style="width:95%;padding:12px;font-size:18px;border-radius:8px">
+<button onclick="checkPin()" style="width:100%;background:green;color:white;padding:14px;font-size:18px;margin-top:8px;border:none;border-radius:8px">✅ PIN Check & Active</button>
+<p id="pinMsg" style="color:red"></p>
+</div>
+
+<script>
+function checkPin(){
+ let pin = document.getElementById('userPinInput').value.trim();
+ let allPins = JSON.parse(localStorage.getItem('gt_pins_200')||'[]');
+ let found = allPins.find(p=>p.code==pin && p.status=='Available');
+ if(pin.startsWith('GT200') && pin.length>=8){
+   document.getElementById('pinMsg').innerHTML='<span style=color:green>✅ PIN સાચો છે! ID Active થઈ ગઈ! (200 Rs)</span>';
+   // PIN ને Used કરી દો
+   let idx = allPins.findIndex(p=>p.code==pin);
+   if(idx>-1){ allPins[idx].status='Used'; allPins[idx].to='GT8167-User'; localStorage.setItem('gt_pins_200', JSON.stringify(allPins));}
+   localStorage.setItem('gt_user_active','yes');
+   alert('200 Rs PIN Active! હવે Task મળશે!');
+ } else {
+   document.getElementById('pinMsg').innerHTML='❌ ખોટો PIN અથવા વપરાયેલો PIN! Admin ને કહો નવો PIN મોકલવા';
+ }
+}
+</script>
