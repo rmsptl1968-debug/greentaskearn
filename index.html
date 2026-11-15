@@ -52,6 +52,49 @@ function checkPin(){
     <button onclick="referFriend()" style="background:#ff9800; color:white; border:none; padding:8px 15px; border-radius:20px; font-weight:bold;">Invite Now</button>
   </div>
 </div>
+<!-- ===== MERCHANT VIDEO ADS - 7 LEVEL ===== -->
+<div id="merchantAdsBox" style="margin:15px;"></div>
+<script>
+function loadMerchantAdsForUser(){
+let ads = JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
+let box = document.getElementById('merchantAdsBox');
+if(!ads.length) return;
+let html = '<h3 style="text-align:center;">📢 વેપારી Video Ads</h3>';
+ads.forEach(ad=>{
+let videoEmbed = '';
+if(ad.video && ad.video.includes('youtu')){
+let vid = ad.video.split('v=')[1] || ad.video.split('/').pop().split('?')[0];
+videoEmbed = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>`;
+} else if(ad.video){
+videoEmbed = `<video width="100%" height="200" controls src="${ad.video}"></video>`;
+} else if(ad.img){
+videoEmbed = `<img src="${ad.img}" style="width:100%; border-radius:10px;">`;
+}
+html += `<div style="background:white; border-radius:12px; padding:12px; margin:10px 0; border:2px solid green;">
+${videoEmbed}
+<div style="margin-top:8px;"><b>🏪 ${ad.shop}</b> - ₹${ad.price}</div>
+<button onclick="watchAndEarnNew(${ad.price})" style="width:100%; background:#25D366; color:white; padding:10px; border:none; border-radius:8px; margin-top:8px; font-weight:bold;">▶️ Video જુઓ - 30 સેકન્ડ</button>
+<div style="font-size:11px; color:gray;">L1 20% L2 10% L3-5 5% L6-7 2.5%</div>
+</div>`;
+});
+box.innerHTML = html;
+}
+function watchAndEarnNew(price){
+alert('⏳ Video 30 સેકન્ડ ચાલુ છે...');
+setTimeout(()=>{
+let msg = '✅ પૂરું! ₹'+price+' વહેંચાયું:\n';
+msg += `L1 20% = ₹${(price*0.20).toFixed(2)}\n`;
+msg += `L2 10% = ₹${(price*0.10).toFixed(2)}\n`;
+msg += `L3 5% = ₹${(price*0.05).toFixed(2)}\n`;
+msg += `L4 5% = ₹${(price*0.05).toFixed(2)}\n`;
+msg += `L5 5% = ₹${(price*0.05).toFixed(2)}\n`;
+msg += `L6 2.5% = ₹${(price*0.025).toFixed(2)}\n`;
+msg += `L7 2.5% = ₹${(price*0.025).toFixed(2)}`;
+alert(msg);
+}, 3000);
+}
+loadMerchantAdsForUser();
+</script>
 
 <script>
 function watchAd(type){
