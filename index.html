@@ -22,3 +22,46 @@ function checkPin(){
  }
 }
 </script>
+<!-- ===== FINAL TASK SYSTEM - NO SMALL AMOUNTS ===== -->
+<div id="taskSystem" style="display:none; padding:15px; font-family:sans-serif; background:#e8f5e9;">
+  
+  <!-- WALLET - તમારી 7 Level વાળી Income બતાવશે -->
+  <div style="background:linear-gradient(green,#2e7d32); color:white; padding:20px; border-radius:15px; text-align:center;">
+    <div>વોલેટ બેલેન્સ / Wallet Balance</div>
+    <div id="walletBalance" style="font-size:36px; font-weight:bold;">₹ 0</div>
+    <div style="margin-top:10px; font-size:14px;">7 Level Income Active ✅</div>
+  </div>
+
+  <h3>✅ ટાસ્ક લિસ્ટ / Task List</h3>
+  
+  <!-- Task 1 - No Money -->
+  <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
+    <div><b>1. Daily Watch Ad</b><br><small>રોજ ની Ad જુઓ - ફરજીયાત</small></div>
+    <button onclick="watchAd(1)" style="background:green; color:white; border:none; padding:8px 15px; border-radius:20px;">Watch</button>
+  </div>
+
+  <!-- Task 2 - No Money -->
+  <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
+    <div><b>2. Merchant Ad</b><br><small>વેપારી ની Ad - સપોર્ટ</small></div>
+    <button onclick="watchAd(2)" style="background:green; color:white; border:none; padding:8px 15px; border-radius:20px;">View</button>
+  </div>
+
+  <!-- Task 3 - 7 Level Income -->
+  <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center; border:2px solid green;">
+    <div><b>3. Refer & Earn</b><br><small>7 Level Income - મોટી કમાણી</small></div>
+    <button onclick="referFriend()" style="background:#ff9800; color:white; border:none; padding:8px 15px; border-radius:20px; font-weight:bold;">Invite Now</button>
+  </div>
+</div>
+
+<script>
+function watchAd(type){
+  alert('Ad ચાલુ છે... પૂરી જુઓ!');
+  setTimeout(()=>{ alert('✅ Daily Task Complete!'); }, 2000);
+}
+function referFriend(){
+  let myID = localStorage.getItem('gt_my_id') || 'GT8167';
+  let link = 'https://rmsptl1968-debug.github.io/greentaskearn/?ref='+myID;
+  let msg = `🌱 Green Task Earn - 7 Level Income! Join કરો: ${link}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg));
+}
+</script>
