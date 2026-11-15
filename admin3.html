@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIN 200 ADMIN - Direct</title>
+<style>body{font-family:Arial;background:#e8f5e9;margin:0} .h{background:green;color:white;padding:14px;text-align:center} .m{display:flex;overflow:auto;background:white} .m b{flex:1;min-width:80px;padding:12px;text-align:center;font-size:12px;border-bottom:3px solid #ccc} .m b.a{border-color:green;color:green;background:#e8f5e9} .c{background:white;margin:8px;padding:12px;border-radius:10px;display:none} .c.a{display:block} .pin{background:#f1f8e9;border-left:5px solid green;padding:10px;margin:6px 0;border-radius:8px} input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #ccc;font-size:16px} button{padding:12px;border:none;border-radius:8px;font-weight:bold} .g{background:green;color:white} .bl{background:#1976d2;color:white} .r{background:red;color:white}</style>
+</head>
+<body>
+<div class="h"><b>🌱 GT8167 - PIN 200 ADMIN</b><br>Direct Open - No Login</div>
+<div class="m"><b id="b0" class="a" onclick="show(0)">📊 DASH</b><b id="b1" onclick="show(1)">📌 CREATE 200</b><b id="b2" onclick="show(2)">📤 SEND</b><b id="b3" onclick="show(3)">📜 HISTORY</b></div>
+
+<div id="c0" class="c a">
+<h3>📊 200 Pin Dashboard</h3>
+<p>Total: <b id="t">0</b> | Available: <b id="a" style="color:green;font-size:22px">0</b> | Used: <b id="u">0</b></p>
+<p>GT8167 | Balance 52 | Fee 200 Rs</p>
+<button class="g" onclick="load()">🔄 Refresh</button>
+</div>
+
+<div id="c1" class="c">
+<h3>📌 CREATE 200 Rs PIN</h3>
+<input id="qty" type="number" value="20" placeholder="કેટલા PIN? 20">
+<input id="pre" value="GT200" placeholder="GT200">
+<button class="g" style="width:100%;padding:16px" onclick="make()">✨ 200 ના PIN બનાવો</button>
+<div id="new"></div>
+</div>
+
+<div id="c2" class="c">
+<h3>📤 SEND PIN</h3>
+<input id="uid" placeholder="User ID GTxxxx">
+<select id="psel"><option>Pin પસંદ કરો</option></select>
+<button class="bl" style="width:100%;padding:16px;margin-top:8px" onclick="send()">📤 SEND NOW</button>
+</div>
+
+<div id="c3" class="c">
+<h3>📜 PIN HISTORY - 200 Rs</h3>
+<div id="hist"></div>
+<button class="r" style="width:100%;margin-top:10px" onclick="if(confirm('Clear?')){localStorage.removeItem('gt_pins_200');load();}">🗑️ Clear All 200 Pins</button>
+</div>
+
+<script>
+let KEY='gt_pins_200';
+function show(n){document.querySelectorAll('.c').forEach(c=>c.classList.remove('a'));document.getElementById('c'+n).classList.add('a');document.querySelectorAll('.m b').forEach(b=>b.classList.remove('a'));document.getElementById('b'+n).classList.add('a');}
+function load(){let pins=JSON.parse(localStorage.getItem(KEY)||'[]');document.getElementById('t').innerText=pins.length;document.getElementById('u').innerText=pins.filter(p=>p.status!='Available').length;document.getElementById('a').innerText=pins.filter(p=>p.status=='Available').length;let h='';pins.slice().reverse().forEach(p=>{h+=`<div class=pin><b>${p.code}</b> - Rs ${p.amt} - <span style=color:${p.status=='Available'?'green':'red'}>${p.status}</span><br><small>To:${p.to||'-'} | ${p.date}</small></div>`});document.getElementById('hist').innerHTML=h||'No Pins';let opts='<option value="">200 નો Pin પસંદ કરો</option>';pins.filter(p=>p.status=='Available').forEach(p=>{opts+=`<option value="${p.code}">${p.code}</option>`});document.getElementById('psel').innerHTML=opts;}
+function make(){let qty=parseInt(document.getElementById('qty').value)||20;let pre=document.getElementById('pre').value||'GT200';let pins=JSON.parse(localStorage.getItem(KEY)||'[]');let list=[];for(let i=0;i<qty;i++){let code=pre+Math.floor(100000+Math.random()*900000);pins.push({code,amt:200,status:'Available',to:'',date:new Date().toLocaleString()});list.push(code);}localStorage.setItem(KEY,JSON.stringify(pins));document.getElementById('new').innerHTML='<div class=pin style=background:#d4edda>✅ બન્યા: '+list.join(', ')+'</div>';load();alert(qty+' PIN 200 Rs ના બની ગયા!');}
+function send(){let uid=document.getElementById('uid').value;let code=document.getElementById('psel').value;if(!uid||!code) return alert('ID અને Pin પસંદ કરો!');let pins=JSON.parse(localStorage.getItem(KEY)||'[]');let idx=pins.findIndex(p=>p.code==code);if(idx>-1){pins[idx].status='Sent';pins[idx].to=uid;pins[idx].date=new Date().toLocaleString();localStorage.setItem(KEY,JSON.stringify(pins));load();alert(code+' -> '+uid+' મોકલાયો!');}}
+load();
+</script>
+</body>
+</html>
