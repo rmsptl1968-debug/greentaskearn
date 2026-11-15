@@ -42,69 +42,44 @@ function checkPin(){
 
   <!-- Task 2 - No Money -->
   <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
-    <div><b>2. Merchant Ad</b><br><small>વેપારી ની Ad - સપોર્ટ</small></div>
-    <button onclick="watchAd(2)" style="background:green; color:white; border:none; padding:8px 15px; border-radius:20px;">View</button>
-  </div>
-
-  <!-- Task 3 - 7 Level Income -->
-  <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center; border:2px solid green;">
-    <div><b>3. Refer & Earn</b><br><small>7 Level Income - મોટી કમાણી</small></div>
-    <button onclick="referFriend()" style="background:#ff9800; color:white; border:none; padding:8px 15px; border-radius:20px; font-weight:bold;">Invite Now</button>
-  </div>
-</div>
-<!-- ===== MERCHANT VIDEO ADS - 7 LEVEL ===== -->
-<div id="merchantAdsBox" style="margin:15px;"></div>
+    <div id="merchantAdsBox" style="margin:15px;"></div>
 <script>
+function getYouTubeId(url){
+ if(!url) return null;
+ let reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+ let m = url.match(reg);
+ return m ? m[1] : null;
+}
 function loadMerchantAdsForUser(){
 let ads = JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
 let box = document.getElementById('merchantAdsBox');
 if(!ads.length) return;
 let html = '<h3 style="text-align:center;">📢 વેપારી Video Ads</h3>';
 ads.forEach(ad=>{
+let ytid = getYouTubeId(ad.video);
 let videoEmbed = '';
-if(ad.video && ad.video.includes('youtu')){
-let vid = ad.video.split('v=')[1] || ad.video.split('/').pop().split('?')[0];
-videoEmbed = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>`;
+if(ytid){
+videoEmbed = `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${ytid}?rel=0" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>`;
 } else if(ad.video){
-videoEmbed = `<video width="100%" height="200" controls src="${ad.video}"></video>`;
-} else if(ad.img){
-videoEmbed = `<img src="${ad.img}" style="width:100%; border-radius:10px;">`;
+videoEmbed = `<video width="100%" height="220" controls src="${ad.video}" style="border-radius:10px;"></video>`;
+} else {
+videoEmbed = `<div style="background:black; color:white; text-align:center; padding:40px;">Video</div>`;
 }
-html += `<div style="background:white; border-radius:12px; padding:12px; margin:10px 0; border:2px solid green;">
+html += `<div style="background:white; border-radius:12px; padding:12px; margin:12px 0; border:2px solid green;">
 ${videoEmbed}
 <div style="margin-top:8px;"><b>🏪 ${ad.shop}</b> - ₹${ad.price}</div>
-<button onclick="watchAndEarnNew(${ad.price})" style="width:100%; background:#25D366; color:white; padding:10px; border:none; border-radius:8px; margin-top:8px; font-weight:bold;">▶️ Video જુઓ - 30 સેકન્ડ</button>
+<button onclick="watchAndEarnNew(${ad.price})" style="width:100%; background:#25D366; color:white; padding:12px; border:none; border-radius:8px; margin-top:8px; font-weight:bold;">▶️ Video જુઓ - 30 સેકન્ડ</button>
 <div style="font-size:11px; color:gray;">L1 20% L2 10% L3-5 5% L6-7 2.5%</div>
 </div>`;
 });
 box.innerHTML = html;
 }
 function watchAndEarnNew(price){
-alert('⏳ Video 30 સેકન્ડ ચાલુ છે...');
+alert('⏳ 30 સેકન્ડ ચાલુ...');
 setTimeout(()=>{
-let msg = '✅ પૂરું! ₹'+price+' વહેંચાયું:\n';
-msg += `L1 20% = ₹${(price*0.20).toFixed(2)}\n`;
-msg += `L2 10% = ₹${(price*0.10).toFixed(2)}\n`;
-msg += `L3 5% = ₹${(price*0.05).toFixed(2)}\n`;
-msg += `L4 5% = ₹${(price*0.05).toFixed(2)}\n`;
-msg += `L5 5% = ₹${(price*0.05).toFixed(2)}\n`;
-msg += `L6 2.5% = ₹${(price*0.025).toFixed(2)}\n`;
-msg += `L7 2.5% = ₹${(price*0.025).toFixed(2)}`;
+let msg = '✅ પૂરું! ₹'+price+' વહેંચાયું:\nL1 20% = ₹'+(price*0.20).toFixed(2)+'\nL2 10% = ₹'+(price*0.10).toFixed(2)+'\nL3 5% = ₹'+(price*0.05).toFixed(2);
 alert(msg);
 }, 3000);
 }
 loadMerchantAdsForUser();
-</script>
-
-<script>
-function watchAd(type){
-  alert('Ad ચાલુ છે... પૂરી જુઓ!');
-  setTimeout(()=>{ alert('✅ Daily Task Complete!'); }, 2000);
-}
-function referFriend(){
-  let myID = localStorage.getItem('gt_my_id') || 'GT8167';
-  let link = 'https://rmsptl1968-debug.github.io/greentaskearn/?ref='+myID;
-  let msg = `🌱 Green Task Earn - 7 Level Income! Join કરો: ${link}`;
-  window.open('https://wa.me/?text='+encodeURIComponent(msg));
-}
 </script>
