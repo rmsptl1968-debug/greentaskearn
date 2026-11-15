@@ -6,23 +6,21 @@
 <title>Green Task Earn</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f1f8e9}
-.top{background:#2e7d32;color:#fff;padding:14px;text-align:center;font-weight:bold}
-.box{background:#fff;margin:12px;padding:16px;border-radius:12px}
-.btn{width:100%;padding:12px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-weight:bold}
+body{background:#e8f5e9}
+.top{background:#2e7d32;color:#fff;padding:15px;text-align:center;font-weight:bold;font-size:18px}
+.box{background:#fff;margin:15px;padding:20px;border-radius:12px;text-align:center;box-shadow:0 2px 8px #0001}
+.btn{width:100%;padding:14px;background:#2e7d32;color:#fff;border:none;border-radius:8px;font-weight:bold;font-size:16px}
 </style>
-<script data-cfasync="false" src="https://afders.org/1/d3d99431adc338a4df304d497bf2d249"></script>
 </head>
 <body>
 <div class="top">🌿 GREEN TASK EARN</div>
-<div class="box" style="text-align:center">
-Balance: ₹<span id="b" style="font-size:28px;color:#2e7d32;font-weight:bold">0</span>
-<br><br>
-<script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
-<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
-</div>
 <div class="box">
-<button class="btn" onclick="add()">START TASK + ₹25</button>
+<div>Your Balance</div>
+<div style="font-size:36px;color:#2e7d32;font-weight:bold">₹<span id="b">0</span></div>
+<br>
+<button class="btn" onclick="add()">✅ COMPLETE TASK + ₹25</button>
+<br><br>
+<button class="btn" style="background:#ff9800" onclick="alert('Min Withdraw ₹100')">WITHDRAW</button>
 </div>
 <script>
 let bal = parseInt(localStorage.getItem('gt_bal')||'0');
@@ -30,10 +28,9 @@ document.getElementById('b').innerText = bal;
 function add(){
 bal+=25;
 localStorage.setItem('gt_bal',bal);
-document.getElementById('b').innerText = bal;
-alert('₹25 Added!');
+document.getElementById('b').innerText=bal;
+alert('Task Completed! ₹25 Added');
 }
 </script>
-<script data-cfasync="false" src="https://bicea.org/14/12ea438ebd8b91048ace7cbd4fbfa34f"></script>
 </body>
 </html>
