@@ -3,56 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task - Admin Panel</title>
+<title>Admin - Green Task V7.3</title>
 <style>
-body{font-family:Arial;background:#f0f8f0;margin:0;padding:15px}
-.card{background:white;padding:15px;border-radius:10px;box-shadow:0 2px 5px #0001;margin-bottom:15px}
+body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
+.card{background:white;padding:15px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px #0001}
 h2{color:green;text-align:center}
-button{background:green;color:white;padding:10px 15px;border:none;border-radius:5px;cursor:pointer}
-input{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px}
-.user-box{border-bottom:1px solid #eee;padding:10px 0}
+.btn{background:green;color:white;padding:10px 15px;border:none;border-radius:6px}
+input{width:95%;padding:12px;border:1px solid #ccc;border-radius:6px;margin:5px 0}
+.user{border:1px solid #c8e6c9;padding:10px;border-radius:8px;margin:8px 0;background:#f1f8e9}
+small{color:#666}
 </style>
 </head>
 <body>
-<h2>🌱 Green Task - ADMIN</h2>
-<div class="card">
-<h3>Login</h3>
-<input type="password" id="pass" placeholder="Admin Password">
-<button onclick="login()">Login</button>
+<h2>🌱 Admin - GT8167 System</h2>
+
+<div class="card" id="loginBox">
+<h3>Admin Login</h3>
+<input type="password" id="pass" placeholder="Password">
+<button class="btn" onclick="login()">Login</button>
+<p><small>Pass: admin123</small></p>
 </div>
 
-<div id="panel" style="display:none">
+<div id="main" style="display:none">
 <div class="card">
-<h3>All Users Data</h3>
-<div id="users"></div>
-<button onclick="clearAll()">Clear All Data</button>
+<h3>📊 Live Stats</h3>
+<p>Total ID Created: <b id="total">0</b></p>
+<p>Your Current ID: <b id="myid">-</b></p>
+<p>Current Balance: ₹<b id="mybal">0</b></p>
+<button class="btn" onclick="load()">🔄 Refresh</button>
 </div>
+
 <div class="card">
-<h3>Withdrawal Requests</h3>
-<div id="withdraw"></div>
+<h3>👥 તમારી 7 Level ટીમ (આ ફોન માં)</h3>
+<div id="teamList">Loading...</div>
+</div>
+
+<div class="card">
+<h3>💰 Withdrawal Requests</h3>
+<div id="wList">No Request</div>
+</div>
+
+<div class="card">
+<h3>🔧 All LocalStorage Data (Debug)</h3>
+<div id="allData" style="font-size:12px;word-break:break-all;background:#eee;padding:10px"></div>
+<button class="btn" style="background:red" onclick="clearAll()">Clear All Data</button>
 </div>
 </div>
 
 <script>
 function login(){
-if(document.getElementById('pass').value==='admin123'){
-document.getElementById('panel').style.display='block';
-loadData();
-}else{alert('Wrong Password!')}
+ if(document.getElementById('pass').value==='admin123'){
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('main').style.display='block';
+  load();
+ }else alert('Wrong Password');
 }
-function loadData(){
-let users = JSON.parse(localStorage.getItem('gt_users')||'[]');
-let html='';
-users.forEach((u,i)=>{
-html+=`<div class="user-box"><b>${u.name||'User'+i}</b> - ₹${u.balance||0} - Refer: ${u.refer||0} Users <br> Mobile: ${u.mobile||''}</div>`;
-});
-document.getElementById('users').innerHTML=html||'No Users Yet';
-let w = JSON.parse(localStorage.getItem('gt_withdraw')||'[]');
-let wh='';
-w.forEach(x=>{wh+=`<div class="user-box">${x.mobile} - ₹${x.amount} - ${x.status}</div>`});
-document.getElementById('withdraw').innerHTML=wh||'No Request';
+function load(){
+ let myId = localStorage.getItem('my_code') || localStorage.getItem('gt_id') || 'GT8167';
+ let myBal = localStorage.getItem('my_bal') || localStorage.getItem('gt_balance') || localStorage.getItem('balance') || '0';
+ document.getElementById('myid').innerText=myId;
+ document.getElementById('mybal').innerText=myBal;
+ document.getElementById('total').innerText=localStorage.length;
+
+ // Team Data - try all possible keys
+ let teamKeys = ['gt_team','gt_referrals','refer_team','gt_users','my_team'];
+ let found=false; let html='';
+ teamKeys.forEach(k=>{
+   let v=localStorage.getItem(k);
+   if(v){found=true; html+=`<div class="user"><b>${k}:</b><br>${v.substring(0,500)}</div>`}
+ });
+ if(!found) html='<div class="user">હજુ કોઈ Join નથી થયું, લિંક Share કરો! <br><br>તમારી લિંક:<br><b>'+window.location.origin+'/greentaskearn/?ref='+myId+'</b></div>';
+ document.getElementById('teamList').innerHTML=html;
+
+ // Withdraw
+ let w = localStorage.getItem('gt_withdraw')||localStorage.getItem('withdraw_list')||'[]';
+ try{
+   let arr=JSON.parse(w); let wh='';
+   arr.forEach(o=>{wh+=`<div class="user">${o.mobile||o.upi} - ₹${o.amount} - ${o.status}</div>`});
+   document.getElementById('wList').innerHTML=wh||'No Request';
+ }catch(e){document.getElementById('wList').innerHTML=w}
+
+ // All data debug
+ let all=''; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); all+=k+': '+localStorage.getItem(k).substring(0,200)+'<br><br>';}
+ document.getElementById('allData').innerHTML=all||'Empty';
 }
-function clearAll(){if(confirm('Sure?')){localStorage.clear();alert('Cleared');loadData()}}
+function clearAll(){if(confirm('બધો Data ડીલીટ કરવો છે?')){localStorage.clear();alert('Clear Done');load();}}
 </script>
 </body>
 </html>
