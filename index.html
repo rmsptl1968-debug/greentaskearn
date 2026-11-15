@@ -16,16 +16,15 @@ body{background:#e8f5e9}
 </style>
 </head>
 <body>
-<div class="top">🌿 GREEN TASK EARN</div>
+<div class="top">🌿 GREEN TASK EARN - WATCH & EARN ₹1</div>
 <div class="box">
 <div>Your Balance</div>
 <div style="font-size:36px;color:#2e7d32;font-weight:bold">₹<span id="b">0</span></div>
 
-<button class="btn btn-watch" id="watchBtn" onclick="watchAd()">▶️ WATCH AD + ₹25</button>
-<div id="timer">Ad જોવાઈ રહી છે... <span id="sec">10</span> sec</div>
+<button class="btn btn-watch" id="watchBtn" onclick="watchAd()">▶️ WATCH AD + ₹1</button>
+<div id="timer">Please wait <span id="sec">10</span> sec... Don't close</div>
 
-<button class="btn" style="background:#ff9800" onclick="alert('Min ₹100 for Withdraw')">WITHDRAW</button>
-<p style="margin-top:10px;font-size:12px;color:#666">Watch Ad પર Click કરો, 10 સેકન્ડ રાહ જુઓ, પછી ₹25 મળશે</p>
+<button class="btn" style="background:#ff9800" onclick="alert('Min ₹100 for Withdraw - Contact Admin')">WITHDRAW</button>
 </div>
 
 <script>
@@ -33,8 +32,8 @@ let bal = parseInt(localStorage.getItem('gt_bal')||'0');
 document.getElementById('b').innerText = bal;
 
 function watchAd(){
-// અહીં તમારી સારી Ad ની Link નાખી શકો છો - હમણાં માટે Demo Link
-window.open('https://www.google.com','_blank');
+// YOUR ADSTERRA SMARTLINK
+window.open('https://asiafilm.org/4/9dac62fd7ae9732b34ebc01618e5d030','_blank');
 
 let btn = document.getElementById('watchBtn');
 let timerDiv = document.getElementById('timer');
@@ -47,10 +46,10 @@ s--;
 secSpan.innerText=s;
 if(s<=0){
 clearInterval(intv);
-bal+=25;
+bal+=1;
 localStorage.setItem('gt_bal',bal);
 document.getElementById('b').innerText=bal;
-alert('✅ Task Complete! ₹25 Added');
+alert('✅ Task Complete! ₹1 Added to Balance');
 btn.disabled=false;
 timerDiv.style.display='none';
 secSpan.innerText=10;
