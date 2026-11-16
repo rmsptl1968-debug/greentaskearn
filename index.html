@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="gu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Green Task Earn - Login</title>
+<html lang="gu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Green Task Earn</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
 body{background:#f0f5f0}
 .header{background:linear-gradient(90deg,#0a7a00,#25D366);padding:15px;text-align:center;color:white;border-radius:0 0 15px 15px}
-.header h1{font-size:26px;letter-spacing:1px}
 .card{background:white;margin:12px;border-radius:12px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 .btn{width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:6px 0}
 .btn-green{background:#25D366;color:white}
@@ -18,81 +17,40 @@ body{background:#f0f5f0}
 .level-box{background:#f0fff0;border-left:4px solid #25D366;padding:8px;margin:6px 0;border-radius:6px;font-size:13px}
 .ref-box{background:#fff3cd;border:2px dashed #ff9800;padding:10px;border-radius:8px;word-break:break-all;font-size:12px;margin:8px 0}
 </style></head><body>
-
-<div class="header">
-<h1>GREEN TASK EARN</h1>
-<p style="font-size:12px;margin-top:4px;">100% LEGAL | MSME | Rs.201 STARTER PLAN</p>
-</div>
+<div class="header"><h1>GREEN TASK EARN</h1><p style="font-size:12px;margin-top:4px;">100% LEGAL | MSME | Rs.201 STARTER PLAN</p></div>
 
 <div id="authSection">
-<div class="tabs">
-<div class="tab active" id="tabLogin" onclick="switchTab('login')">Login</div>
-<div class="tab" id="tabSignup" onclick="switchTab('signup')">Sign Up</div>
+<div class="tabs"><div class="tab active" id="tabLogin" onclick="switchTab('login')">Login</div><div class="tab" id="tabSignup" onclick="switchTab('signup')">Sign Up</div></div>
+<div id="loginBox" class="card"><h3 style="text-align:center;color:green;">🔐 Member Login</h3><input id="loginId" class="input" placeholder="Mobile No / User ID"><input id="loginPass" type="password" class="input" placeholder="Password"><button class="btn btn-green" onclick="doLogin()">Login કરો</button></div>
+<div id="signupBox" class="card hidden"><h3 style="text-align:center;color:green;">📝 New Member Sign Up</h3><input id="sName" class="input" placeholder="તમારું નામ"><input id="sMobile" class="input" placeholder="Mobile No (આ જ તમારી ID)"><input id="sPass" type="password" class="input" placeholder="Password"><input id="sRef" class="input" placeholder="Referral Code (Optional)"><div style="font-size:11px;background:#e8f5e9;padding:8px;border-radius:6px;margin:6px 0;">Rs.201 Plan: L1=25, L2=20, L3=40 Super, L4=20, L5=20</div><button class="btn btn-green" onclick="doSignup()">Sign Up + Join</button></div>
 </div>
 
-<div id="loginBox" class="card">
-<h3 style="text-align:center;color:green;">🔐 Member Login</h3>
-<input id="loginId" class="input" placeholder="Mobile No / User ID">
-<input id="loginPass" type="password" class="input" placeholder="Password">
-<button class="btn btn-green" onclick="doLogin()">Login કરો</button>
-</div>
-
-<div id="signupBox" class="card hidden">
-<h3 style="text-align:center;color:green;">📝 New Member Sign Up</h3>
-<input id="sName" class="input" placeholder="તમારું નામ">
-<input id="sMobile" class="input" placeholder="Mobile No (આ જ તમારી ID બનશે)">
-<input id="sPass" type="password" class="input" placeholder="Password બનાવો">
-<input id="sRef" class="input" placeholder="Referral Code (જો હોય તો)">
-<div style="font-size:11px;background:#e8f5e9;padding:8px;border-radius:6px;margin:6px 0;">Rs.201 Plan: L1=25, L2=20, L3=40 Super, L4=20, L5=20</div>
-<button class="btn btn-green" onclick="doSignup()">Sign Up + Join Rs.201 Plan</button>
-</div>
+<div class="card" style="border:2px solid #25D366;">
+<h3 style="color:green;text-align:center;">📢 વેપારી Ads + Detail (બધા જોઈ શકે)</h3>
+<p style="font-size:11px;color:#666;text-align:center;margin:4px 0;">Login વગર પણ Video જોઈ શકો છો</p>
+<div id="publicAds"></div>
 </div>
 
 <div id="dashSection" class="hidden">
-<div class="card">
-<h3 id="welcomeText">Welcome!</h3>
-<p style="font-size:12px;color:#666;" id="userInfo"></p>
-<button class="btn btn-dark" style="padding:8px;margin-top:8px;" onclick="doLogout()">Logout</button>
-</div>
-
-<div class="card">
-<h3 style="color:green;">🔗 તમારી Refer Link</h3>
-<div class="ref-box" id="refLinkBox"></div>
-<button class="btn btn-green" onclick="copyRef()" style="padding:8px;">📋 Link Copy કરો</button>
-<button class="btn" style="background:#25D366;color:white;padding:10px;margin-top:6px;" onclick="shareWA()">WhatsApp Share</button>
-</div>
-
-<div class="card">
-<h3 style="color:green;">💰 મારી Team (5 Level)</h3>
-<div id="teamStats"></div>
-</div>
-
-<div class="card" style="border:2px dashed red;">
-<h3 style="color:red;text-align:center;font-size:14px;">🔴 ADMIN - Merchant Ad Add</h3>
-<input id="mName" class="input" placeholder="વેપારી નામ">
-<input id="mLink" class="input" placeholder="YouTube Link">
-<button class="btn btn-red" onclick="addMerchant()">➕ Merchant Ad Add કરો</button>
-</div>
-
-<div class="card">
-<h3>📢 વેપારી Ads</h3>
-<div id="allAdsContainer"></div>
-</div>
+<div class="card"><h3 id="welcomeText">Welcome!</h3><p style="font-size:12px;color:#666;" id="userInfo"></p><button class="btn btn-dark" style="padding:8px;margin-top:8px;" onclick="doLogout()">Logout</button></div>
+<div class="card"><h3 style="color:green;">🔗 તમારી Refer Link</h3><div class="ref-box" id="refLinkBox"></div><button class="btn btn-green" onclick="copyRef()" style="padding:8px;">📋 Copy</button><button class="btn" style="background:#25D366;color:white;padding:10px;margin-top:6px;" onclick="shareWA()">WhatsApp Share</button></div>
+<div class="card"><h3 style="color:green;">💰 મારી Team</h3><div id="teamStats"></div></div>
+<div class="card" style="border:2px dashed red;"><h3 style="color:red;text-align:center;font-size:14px;">🔴 ADMIN - Merchant Ad Add</h3><input id="mName" class="input" placeholder="વેપારી નામ"><input id="mDetail" class="input" placeholder="વેપારી Detail / Address / Mobile"><input id="mLink" class="input" placeholder="YouTube Link"><button class="btn btn-red" onclick="addMerchant()">➕ Add કરો</button></div>
+<div class="card"><h3>📢 મારા Ads (Login પછી)</h3><div id="allAdsContainer"></div></div>
 </div>
 
 <script>
 let users=JSON.parse(localStorage.getItem('gte_users')||'{}');
 let currentUser=JSON.parse(localStorage.getItem('gte_current')||'null');
 function switchTab(t){document.getElementById('loginBox').classList.toggle('hidden',t!=='login');document.getElementById('signupBox').classList.toggle('hidden',t!=='signup');document.getElementById('tabLogin').classList.toggle('active',t==='login');document.getElementById('tabSignup').classList.toggle('active',t==='signup');}
-function doSignup(){let name=document.getElementById('sName').value.trim();let mobile=document.getElementById('sMobile').value.trim();let pass=document.getElementById('sPass').value.trim();let ref=document.getElementById('sRef').value.trim().toUpperCase();if(!name||!mobile||!pass){alert('બધા Field ભરો');return;}if(users[mobile]){alert('Account પહેલેથી છે! Login કરો');switchTab('login');return;}let user={name:name,mobile:mobile,pass:pass,refBy:ref||'',joinDate:new Date().toLocaleDateString(),team:[]};users[mobile]=user;if(ref&&users[ref]){users[ref].team.push(mobile);}localStorage.setItem('gte_users',JSON.stringify(users));alert('Success! ID: '+mobile);switchTab('login');}
-function doLogin(){let id=document.getElementById('loginId').value.trim();let pass=document.getElementById('loginPass').value.trim();if(!users[id]){alert('User નથી! Sign Up કરો');return;}if(users[id].pass!==pass){alert('Password ખોટો');return;}currentUser=id;localStorage.setItem('gte_current',JSON.stringify(currentUser));showDash();}
+function doSignup(){let n=document.getElementById('sName').value.trim();let m=document.getElementById('sMobile').value.trim();let p=document.getElementById('sPass').value.trim();let r=document.getElementById('sRef').value.trim().toUpperCase();if(!n||!m||!p){alert('બધા ભરો');return;}if(users[m]){alert('Account છે! Login કરો');switchTab('login');return;}users[m]={name:n,mobile:m,pass:p,refBy:r||'',joinDate:new Date().toLocaleDateString(),team:[]};if(r&&users[r])users[r].team.push(m);localStorage.setItem('gte_users',JSON.stringify(users));alert('Success ID:'+m);switchTab('login');}
+function doLogin(){let id=document.getElementById('loginId').value.trim();let ps=document.getElementById('loginPass').value.trim();if(!users[id]){alert('User નથી');return;}if(users[id].pass!==ps){alert('Password ખોટો');return;}currentUser=id;localStorage.setItem('gte_current',JSON.stringify(currentUser));showDash();}
 function doLogout(){localStorage.removeItem('gte_current');currentUser=null;document.getElementById('authSection').classList.remove('hidden');document.getElementById('dashSection').classList.add('hidden');}
-function showDash(){if(!currentUser)return;let u=users[currentUser];document.getElementById('authSection').classList.add('hidden');document.getElementById('dashSection').classList.remove('hidden');document.getElementById('welcomeText').innerText='Welcome, '+u.name+'!';document.getElementById('userInfo').innerText='ID: '+u.mobile+' | Join: '+u.joinDate+' | Refer By: '+(u.refBy||'Direct');let baseUrl=window.location.origin+window.location.pathname;let refLink=baseUrl+'?ref='+u.mobile;document.getElementById('refLinkBox').innerText=refLink;let direct=u.team?u.team.length:0;document.getElementById('teamStats').innerHTML=`<div class="level-box">Level 1 (Direct) = ${direct} Members = Rs.${direct*25}</div><div class="level-box">Level 2 = Rs.20 per member</div><div class="level-box" style="border-left-color:red;background:#fff0f0;"><b>Level 3 = Super Promoter = Rs.40</b></div><div class="level-box">Level 4=20 | Level5=20</div><div style="font-size:11px;margin-top:6px;">Direct: ${(u.team||[]).join(', ')||'હજુ કોઈ નથી'}</div>`;loadAds();}
-function copyRef(){navigator.clipboard.writeText(document.getElementById('refLinkBox').innerText).then(()=>alert('Link Copy થયો!'));}
-function shareWA(){let t=document.getElementById('refLinkBox').innerText;let msg=`*GREEN TASK EARN Rs.201 Plan*%0AJoin: ${encodeURIComponent(t)}`;window.open('https://wa.me/?text='+msg,'_blank');}
-function loadAds(){let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');if(ads.length==0){ads=[{name:'Happylife Channel - Mundra',id:'QrhsduEJNMg'}];}let c=document.getElementById('allAdsContainer');c.innerHTML='';ads.forEach(a=>{c.innerHTML+=`<div style='background:white;border:2px solid #25D366;border-radius:12px;padding:10px;margin:8px 0;text-align:center;'><img src='https://img.youtube.com/vi/${a.id}/hqdefault.jpg' style='width:100%;border-radius:8px;'><div style='font-weight:bold;margin:6px 0;text-align:left;font-size:13px;'>🏪 ${a.name}</div><button onclick="window.open('https://www.youtube.com/watch?v=${a.id}','_blank')" style='width:100%;background:#25D366;color:white;padding:10px;border:none;border-radius:6px;'>▶️ Video જુઓ</button></div>`;});}
+function showDash(){if(!currentUser)return;let u=users[currentUser];document.getElementById('authSection').classList.add('hidden');document.getElementById('dashSection').classList.remove('hidden');document.getElementById('welcomeText').innerText='Welcome, '+u.name+'!';document.getElementById('userInfo').innerText='ID:'+u.mobile+' | Refer:'+(u.refBy||'Direct');let base=window.location.origin+window.location.pathname;document.getElementById('refLinkBox').innerText=base+'?ref='+u.mobile;let direct=u.team?u.team.length:0;document.getElementById('teamStats').innerHTML='<div class="level-box">L1 Direct='+direct+' = Rs.'+direct*25+'</div><div class="level-box">L2=20, L3=40 Super, L4=20, L5=20</div><div style="font-size:11px;margin-top:6px;">Direct: '+(u.team||[]).join(', ')||'કોઈ નથી'+'</div>';loadAds();}
+function copyRef(){navigator.clipboard.writeText(document.getElementById('refLinkBox').innerText).then(()=>alert('Copy થયો'));}
+function shareWA(){let t=document.getElementById('refLinkBox').innerText;window.open('https://wa.me/?text='+encodeURIComponent('*GREEN TASK EARN* Join:'+t),'_blank');}
+function loadAds(){let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');if(ads.length==0)ads=[{name:'Happylife Channel - Mundra',id:'QrhsduEJNMg',detail:'Mundra Kutch - Business Promotion'}];let c1=document.getElementById('publicAds');let c2=document.getElementById('allAdsContainer');let h='';ads.forEach(a=>{let det=a.detail||a.name+' - વેપારી';h+=`<div style='background:white;border:2px solid #25D366;border-radius:12px;padding:10px;margin:8px 0;text-align:center;'><img onclick="window.open('https://www.youtube.com/watch?v=${a.id}','_blank')" src='https://img.youtube.com/vi/${a.id}/hqdefault.jpg' style='width:100%;border-radius:8px;cursor:pointer;'><div style='font-weight:bold;margin:6px 0;text-align:left;font-size:13px;'>🏪 ${a.name}</div><div style='font-size:11px;color:#555;text-align:left;margin-bottom:6px;'>📝 ${det}</div><div style='display:flex;gap:6px;'><button onclick="window.open('https://www.youtube.com/watch?v=${a.id}','_blank')" style='flex:1;background:#25D366;color:white;padding:10px;border:none;border-radius:6px;'>▶️ Video</button><button onclick="alert('વેપારી: ${a.name}\\nDetail: ${det}')" style='flex:1;background:#2962ff;color:white;padding:10px;border:none;border-radius:6px;'>📞 Detail</button></div></div>`;});if(c1)c1.innerHTML=h;if(c2)c2.innerHTML=h;}
 function extractID(u){let m=u.match(/(?:shorts\/|youtu\.be\/|watch\?v=|embed\/|v\/)([A-Za-z0-9_-]{6,15})/);return m?m[1]:'';}
-function addMerchant(){let n=document.getElementById('mName').value.trim();let l=document.getElementById('mLink').value.trim();let id=extractID(l);if(!n||!id){alert('નામ+Link');return;}let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');ads.unshift({name:n,id:id});localStorage.setItem('gt_merchant_ads',JSON.stringify(ads));loadAds();}
-window.onload=function(){let params=new URLSearchParams(window.location.search);let ref=params.get('ref');if(ref){document.getElementById('sRef').value=ref;switchTab('signup');}let saved=localStorage.getItem('gte_current');if(saved){currentUser=JSON.parse(saved);showDash();}}
-</script>
-</body></html>
+function addMerchant(){let n=document.getElementById('mName').value.trim();let d=document.getElementById('mDetail').value.trim();let l=document.getElementById('mLink').value.trim();let id=extractID(l);if(!n||!id){alert('નામ+Link');return;}let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');ads.unshift({name:n,detail:d||n,id:id});localStorage.setItem('gt_merchant_ads',JSON.stringify(ads));loadAds();document.getElementById('mName').value='';document.getElementById('mDetail').value='';document.getElementById('mLink').value='';alert('Ad Add થયું');}
+window.onload=function(){let p=new URLSearchParams(window.location.search);let r=p.get('ref');if(r){document.getElementById('sRef').value=r;switchTab('signup');}loadAds();let s=localStorage.getItem('gte_current');if(s){currentUser=JSON.parse(s);showDash();}}
+</script></body></html>
