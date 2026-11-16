@@ -3,37 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn - Join Team</title>
+<title>Green Task Earn - Connect With Us</title>
 <style>
-body{font-family:Arial;background:#f0fff0;padding:20px}
-.box{max-width:400px;margin:auto;background:white;padding:25px;border-radius:15px;box-shadow:0 4px 10px #ccc}
-h2{color:#0a7a00;text-align:center}
+body{font-family:Arial;background:#f8fff8;padding:20px}
+.box{max-width:400px;margin:auto;background:white;padding:25px;border-radius:15px;box-shadow:0 4px 15px #ccc}
+h2{color:#0a7a00;text-align:center;line-height:1.3}
 input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
-button{width:100%;padding:14px;background:#0a7a00;color:white;border:none;border-radius:8px;font-size:18px;margin-top:12px;font-weight:bold}
+button{width:100%;padding:14px;background:#0a7a00;color:white;border:none;border-radius:8px;font-size:17px;margin-top:12px;font-weight:bold;cursor:pointer}
+.tagline{background:#f1f8e9;padding:12px;border-radius:10px;text-align:center;color:#33691e;font-size:15px;margin:15px 0;line-height:1.4}
 small{color:gray}
 </style>
 </head>
 <body>
 <div class="box">
-<h2>🌱 Green Task Earn<br>Team Join Form</h2>
-<p style="text-align:center"><small>Adipur Team - By Rameshkumar<br>Ticket #156483087 Clean Ads In Progress</small></p>
-<input type="text" id="name" placeholder="તમારું પૂરું નામ *" required>
+<h2>🌱 Green Task Earn<br><span style="font-size:16px;color:#333">Adipur Team</span></h2>
+
+<div class="tagline">
+અમારી સાથે Connect થઈને<br>
+<b>Ad જોઈને Extra Income મેળવો</b><br>
+<small style="color:#555">Rameshkumar Patel - Adipur | શરૂઆત છે, મહેનત થી આગળ વધીશું</small>
+</div>
+
+<input type="text" id="name" placeholder="તમારું નામ *" required>
 <input type="tel" id="phone" placeholder="WhatsApp Number *" required>
-<input type="text" id="ref" placeholder="Referral Name - કોણે મોકલ્યા?">
-<button onclick="join()">Join Now 🚀 WhatsApp પર મોકલો</button>
+<input type="text" id="ref" placeholder="કોણે મોકલ્યા?">
+
+<button onclick="join()">Connect થાઓ 🚀 WhatsApp પર</button>
 <p id="msg" style="text-align:center;color:green;margin-top:12px;font-weight:bold"></p>
+
 <hr>
+<p style="font-size:13px;color:#666;text-align:center;line-height:1.5">
+અમે Local વેપારીઓ અને Adsterra સાથે મળીને Ad Task લાવી રહ્યા છીએ.<br>
+શરૂઆત નો સમય છે - સાથે મહેનત કરીશું તો બધા આગળ વધીશું.
+</p>
 <p style="text-align:center"><a href="https://rmsptl1968-debug.github.io/greentaskearn/">← Website જુઓ</a> | <a href="https://rmsptl1968-debug.github.io/greentaskearn/privacy-policy.html">Privacy Policy</a></p>
 </div>
+
 <script>
 function join(){
 let n=document.getElementById('name').value.trim();
 let p=document.getElementById('phone').value.trim();
 let r=document.getElementById('ref').value.trim();
 if(n==""||p==""){alert("નામ અને WhatsApp Number લખો!");return;}
-let text=`*Green Task Earn - New Join*%0A%0A*Name:* ${n}%0A*Phone:* ${p}%0A*Referral:* ${r}%0A*Website:* rmsptl1968-debug.github.io/greentaskearn/%0A%0AMujhe Team Me Jodo!`;
+let text=`*Green Task Earn - Connect Request*%0A%0A*Name:* ${n}%0A*Phone:* ${p}%0A*Ref:* ${r}%0A%0AAd Dekhkar Extra Income Me Interested Hu. Connect Karo.`;
 window.open(`https://wa.me/919904078804?text=${text}`,"_blank");
-document.getElementById('msg').innerHTML="✅ તમારું WhatsApp ખુલશે - SEND દબાવો!<br>અમે તમને 5 મિનિટ માં Team માં Add કરીશું!";
+document.getElementById('msg').innerHTML="✅ WhatsApp ખુલશે - SEND દબાવો!<br>અમે તમને Task ની માહિતી મોકલીશું!";
 }
 </script>
 </body>
