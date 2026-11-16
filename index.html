@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn - 4 Ads Live</title>
+<title>Green Task Earn</title>
 <!-- ADSTERRA 4 ADS - તમને પૈસા આપશે -->
 <script data-cfasync="false" src="https://bicea.org/14/12ea438ebd8b91048ace7cbd4fbfa34f"></script>
 <script src="https://arwf.org/4/71c629698b098809841a9971deed43dc"></script>
@@ -12,15 +12,15 @@
 </head>
 <body>
 
-<div style="background:linear-gradient(green,#2e7d32);color:white;padding:15px;border-radius:15px;text-align:center;margin:10px;">
-  <b>💰 વોલેટ ₹ <span id="walletBalance">0</span></b><br>
-  <small style="font-size:12px;">Adsterra 4 Ads LIVE ✅ 6201015 Approved ✅</small>
+<!-- ✅ નવો LOGO - Wallet ની જગ્યાએ -->
+<div style="background:black; padding:10px; border-radius:15px; text-align:center; margin:10px;">
+  <img src="logo.png" alt="Green Task Earn Logo" style="width:100%; max-width:400px; border-radius:10px;">
 </div>
 
-<!-- ✅✅✅ નવો LEVEL PLAN - અહીં લગાવ્યો છે ✅✅✅ -->
+<!-- ✅ સાફ કરેલો LEVEL PLAN -->
 <div style="border:2px solid green; padding:15px; background:#f0fff0; border-radius:15px; font-family:Arial; margin:10px;">
 <h3 style="text-align:center; color:green; margin:0;">🌟 Rs.201 STARTER PLAN - 100% LEGAL 🌟</h3>
-<p style="text-align:center; font-size:12px; margin:5px 0;">MSME Registered | GST Exempted upto 44L<br><b>PIN Sale Nathi! PIN FREE ID Che!</b></p>
+<p style="text-align:center; font-size:12px; margin:5px 0;">MSME Registered | GST Exempted upto 44L</p>
 <hr>
 <p style="margin:5px 0; font-weight:bold;">Rs.201 Ad Service Ni Vahenchani:</p>
 <p style="margin:5px 0; line-height:22px;">
@@ -34,9 +34,7 @@ Level 5 = Rs.20 - Team Support
 <p style="margin:5px 0;"><b>Total Team Bonus = Rs.125</b><br>
 Admin + Website = Rs.30 | Profit = Rs.46<br>
 <b style="color:green;">Total = Rs.201</b></p>
-<p style="text-align:center; font-size:12px; color:green; margin:5px 0 0 0;"><b>Adipur No Vyapar, Desh No Vyapar!</b></p>
 </div>
-<!-- LEVEL PLAN પૂરો -->
 
 <div style="background:white;border:3px dashed red;border-radius:15px;padding:15px;margin:10px;">
   <h3 style="color:red;text-align:center;margin:0;font-size:14px;">🔴 ADMIN - વેપારી Ad (₹201 વાળી - MSME)</h3>
@@ -55,8 +53,6 @@ Admin + Website = Rs.30 | Profit = Rs.46<br>
 <div id="allAdsContainer"></div>
 
 <script>
-let balance=parseInt(localStorage.getItem('gt_wallet')||'0');
-document.getElementById('walletBalance').innerText=balance;
 let ads=JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
 ads=ads.filter(a=>a.id&&a.id.length>=6&&a.id.length<=15&&!/^[0-9]{10,}$/.test(a.id)&&a.name);
 if(ads.length==0){ads=[{name:'Happylife Channel - Mundra', id:'QrhsduEJNMg', price:201}];}
@@ -65,7 +61,7 @@ function extractID(url){let m=url.match(/(?:shorts\/|youtu\.be\/|watch\?v=|embed
 function addMerchant(){let n=document.getElementById('mName').value.trim();let l=document.getElementById('mLink').value.trim();let id=extractID(l);if(!n||!id){alert('નામ + સાચી Link');return;}ads.unshift({name:n,id:id,price:201});localStorage.setItem('gt_merchant_ads',JSON.stringify(ads));location.reload();}
 document.getElementById('adCount').innerText=ads.length;
 let c=document.getElementById('allAdsContainer');
-ads.forEach((ad)=>{c.innerHTML+=`<div style="background:white;border:3px solid #25D366;border-radius:15px;padding:15px;margin:10px;text-align:center;"><img onclick="window.open('https://www.youtube.com/watch?v=${ad.id}','_blank')" src="https://img.youtube.com/vi/${ad.id}/hqdefault.jpg" style="width:100%;border-radius:12px;cursor:pointer;"><div style="font-weight:bold;margin:10px 0;text-align:left;">🏪 ${ad.name}</div><button onclick="let t=5;let b=this;b.disabled=true;let tm=setInterval(()=>{t--;b.innerText='⏳ '+t;if(t<=0){clearInterval(tm);let bal=parseInt(localStorage.getItem('gt_wallet')||'0')+50;localStorage.setItem('gt_wallet',bal);document.getElementById('walletBalance').innerText=bal;b.innerText='✅ ₹50 મળ્યું!';}},1000)" style="width:100%;background:#25D366;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;">▶️ Video જુઓ - ₹50</button></div>`;});
+ads.forEach((ad)=>{c.innerHTML+=`<div style="background:white;border:3px solid #25D366;border-radius:15px;padding:15px;margin:10px;text-align:center;"><img onclick="window.open('https://www.youtube.com/watch?v=${ad.id}','_blank')" src="https://img.youtube.com/vi/${ad.id}/hqdefault.jpg" style="width:100%;border-radius:12px;cursor:pointer;"><div style="font-weight:bold;margin:10px 0;text-align:left;">🏪 ${ad.name}</div><button onclick="window.open('https://www.youtube.com/watch?v=${ad.id}','_blank')" style="width:100%;background:#25D366;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;">▶️ Video જુઓ</button></div>`;});
 </script>
 </body>
 </html>
