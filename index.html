@@ -1,49 +1,114 @@
 <!DOCTYPE html>
-<html lang="gu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Green Task - FIXED</title></head><body style="background:#f0f0f0;font-family:sans-serif;margin:0;padding:10px;">
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Task Earn - Adsterra + Merchant</title>
 
-<div style="background:#e8f5e9;padding:15px;border-radius:15px;text-align:center;">
-  <div>વોલેટ ₹ <span id="walletBalance">0</span></div>
-  <button onclick="if(confirm('બધી Ad કાઢી નાખવી?')){localStorage.removeItem('gt_merchant_ads');location.reload();}" style="background:black;color:white;padding:10px;border-radius:8px;margin-top:10px;">🗑️ બધી ખોટી Ad Delete કરો - RESET</button>
+<!-- ===== ADSTERRA MAIN CODE - આ જ તમને પૈસા આપશે ===== -->
+<script data-cfasync="false" src="https://bicea.org/14/12ea438ebd8b91048ace7cbd4fbfa34f"></script>
+
+<!-- બીજા 3 Code પણ અહીંયા જ Paste કરવાના - તમે મોકલશો એટલે હું ઉમેરી દઈશ -->
+<!-- Social Bar ID 32279370, Native Banner ID 32279371 -->
+
+<style>body{margin:0;font-family:sans-serif;background:#f0f0f0;}input{box-sizing:border-box;}button{cursor:pointer;}</style>
+</head>
+<body>
+
+<!-- WALLET + RESET -->
+<div style="background:linear-gradient(green,#2e7d32);color:white;padding:15px;border-radius:15px;text-align:center;margin:10px;">
+  <div>💰 વોલેટ બેલેન્સ</div>
+  <div id="walletBalance" style="font-size:32px;font-weight:bold;">₹ 0</div>
+  <div style="font-size:12px;">Adsterra Income + Merchant Income Active ✅</div>
+  <button onclick="if(confirm('બધી જૂની ખોટી Ad કાઢવી?')){localStorage.removeItem('gt_merchant_ads');location.reload();}" style="background:black;color:white;padding:8px 12px;border-radius:8px;margin-top:8px;font-size:12px;">🗑️ RESET All Ads</button>
 </div>
 
-<div style="background:white;border:3px dashed red;border-radius:15px;padding:15px;margin:15px 0;">
-  <h3 style="color:red;text-align:center;">ADMIN - નવી Ad ઉમેરો</h3>
-  <input id="mName" placeholder="વેપારી નું નામ" style="width:100%;padding:12px;margin:5px 0;">
-  <input id="mLink" placeholder="YouTube Link આખી Paste કરો" style="width:100%;padding:12px;margin:5px 0;">
-  <input id="mPrice" placeholder="1000" type="number" style="width:100%;padding:12px;margin:5px 0;">
-  <button onclick="addMerchant()" style="width:100%;background:red;color:white;padding:14px;border:none;border-radius:10px;">➕ Add કરો</button>
+<!-- ADSTERRA STATUS -->
+<div style="background:#fffde7;border:2px solid #ffb300;border-radius:12px;padding:12px;margin:10px;text-align:center;">
+  <b style="color:#e65100;">🏢 Adsterra Company Ad Active</b><br>
+  <small>ID: 6201015 | 4 Ad Units Approved | Earnings Dashboard માં દેખાશે</small><br>
+  <div style="background:white;padding:8px;border-radius:8px;margin-top:8px;border:1px dashed orange;">
+    👆 User Site ખોલે એટલે Adsterra ની Ad Auto દેખાશે (Social Bar / Popunder)<br>
+    <small>તમારે કંઈ કરવાનું નથી - પૈસા Auto ગણાશે!</small>
+  </div>
 </div>
 
+<!-- ADMIN - MERCHANT AD -->
+<div style="background:white;border:3px dashed red;border-radius:15px;padding:15px;margin:10px;">
+  <h3 style="color:red;margin:0;text-align:center;">🔴 ADMIN - વેપારી Ad ઉમેરો</h3>
+  <input id="mName" placeholder="વેપારી નું નામ" style="width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #ccc;">
+  <input id="mLink" placeholder="YouTube Link આખી Paste કરો" style="width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #ccc;">
+  <input id="mPrice" placeholder="કિંમત 1000" type="number" style="width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #ccc;">
+  <button onclick="addMerchant()" style="width:100%;background:red;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;">➕ Merchant Ad Add કરો</button>
+</div>
+
+<!-- NATIVE BANNER JAGYA - Adsterra Native Banner અહીંયા દેખાશે -->
+<div id="nativeBannerSlot" style="background:white;border:2px solid blue;border-radius:12px;padding:10px;margin:10px;text-align:center;">
+  <small style="color:blue;">🔵 Adsterra Native Banner અહીંયા આવશે (ID 32279371)</small>
+  <!-- તમારો બીજો Native Banner નો Code અહીંયા Paste કરો -->
+</div>
+
+<h3 style="margin:15px 10px;">📢 વેપારી Ads (<span id="adCount">0</span>)</h3>
 <div id="allAdsContainer"></div>
 
+<!-- TRACKING REPORT -->
+<div style="background:white;border-radius:12px;padding:15px;margin:10px;border:2px solid green;">
+  <h4 style="margin:0 0 10px 0;">📊 આજ નો Report (કંપની માટે)</h4>
+  <div>Merchant Ads Views: <b id="viewCount">0</b></div>
+  <div>Adsterra Views: <b>Adsterra Dashboard માં જોવા મળશે</b></div>
+  <div style="font-size:11px;color:gray;margin-top:6px;">Adsterra: publisher.adsterra.com -> Statistics માં જુઓ</div>
+</div>
+
 <script>
+let balance=parseInt(localStorage.getItem('gt_wallet')||'0');
+document.getElementById('walletBalance').innerText='₹ '+balance;
 let ads = JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
-// જૂની ખોટી Ad Auto કાઢી નાખો
-ads = ads.filter(a=>a.id && a.id.length>=6 && a.id.length<=15 && !a.id.match(/^[0-9]{10,}$/) && a.name);
+ads = ads.filter(a=>a.id && a.id.length>=6 && a.id.length<=15 && !/^[0-9]{10,}$/.test(a.id) && a.name);
 if(ads.length==0){ads=[{name:'Happylife Channel - Mundra', id:'QrhsduEJNMg', price:1000}];}
 localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));
+let viewCount = parseInt(localStorage.getItem('gt_views')||'0');
+document.getElementById('viewCount').innerText=viewCount;
 
 function extractID(url){
-  let m = url.match(/(?:shorts\/|youtu\.be\/|watch\?v=|embed\/)([A-Za-z0-9_-]{6,15})/);
-  return m ? m[1] : '';
+  let m=url.match(/(?:shorts\/|youtu\.be\/|watch\?v=|embed\/|v\/)([A-Za-z0-9_-]{6,15})/);
+  return m?m[1]:'';
 }
 function addMerchant(){
   let name=document.getElementById('mName').value.trim();
   let link=document.getElementById('mLink').value.trim();
   let price=document.getElementById('mPrice').value||1000;
   let id=extractID(link);
-  if(!name||!id){alert('નામ અને સાચી YouTube Link નાખો! \nID ન મળી!');return;}
+  if(!name||!id){alert('નામ અને સાચી YouTube Link નાખો!');return;}
   ads.unshift({name:name,id:id,price:parseInt(price)});
   localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));
   location.reload();
 }
 let container=document.getElementById('allAdsContainer');
+let countEl=document.getElementById('adCount');
+countEl.innerText=ads.length;
 ads.forEach((ad,i)=>{
-  container.innerHTML+=`<div style="background:white;border:3px solid green;border-radius:15px;padding:15px;margin:10px 0;text-align:center;">
+  container.innerHTML+=`<div style="background:white;border:3px solid #25D366;border-radius:15px;padding:15px;margin:10px;text-align:center;">
   <img onclick="window.open('https://www.youtube.com/watch?v=${ad.id}','_blank')" src="https://img.youtube.com/vi/${ad.id}/hqdefault.jpg" style="width:100%;border-radius:12px;cursor:pointer;">
   <div style="font-weight:bold;margin:10px 0;text-align:left;">🏪 ${ad.name} - ₹${ad.price}</div>
-  <button style="width:100%;background:#25D366;color:white;padding:14px;border:none;border-radius:10px;">▶️ Video જુઓ</button>
+  <button onclick="watchAndEarn(this)" style="width:100%;background:#25D366;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;">▶️ Video જુઓ - ₹50 કમાઓ</button>
+  <div style="display:flex;justify-content:space-between;margin-top:8px;"><small style="font-size:10px;color:gray;">L1 20% L2 10% L3-5 5% L6-7 2.5%</small><small onclick="if(confirm('Delete?')){ads.splice(${i},1);localStorage.setItem('gt_merchant_ads',JSON.stringify(ads));location.reload();}" style="color:red;cursor:pointer;">🗑️</small></div>
   </div>`;
 });
+function watchAndEarn(btn){
+  let t=5; btn.disabled=true;
+  let timer=setInterval(()=>{
+    t--; btn.innerText='⏳ '+t+' સેકન્ડ...';
+    if(t<=0){
+      clearInterval(timer);
+      balance+=50; viewCount++;
+      localStorage.setItem('gt_wallet',balance);
+      localStorage.setItem('gt_views',viewCount);
+      document.getElementById('walletBalance').innerText='₹ '+balance;
+      document.getElementById('viewCount').innerText=viewCount;
+      btn.innerText='✅ ₹50 મળ્યું!';
+    }
+  },1000);
+}
 </script>
-</body></html>
+</body>
+</html>
