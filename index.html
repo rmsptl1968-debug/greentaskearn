@@ -1,13 +1,37 @@
-<div id="adsBox" style="margin-top:8px;">
-<div style="font-weight:bold;">📢 વેપારી Ads - હંમેશા અહીં રહેશે</div>
-
-<div class="ad" style="border:2px solid #00c853;border-radius:10px;padding:8px;background:white;margin:8px 0;">
-<img src="https://img.youtube.com/vi/QrhsduEJNMg/hqdefault.jpg" style="width:100%;border-radius:6px;" onclick="openVideo('QrhsduEJNMg')">
-<div style="font-weight:bold;margin:6px 0;">🏪 Happylife Channel - Mundra</div>
-<div style="font-size:11px;color:#555;">Mundra Kutch Business Promotion</div>
-<div style="display:flex;gap:6px;margin-top:6px;">
-<button style="flex:1;padding:12px;background:#00c853;color:white;border:none;border-radius:7px;font-weight:bold;" onclick="openVideo('QrhsduEJNMg')">▶️ Video જુઓ - Earn Rs.5</button>
-</div>
-</div>
-
-</div>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GREEN TASK EARN - ULTRA FINAL</title>
+<style>*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:#f2f2f2;padding:5px}
+.head{background:linear-gradient(90deg,#0a8a00,#00c853);padding:14px;border-radius:10px;text-align:center;color:white}
+.box{background:white;border:2px solid #00c853;border-radius:10px;padding:12px;margin:8px 0}
+.in{width:100%;padding:12px;margin:6px 0;border:2px solid #666;border-radius:7px;font-size:14px}
+.btn{width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;color:white;cursor:pointer;font-size:15px;margin:6px 0}
+.g{background:#00c853}.r{background:red}.d{background:#222}.b{background:#2962ff}
+.hide{display:none}
+.success{background:#ffeb3b;border:3px solid green;border-radius:10px;padding:14px;text-align:center;margin:8px 0}
+.ref{background:white;border:2px dashed orange;padding:10px;border-radius:7px;word-break:break-all;font-size:13px;font-weight:bold;margin:6px 0}
+.ad{border:3px solid #00c853;border-radius:12px;padding:8px;background:white;margin:10px 0}
+.ad img{width:100%;border-radius:8px}
+#videoModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;padding:15px}
+#videoModal iframe{width:100%;max-width:560px;height:315px;border-radius:12px;border:3px solid #00c853}
+</style></head><body>
+<div id="videoModal"><iframe id="ytPlayer" src="" allowfullscreen allow="autoplay"></iframe><div style="color:white;margin:12px;font-size:18px;font-weight:bold;text-align:center;">⏳ <span id="timer">10</span> સેકન્ડ Video જુઓ<br><span style="font-size:13px;">Task ચાલુ છે...</span></div><button id="earnBtn" class="btn g hide" style="max-width:320px;font-size:18px;" onclick="completeTask()">✅ Task Complete - Rs.5 મેળવો</button><button class="btn r" style="max-width:320px;" onclick="closeVideo()">❌ બંધ કરો</button></div>
+<div class="head"><h1>GREEN TASK EARN</h1><div style="font-size:12px;">100% LEGAL | MSME | Rs.201 STARTER</div></div>
+<div id="okBox" class="success hide"><h2 style="color:green;">✅ LOGIN થઈ ગયું!</h2><div id="okName"></div><div class="ref" id="okRef"></div><button class="btn g" onclick="copyRef()">📋 Refer Link Copy</button><button class="btn" style="background:#25D366;" onclick="shareWA()">📲 WhatsApp Share</button><div id="okTeam" style="font-size:12px;text-align:left;background:white;padding:8px;border-radius:6px;margin-top:8px;"></div><div style="font-size:18px;font-weight:bold;color:green;margin-top:10px;background:white;padding:8px;border-radius:8px;">💰 Total Earn: Rs.<span id="earnTotal">0</span></div><button class="btn d" onclick="logout()">Logout</button></div>
+<div id="authBox" class="box"><div style="text-align:center;font-weight:bold;color:green;font-size:17px;">🔐 એક જ ક્લિક માં Start</div><input id="sName" class="in" value="RAMESHKUMAR GIRDHARLAL PATEL"><input id="sMob" class="in" type="tel" value="9904078804"><input id="sPass" class="in" type="password" placeholder="Password - 123456 લખો"><input id="sRef" class="in" placeholder="Referral (Optional)"><button class="btn g" style="font-size:18px;" onclick="oneClick()">✅ એક ક્લિક માં Start કરો</button></div>
+<div style="background:#f0fff0;border:2px solid green;border-radius:10px;padding:10px;margin:8px 0;font-size:12px;"><b>🌟 Rs.201 PLAN 🌟</b> L1=25 L2=20 L3=40 Super Promoter L4=20 L5=20 | Total 201</div>
+<div style="font-weight:bold;font-size:16px;margin:12px 2px;color:#0a8a00;">📢 વેપારી Ads - હંમેશા અહીં રહેશે</div>
+<div id="adsBox"><div class="ad"><img src="https://img.youtube.com/vi/QrhsduEJNMg/hqdefault.jpg" onclick="openVideo('QrhsduEJNMg')"><div style="font-weight:bold;margin:8px 0;font-size:15px;">🏪 Happylife Channel - Mundra</div><div style="font-size:12px;color:#555;margin-bottom:8px;">Mundra Kutch - Video જોઈને Rs.5 કમાઓ</div><button class="btn g" style="font-size:16px;" onclick="openVideo('QrhsduEJNMg')">▶️ Video જુઓ - Earn Rs.5</button><button class="btn b" onclick="alert('Mundra Business')">📞 Detail</button></div></div>
+<script>
+let earn=parseInt(localStorage.getItem('gte_earn_final')||'0');
+function getUsers(){try{return JSON.parse(localStorage.getItem('gte_final_users')||'{}')}catch(e){return {}}}
+function saveUsers(u){localStorage.setItem('gte_final_users',JSON.stringify(u))}
+let users=getUsers();let cur=localStorage.getItem('gte_final_cur');
+function oneClick(){let n=document.getElementById('sName').value.trim();let m=document.getElementById('sMob').value.trim().replace(/[^0-9]/g,'').slice(-10);let p=document.getElementById('sPass').value.trim();let r=document.getElementById('sRef').value.trim().replace(/[^0-9]/g,'').slice(-10);if(!n||m.length!=10||!p){alert('નામ + Mobile + Password લખો');return;}users=getUsers();if(users[m]){if(users[m].pass!==p){alert('Password ખોટો! સાચો:'+users[m].pass);return;}cur=m;localStorage.setItem('gte_final_cur',cur);showOk();}else{users[m]={name:n,mobile:m,pass:p,refBy:r,team:[],join:new Date().toLocaleDateString()};if(r&&users[r]){users[r].team.push(m);}saveUsers(users);cur=m;localStorage.setItem('gte_final_cur',cur);showOk();alert('🎉 SIGN UP થયું! ID:'+m);}}
+function showOk(){users=getUsers();if(!cur||!users[cur])return;let u=users[cur];document.getElementById('authBox').classList.add('hide');document.getElementById('okBox').classList.remove('hide');document.getElementById('okName').innerHTML='Welcome <b>'+u.name+'</b><br>ID:'+u.mobile;let base=location.origin+location.pathname;document.getElementById('okRef').innerText=base+'?ref='+u.mobile;document.getElementById('okTeam').innerHTML='Team:'+u.team.length+' = Rs.'+u.team.length*25;document.getElementById('earnTotal').innerText=earn;window.scrollTo(0,0);}
+function logout(){localStorage.removeItem('gte_final_cur');location.reload();}
+function copyRef(){let t=document.getElementById('okRef').innerText;navigator.clipboard.writeText(t).then(()=>alert('✅ Copy'));}
+function shareWA(){let t=document.getElementById('okRef').innerText;window.open('https://wa.me/?text='+encodeURIComponent('Join GREEN TASK EARN: '+t),'_blank');}
+function openVideo(id){document.getElementById('videoModal').style.display='flex';document.getElementById('ytPlayer').src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';let t=10;document.getElementById('timer').innerText=t;document.getElementById('earnBtn').classList.add('hide');let iv=setInterval(()=>{t--;document.getElementById('timer').innerText=t;if(t<=0){clearInterval(iv);document.getElementById('timer').innerText='✅ Complete!';document.getElementById('earnBtn').classList.remove('hide');}},1000);window._timer=iv;}
+function closeVideo(){document.getElementById('videoModal').style.display='none';document.getElementById('ytPlayer').src='';if(window._timer)clearInterval(window._timer);}
+function completeTask(){earn+=5;localStorage.setItem('gte_earn_final',earn);document.getElementById('earnTotal').innerText=earn;alert('🎉 Task Complete! Rs.5 Add! Total: Rs.'+earn);closeVideo();}
+window.onload=function(){let p=new URLSearchParams(location.search);let r=p.get('ref');if(r){document.getElementById('sRef').value=r.replace(/[^0-9]/g,'').slice(-10);}users=getUsers();if(cur&&users[cur]){showOk();}document.getElementById('earnTotal').innerText=earn;}
+</script></body></html>
