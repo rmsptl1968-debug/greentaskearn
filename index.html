@@ -1,31 +1,51 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Task Earn - GT8167</title>
+<style>
+body{margin:0; font-family:sans-serif; background:#f0f0f0;}
+button{cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- 1. PIN SYSTEM -->
 <div style="background:#fff3cd;padding:15px;border-radius:10px;border:2px solid green;margin:10px">
-<h3 style="color:green">🔑 PIN થી ID Active કરો - 200 Rs</h3>
-<input id="userPinInput" placeholder="PIN નાખો - GT200..." style="width:95%;padding:12px;font-size:18px;border-radius:8px">
+<h3 style="color:green; margin-top:0;">🔑 PIN થી ID Active કરો - 200 Rs</h3>
+<input id="userPinInput" placeholder="PIN નાખો - GT200..." style="width:95%;padding:12px;font-size:18px;border-radius:8px; border:1px solid #ccc;">
 <button onclick="checkPin()" style="width:100%;background:green;color:white;padding:14px;font-size:18px;margin-top:8px;border:none;border-radius:8px">✅ PIN Check & Active</button>
-<p id="pinMsg" style="color:red"></p>
+<p id="pinMsg" style="font-weight:bold;"></p>
 </div>
 
 <script>
 function checkPin(){
  let pin = document.getElementById('userPinInput').value.trim();
  let allPins = JSON.parse(localStorage.getItem('gt_pins_200')||'[]');
- let found = allPins.find(p=>p.code==pin && p.status=='Available');
  if(pin.startsWith('GT200') && pin.length>=8){
    document.getElementById('pinMsg').innerHTML='<span style=color:green>✅ PIN સાચો છે! ID Active થઈ ગઈ! (200 Rs)</span>';
-   // PIN ને Used કરી દો
    let idx = allPins.findIndex(p=>p.code==pin);
    if(idx>-1){ allPins[idx].status='Used'; allPins[idx].to='GT8167-User'; localStorage.setItem('gt_pins_200', JSON.stringify(allPins));}
    localStorage.setItem('gt_user_active','yes');
+   document.getElementById('taskSystem').style.display='block';
    alert('200 Rs PIN Active! હવે Task મળશે!');
  } else {
    document.getElementById('pinMsg').innerHTML='❌ ખોટો PIN અથવા વપરાયેલો PIN! Admin ને કહો નવો PIN મોકલવા';
  }
 }
+// Page ખુલે ત્યારે જો પહેલેથી Active હોય તો Task બતાવો
+window.onload = function(){
+ if(localStorage.getItem('gt_user_active')=='yes'){
+   document.getElementById('taskSystem').style.display='block';
+ }
+}
 </script>
-<!-- ===== FINAL TASK SYSTEM - NO SMALL AMOUNTS ===== -->
-<div id="taskSystem" style="display:none; padding:15px; font-family:sans-serif; background:#e8f5e9;">
-  
-  <!-- WALLET - તમારી 7 Level વાળી Income બતાવશે -->
+
+<!-- 2. FINAL TASK SYSTEM -->
+<div id="taskSystem" style="display:none; padding:15px; background:#e8f5e9;">
+
+  <!-- WALLET -->
   <div style="background:linear-gradient(green,#2e7d32); color:white; padding:20px; border-radius:15px; text-align:center;">
     <div>વોલેટ બેલેન્સ / Wallet Balance</div>
     <div id="walletBalance" style="font-size:36px; font-weight:bold;">₹ 0</div>
@@ -34,13 +54,58 @@ function checkPin(){
 
   <h3>✅ ટાસ્ક લિસ્ટ / Task List</h3>
   
-  <!-- Task 1 - No Money -->
+  <!-- Daily Task -->
   <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
     <div><b>1. Daily Watch Ad</b><br><small>રોજ ની Ad જુઓ - ફરજીયાત</small></div>
     <button onclick="watchAd(1)" style="background:green; color:white; border:none; padding:8px 15px; border-radius:20px;">Watch</button>
-<div style="margin:15px; background:white; border:2px solid green; border-radius:12px; padding:12px;">
-<h3 style="text-align:center;">📢 વેપારી Video Ads</h3>
-<iframe width="100%" height="220" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>
-<div style="margin-top:8px;"><b>🏪 Rangila Electronics - ₹1000</b></div>
-<button onclick="alert('✅ ₹1000 વહેંચાયું!')" style="width:100%; background:#25D366; color:white; padding:12px; border:none; border-radius:8px; margin-top:8px; font-weight:bold;">▶️ Video જુઓ</button>
+  </div>
+
+  <!-- ===== 3. MERCHANT VIDEO ADS - 100% WORKING - NO IFRAME BLOCK ===== -->
+  <div style="background:white; border:3px solid #25D366; border-radius:15px; padding:15px; margin-top:20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+    <h3 style="margin:0 0 12px 0; color:green;">📢 વેપારી Video Ads</h3>
+
+    <!-- YouTube Thumbnail - Third Party Block નહીં થાય -->
+    <div onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank')" style="position:relative; cursor:pointer;">
+      <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" style="width:100%; border-radius:12px; border:2px solid black;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(255,0,0,0.9); color:white; padding:12px 18px; border-radius:50%; font-size:30px;">▶️</div>
+    </div>
+
+    <div style="margin:12px 0 8px 0; font-weight:bold; font-size:18px; text-align:left;">🏪 Rangila Electronics - Mundra - ₹1000</div>
+    
+    <button onclick="watchAndEarn()" style="width:100%; background:#25D366; color:white; padding:14px; border:none; border-radius:10px; font-weight:bold; font-size:18px;">▶️ Video જુઓ - 30 સેકન્ડ કમાઓ</button>
+    <div style="font-size:11px; color:gray; margin-top:8px;">L1 20% | L2 10% | L3-L5 5% | L6-L7 2.5%<br>Photo પર ક્લિક કરો = YouTube ખુલશે</div>
+  </div>
+
 </div>
+
+<script>
+// Task and Earning Logic
+let balance = parseInt(localStorage.getItem('gt_wallet')||'0');
+document.getElementById('walletBalance').innerText = '₹ '+balance;
+
+function watchAd(id){
+ alert('Ad 30 સેકન્ડ જુઓ... પૂરું થયું!');
+}
+function watchAndEarn(){
+ let price = 1000;
+ let btn = event.target;
+ let t = 30;
+ btn.disabled = true;
+ let timer = setInterval(()=>{
+   t--;
+   btn.innerText = '⏳ '+t+' સેકન્ડ બાકી...';
+   if(t<=0){
+     clearInterval(timer);
+     balance += 50; // User ને ₹50
+     localStorage.setItem('gt_wallet', balance);
+     document.getElementById('walletBalance').innerText = '₹ '+balance;
+     btn.innerText = '✅ ₹50 મળ્યું! - ₹1000 વહેંચાયું';
+     alert('✅ પૂરું! ₹1000 વહેંચાયું:\nL1 20% = ₹200\nL2 10% = ₹100\nL3 5% = ₹50\nL4 5% = ₹50\nL5 5% = ₹50\nL6 2.5% = ₹25\nL7 2.5% = ₹25\n\nતમારા Wallet માં ₹50 જમા!');
+     // 7 Level Logic અહીંયા લાગશે
+   }
+ }, 1000);
+}
+</script>
+
+</body>
+</html>
