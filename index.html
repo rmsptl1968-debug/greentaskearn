@@ -38,48 +38,37 @@ function checkPin(){
   <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
     <div><b>1. Daily Watch Ad</b><br><small>રોજ ની Ad જુઓ - ફરજીયાત</small></div>
     <button onclick="watchAd(1)" style="background:green; color:white; border:none; padding:8px 15px; border-radius:20px;">Watch</button>
-  </div>
-
-  <!-- Task 2 - No Money -->
-  <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
-    <div id="merchantAdsBox" style="margin:15px;"></div>
+<div id="merchantAdsBox" style="margin:15px; padding:10px;"></div>
 <script>
+const MERCHANT_ADS = [
+  { shop: "Rangila Electronics - Mundra", price: 1000, video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
+];
 function getYouTubeId(url){
- if(!url) return null;
  let reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
  let m = url.match(reg);
  return m ? m[1] : null;
 }
 function loadMerchantAdsForUser(){
-let ads = JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
-let box = document.getElementById('merchantAdsBox');
-if(!ads.length) return;
-let html = '<h3 style="text-align:center;">📢 વેપારી Video Ads</h3>';
-ads.forEach(ad=>{
-let ytid = getYouTubeId(ad.video);
-let videoEmbed = '';
-if(ytid){
-videoEmbed = `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${ytid}?rel=0" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>`;
-} else if(ad.video){
-videoEmbed = `<video width="100%" height="220" controls src="${ad.video}" style="border-radius:10px;"></video>`;
-} else {
-videoEmbed = `<div style="background:black; color:white; text-align:center; padding:40px;">Video</div>`;
+ let localAds = JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
+ let ads = [...MERCHANT_ADS, ...localAds];
+ let box = document.getElementById('merchantAdsBox');
+ let html = '<h3 style="text-align:center;">📢 વેપારી Video Ads</h3>';
+ ads.forEach(ad=>{
+  let ytid = getYouTubeId(ad.video);
+  let embed = ytid ? `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${ytid}" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>` : `<div>Video: ${ad.video}</div>`;
+  html += `<div style="background:white; border-radius:12px; padding:12px; margin:15px 0; border:2px solid #25D366;">
+  ${embed}
+  <div style="margin-top:8px; font-weight:bold;">🏪 ${ad.shop} - ₹${ad.price}</div>
+  <button onclick="watchAndEarnNew(${ad.price})" style="width:100%; background:#25D366; color:white; padding:12px; border:none; border-radius:8px; margin-top:8px; font-weight:bold;">▶️ Video જુઓ - 30 સેકન્ડ</button>
+  </div>`;
+ });
+ box.innerHTML = html;
 }
-html += `<div style="background:white; border-radius:12px; padding:12px; margin:12px 0; border:2px solid green;">
-${videoEmbed}
-<div style="margin-top:8px;"><b>🏪 ${ad.shop}</b> - ₹${ad.price}</div>
-<button onclick="watchAndEarnNew(${ad.price})" style="width:100%; background:#25D366; color:white; padding:12px; border:none; border-radius:8px; margin-top:8px; font-weight:bold;">▶️ Video જુઓ - 30 સેકન્ડ</button>
-<div style="font-size:11px; color:gray;">L1 20% L2 10% L3-5 5% L6-7 2.5%</div>
-</div>`;
-});
-box.innerHTML = html;
-}
-function watchAndEarnNew(price){
-alert('⏳ 30 સેકન્ડ ચાલુ...');
-setTimeout(()=>{
-let msg = '✅ પૂરું! ₹'+price+' વહેંચાયું:\nL1 20% = ₹'+(price*0.20).toFixed(2)+'\nL2 10% = ₹'+(price*0.10).toFixed(2)+'\nL3 5% = ₹'+(price*0.05).toFixed(2);
-alert(msg);
-}, 3000);
-}
+function watchAndEarnNew(price){ alert('⏳ 30 સેકન્ડ...'); setTimeout(()=>{ alert('✅ ₹'+price+' વહેંચાયું! L1 20% = ₹'+(price*0.20)); }, 2000); }
 loadMerchantAdsForUser();
 </script>
+  </div>
+
+  <!-- Task 2 - No Money -->
+  <div style="background:white; padding:15px; border-radius:12px; margin:10px 0; display:flex; justify-content:space-between; align-items:center;">
+    
