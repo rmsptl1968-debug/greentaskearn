@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Task Earn - Join Team</title>
+<style>
+body{font-family:Arial;background:#f0fff0;padding:20px}
+.box{max-width:400px;margin:auto;background:white;padding:25px;border-radius:15px;box-shadow:0 4px 10px #ccc}
+h2{color:#0a7a00;text-align:center}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{width:100%;padding:14px;background:#0a7a00;color:white;border:none;border-radius:8px;font-size:18px;margin-top:12px;font-weight:bold}
+small{color:gray}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🌱 Green Task Earn<br>Team Join Form</h2>
+<p style="text-align:center"><small>Adipur Team - By Rameshkumar<br>Ticket #156483087 Clean Ads In Progress</small></p>
+<input type="text" id="name" placeholder="તમારું પૂરું નામ *" required>
+<input type="tel" id="phone" placeholder="WhatsApp Number *" required>
+<input type="text" id="ref" placeholder="Referral Name - કોણે મોકલ્યા?">
+<button onclick="join()">Join Now 🚀 WhatsApp પર મોકલો</button>
+<p id="msg" style="text-align:center;color:green;margin-top:12px;font-weight:bold"></p>
+<hr>
+<p style="text-align:center"><a href="https://rmsptl1968-debug.github.io/greentaskearn/">← Website જુઓ</a> | <a href="https://rmsptl1968-debug.github.io/greentaskearn/privacy-policy.html">Privacy Policy</a></p>
+</div>
+<script>
+function join(){
+let n=document.getElementById('name').value.trim();
+let p=document.getElementById('phone').value.trim();
+let r=document.getElementById('ref').value.trim();
+if(n==""||p==""){alert("નામ અને WhatsApp Number લખો!");return;}
+let text=`*Green Task Earn - New Join*%0A%0A*Name:* ${n}%0A*Phone:* ${p}%0A*Referral:* ${r}%0A*Website:* rmsptl1968-debug.github.io/greentaskearn/%0A%0AMujhe Team Me Jodo!`;
+window.open(`https://wa.me/919904078804?text=${text}`,"_blank");
+document.getElementById('msg').innerHTML="✅ તમારું WhatsApp ખુલશે - SEND દબાવો!<br>અમે તમને 5 મિનિટ માં Team માં Add કરીશું!";
+}
+</script>
+</body>
+</html>
