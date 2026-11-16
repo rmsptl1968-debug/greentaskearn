@@ -1,140 +1,49 @@
 <!DOCTYPE html>
-<html lang="gu">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn - Multi Merchant</title>
-<style>body{margin:0;font-family:sans-serif;background:#f0f0f0;}button{cursor:pointer;}input{box-sizing:border-box;}</style>
-</head>
-<body>
+<html lang="gu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Green Task - FIXED</title></head><body style="background:#f0f0f0;font-family:sans-serif;margin:0;padding:10px;">
 
-<!-- PIN SYSTEM -->
-<div style="background:#fff3cd;padding:15px;border-radius:10px;border:2px solid green;margin:10px">
-<h3 style="color:green;margin:0 0 8px 0;">🔑 PIN થી ID Active - 200 Rs</h3>
-<input id="userPinInput" placeholder="GT200..." style="width:95%;padding:12px;font-size:18px;border-radius:8px;border:1px solid #ccc;">
-<button onclick="checkPin()" style="width:100%;background:green;color:white;padding:14px;font-size:18px;margin-top:8px;border:none;border-radius:8px">✅ PIN Check & Active</button>
-<p id="pinMsg" style="font-weight:bold;"></p>
+<div style="background:#e8f5e9;padding:15px;border-radius:15px;text-align:center;">
+  <div>વોલેટ ₹ <span id="walletBalance">0</span></div>
+  <button onclick="if(confirm('બધી Ad કાઢી નાખવી?')){localStorage.removeItem('gt_merchant_ads');location.reload();}" style="background:black;color:white;padding:10px;border-radius:8px;margin-top:10px;">🗑️ બધી ખોટી Ad Delete કરો - RESET</button>
 </div>
 
-<script>
-function checkPin(){
- let pin=document.getElementById('userPinInput').value.trim();
- if(pin.startsWith('GT200') && pin.length>=8){
-   localStorage.setItem('gt_user_active','yes');
-   document.getElementById('taskSystem').style.display='block';
-   document.getElementById('pinMsg').innerHTML='<span style=color:green>✅ Active!</span>';
-   alert('PIN Active!');
- } else {
-   document.getElementById('pinMsg').innerHTML='❌ ખોટો PIN';
- }
-}
-</script>
-
-<!-- TASK + MERCHANT SYSTEM -->
-<div id="taskSystem" style="display:none;padding:10px;background:#e8f5e9;">
-
-  <!-- WALLET -->
-  <div style="background:linear-gradient(green,#2e7d32);color:white;padding:20px;border-radius:15px;text-align:center;margin:5px;">
-    <div>વોલેટ બેલેન્સ</div>
-    <div id="walletBalance" style="font-size:36px;font-weight:bold;">₹ 0</div>
-    <div style="font-size:14px;">7 Level Income Active ✅</div>
-  </div>
-
-  <!-- ===== ADMIN PANEL - ફક્ત તમારા માટે ===== -->
-  <div style="background:white;border:3px dashed red;border-radius:15px;padding:15px;margin:15px 5px;">
-    <h3 style="color:red;margin:0 0 10px 0;text-align:center;">🔴 ADMIN - નવી વેપારી Ad ઉમેરો</h3>
-    <input id="mName" placeholder="વેપારી નું નામ - દા.ત. Rangila Electronics" style="width:100%;padding:12px;margin:5px 0;border-radius:8px;border:1px solid #ccc;">
-    <input id="mLink" placeholder="YouTube Link Paste કરો - https://youtube.com/shorts/..." style="width:100%;padding:12px;margin:5px 0;border-radius:8px;border:1px solid #ccc;">
-    <input id="mPrice" placeholder="કિંમત - દા.ત. 1000" type="number" style="width:100%;padding:12px;margin:5px 0;border-radius:8px;border:1px solid #ccc;">
-    <button onclick="addMerchant()" style="width:100%;background:red;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;font-size:18px;margin-top:8px;">➕ નવી Ad Add કરો</button>
-    <div style="font-size:11px;color:gray;margin-top:6px;text-align:center;">તમે Link આખી Paste કરો, ID ઓટોમેટિક નીકળી જશે!</div>
-  </div>
-
-  <h3 style="margin:15px 5px;">📢 બધી વેપારી Ads (<span id="adCount">0</span>)</h3>
-  
-  <!-- Ads અહીંયા આવશે -->
-  <div id="allAdsContainer"></div>
-
+<div style="background:white;border:3px dashed red;border-radius:15px;padding:15px;margin:15px 0;">
+  <h3 style="color:red;text-align:center;">ADMIN - નવી Ad ઉમેરો</h3>
+  <input id="mName" placeholder="વેપારી નું નામ" style="width:100%;padding:12px;margin:5px 0;">
+  <input id="mLink" placeholder="YouTube Link આખી Paste કરો" style="width:100%;padding:12px;margin:5px 0;">
+  <input id="mPrice" placeholder="1000" type="number" style="width:100%;padding:12px;margin:5px 0;">
+  <button onclick="addMerchant()" style="width:100%;background:red;color:white;padding:14px;border:none;border-radius:10px;">➕ Add કરો</button>
 </div>
 
-<script>
-// ===== CORE LOGIC =====
-let balance=parseInt(localStorage.getItem('gt_wallet')||'0');
-document.getElementById('walletBalance').innerText='₹ '+balance;
-if(localStorage.getItem('gt_user_active')=='yes'){document.getElementById('taskSystem').style.display='block';}
+<div id="allAdsContainer"></div>
 
-// Load Ads from LocalStorage or Seed with your video
+<script>
 let ads = JSON.parse(localStorage.getItem('gt_merchant_ads')||'[]');
-if(ads.length==0){
-  ads = [{name:'Happylife Channel - Mundra', id:'QrhsduEJNMg', price:1000}];
-  localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));
-}
+// જૂની ખોટી Ad Auto કાઢી નાખો
+ads = ads.filter(a=>a.id && a.id.length>=6 && a.id.length<=15 && !a.id.match(/^[0-9]{10,}$/) && a.name);
+if(ads.length==0){ads=[{name:'Happylife Channel - Mundra', id:'QrhsduEJNMg', price:1000}];}
+localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));
 
 function extractID(url){
-  // youtube.com/shorts/ID, youtu.be/ID, youtube.com/watch?v=ID
-  let id = url.trim();
-  if(id.includes('shorts/')) id = id.split('shorts/')[1].split('?')[0].split('&')[0];
-  else if(id.includes('youtu.be/')) id = id.split('youtu.be/')[1].split('?')[0];
-  else if(id.includes('v=')) id = id.split('v=')[1].split('&')[0].split('?')[0];
-  return id.substring(0,20); // clean
+  let m = url.match(/(?:shorts\/|youtu\.be\/|watch\?v=|embed\/)([A-Za-z0-9_-]{6,15})/);
+  return m ? m[1] : '';
 }
-
 function addMerchant(){
   let name=document.getElementById('mName').value.trim();
   let link=document.getElementById('mLink').value.trim();
-  let price=document.getElementById('mPrice').value.trim()||'1000';
-  if(!name || !link){alert('નામ અને Link બંને નાખો!');return;}
-  let id = extractID(link);
-  if(id.length<5){alert('YouTube Link સાચી નથી!');return;}
-  ads.unshift({name:name, id:id, price:parseInt(price)});
+  let price=document.getElementById('mPrice').value||1000;
+  let id=extractID(link);
+  if(!name||!id){alert('નામ અને સાચી YouTube Link નાખો! \nID ન મળી!');return;}
+  ads.unshift({name:name,id:id,price:parseInt(price)});
   localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));
-  document.getElementById('mName').value=''; document.getElementById('mLink').value=''; document.getElementById('mPrice').value='';
-  renderAds();
-  alert('✅ Ad Add થઈ ગઈ! '+name);
+  location.reload();
 }
-
-function renderAds(){
-  let container=document.getElementById('allAdsContainer');
-  document.getElementById('adCount').innerText=ads.length;
-  container.innerHTML='';
-  ads.forEach((ad, index)=>{
-    container.innerHTML+=`
-    <div style="background:white;border:3px solid #25D366;border-radius:15px;padding:15px;margin:12px 5px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-      <div onclick="window.open('https://www.youtube.com/watch?v=${ad.id}','_blank')" style="position:relative;cursor:pointer;">
-        <img src="https://img.youtube.com/vi/${ad.id}/hqdefault.jpg" style="width:100%;border-radius:12px;border:2px solid black;" onerror="this.src='https://img.youtube.com/vi/${ad.id}/mqdefault.jpg'">
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,0,0,0.9);color:white;padding:12px 18px;border-radius:50%;font-size:30px;">▶️</div>
-      </div>
-      <div style="margin:12px 0 8px 0;font-weight:bold;font-size:16px;text-align:left;">🏪 ${ad.name} - ₹${ad.price}<br><small style="font-size:11px;color:gray;">${ad.id}</small></div>
-      <button onclick="watchAndEarn(this, ${ad.price})" style="width:100%;background:#25D366;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;font-size:16px;">▶️ Video જુઓ - કમાઓ</button>
-      <div style="display:flex;justify-content:space-between;margin-top:8px;">
-        <small style="font-size:10px;color:gray;">L1 20% | L2 10% | L3-L5 5% | L6-L7 2.5%</small>
-        <small onclick="deleteAd(${index})" style="color:red;cursor:pointer;font-weight:bold;">🗑️ Delete</small>
-      </div>
-    </div>`;
-  });
-}
-
-function deleteAd(i){
-  if(confirm('આ Ad Delete કરવી છે?')){ads.splice(i,1);localStorage.setItem('gt_merchant_ads', JSON.stringify(ads));renderAds();}
-}
-
-function watchAndEarn(btn, price){
-  let t=30; btn.disabled=true;
-  let timer=setInterval(()=>{
-    t--; btn.innerText='⏳ '+t+' સેકન્ડ બાકી...';
-    if(t<=0){
-      clearInterval(timer);
-      balance+=50; // દરેક Video પર User ને ₹50
-      localStorage.setItem('gt_wallet',balance);
-      document.getElementById('walletBalance').innerText='₹ '+balance;
-      btn.innerText='✅ ₹50 મળ્યું! ₹'+price+' વહેંચાયું';
-      alert(`✅ પૂરું! ₹${price} વહેંચાયું:\nL1 20% = ₹${price*0.2}\nL2 10% = ₹${price*0.1}\nL3-L5 5% = ₹${price*0.05}\nL6-L7 2.5% = ₹${price*0.025}`);
-    }
-  },1000);
-}
-
-renderAds();
+let container=document.getElementById('allAdsContainer');
+ads.forEach((ad,i)=>{
+  container.innerHTML+=`<div style="background:white;border:3px solid green;border-radius:15px;padding:15px;margin:10px 0;text-align:center;">
+  <img onclick="window.open('https://www.youtube.com/watch?v=${ad.id}','_blank')" src="https://img.youtube.com/vi/${ad.id}/hqdefault.jpg" style="width:100%;border-radius:12px;cursor:pointer;">
+  <div style="font-weight:bold;margin:10px 0;text-align:left;">🏪 ${ad.name} - ₹${ad.price}</div>
+  <button style="width:100%;background:#25D366;color:white;padding:14px;border:none;border-radius:10px;">▶️ Video જુઓ</button>
+  </div>`;
+});
 </script>
-
-</body>
-</html>
+</body></html>
