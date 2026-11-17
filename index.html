@@ -3,193 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn</title>
+<title>GreenTaskEarn</title>
+<!-- Adsterra Social Bar -->
+<script data-cfasync="false" src="https://bicea.org/14/12ea438ebd8b91048ace7cbd4fbfa34f"></script>
+<!-- Adsterra Popunder -->
+<script data-cfasync="false" src="https://afders.org/1/d3d99431adc338a4df304d497bf2d249"></script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <style>
-body{font-family:Arial;background:#f0fff4;margin:0;padding:15px}
-.card{background:white;padding:20px;border-radius:15px;max-width:400px;margin:auto}
-input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
-button{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;margin-top:10px}
-button:disabled{background:gray}
+body{font-family:Arial;background:#f0fdf4;margin:0;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;max-width:500px;margin:auto;box-shadow:0 2px 10px #ccc}
+button{width:100%;padding:13px;background:#16a34a;color:white;border:none;border-radius:10px;font-size:16px;margin-top:10px}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin-top:10px;box-sizing:border-box}
 .box{display:flex;justify-content:space-between;background:#dcfce7;padding:12px;border-radius:10px;margin:10px 0}
-.hidden{display:none}
-.adBox{background:#fffbeb;border:2px solid #f59e0b;padding:15px;border-radius:12px;margin:15px 0;text-align:center}
-.videoWrap{position:relative;width:100%;padding-bottom:125%;height:0;overflow:hidden;border-radius:10px;background:black}
-.videoWrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-.refBox{background:#fef9c3;padding:10px;border-radius:10px;word-break:break-all;font-size:13px}
-.wBox{background:#e0f2fe;border:2px solid #0284c7;padding:15px;border-radius:12px;margin:15px 0;text-align:center}
+.adBox{background:#fffbeb;border:1px solid #f59e0b;padding:12px;border-radius:10px;margin:10px 0}
+.small{font-size:13px;color:#555}
 </style>
 </head>
 <body>
-<div class="card">
-<div id="loginDiv">
-<h2 style="text-align:center;color:#16a34a">🌱 Green Task Earn</h2>
-<p style="text-align:center;font-size:14px">Video જુઓ - પૈસા કમાઓ!</p>
-<input id="m" placeholder="Mobile Number" type="tel">
-<input id="n" placeholder="Full Name">
-<input id="p" type="password" placeholder="Password">
-<input id="ref" placeholder="Referral Mobile (હોય તો)">
-<button onclick="register()">Register / Login</button>
-<p style="text-align:center;font-size:12px"><a href="merchant.html">Merchant Panel</a></p>
+<div class="card" id="loginBox">
+<h2 style="text-align:center;color:#16a34a">🌿 GreenTaskEarn</h2>
+<p style="text-align:center">Video Joi ne Kamavo - Final App</p>
+<input id="name" placeholder="Tamara Naam">
+<input id="mobile" placeholder="Mobile Number - 10 Digit" type="number">
+<button onclick="doLogin()">Login / Join Karo</button>
+<p class="small" style="text-align:center">Login karine tamaro Data Firebase ma Save thase - Admin badha ne joise!</p>
 </div>
 
-<div id="homeDiv" class="hidden">
-<h2>Welcome, <span id="uName"></span> 👋</h2>
+<div class="card" id="mainBox" style="display:none">
+<h2 style="text-align:center;color:#16a34a">Welcome, <span id="uName"></span></h2>
 <div class="box"><b>My Team:</b><b id="teamCount">0</b></div>
-<div class="box"><b>My Earning:</b><b>₹<span id="earnCount">0</span></b></div>
+<div class="box"><b>My Earning:</b><b id="myEarn">₹0</b></div>
 
-<div class="wBox">
-<h3 style="margin:0;color:#0369a1">💰 Withdraw</h3>
-<p id="wStatus" style="font-size:13px">Min Withdraw: ₹250</p>
-<input id="upi" placeholder="UPI ID - e.g. 98765@paytm">
-<button id="wBtn" onclick="withdraw()" style="background:#0284c7">Withdraw Request કરો</button>
-<p id="wMsg" style="font-size:12px;color:#666"></p>
-</div>
-
-<div id="adBox" class="adBox hidden">
-<p id="adName" style="font-weight:bold;margin:0"></p>
-<p style="font-size:13px">આ Video 10 Sec જુઓ - <b>₹<span id="adRate"></span> મળશે!</b></p>
-<div class="videoWrap">
-<iframe id="adVideo" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
-<p id="timerText" style="color:red;font-weight:bold">10 Sec રાહ જુઓ...</p>
-<button id="claimBtn" onclick="claimAd()" disabled>રાહ જુઓ...</button>
+<h3>📺 Aaj ni Task - Video Juo</h3>
+<div class="adBox">
+<b>Rangila Electronics - Mundra</b><br>
+<span class="small">Video joi ne ₹1 Claim Karo</span><br><br>
+<iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe><br>
+<button onclick="claimTask()" style="background:#f59e0b">₹1 Claim Karo</button>
 </div>
 
-<p>તમારી Referral Link:</p>
-<div class="refBox" id="refLink"></div>
-<button onclick="share()" style="background:#25D366">WhatsApp પર Share કરો</button>
-<button onclick="logout()" style="background:#ef4444">Logout</button>
+<h3>📢 Adsterra Ad - Juo ne Kamavo</h3>
+<div class="adBox">
+<!-- Adsterra Native Bar -->
+<script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
+<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
+<button onclick="window.open('https://arwf.org/4/71c629698b098809841a9971deed43dc','_blank')" style="background:#0284c7">🎁 Smart Link Ad Kholo - ₹2 Malse</button>
 </div>
+
+<h3>💰 Withdraw</h3>
+<input id="upi" placeholder="Tamari UPI ID - jema paisa mokalva">
+<button onclick="doWithdraw()" style="background:#7c3aed">Withdraw Request Karo - Min ₹250</button>
+<p class="small">Withdraw Status: <b id="wStatus">Koi Request Nathi</b></p>
+
+<h3>👥 Referral - Team Banavo</h3>
+<p class="small">Tamari Link:</p>
+<input id="refLink" readonly>
+<button onclick="shareWA()" style="background:#25D366">WhatsApp Par Share Karo</button>
+<button onclick="doLogout()" style="background:#999">Logout</button>
 </div>
 
 <script>
-let currentAd = null;
-let current = JSON.parse(localStorage.getItem("g_current") || "null");
-
-window.onload = () => {
-  let r = new URLSearchParams(location.search).get("ref");
-  if(r) document.getElementById("ref").value = r;
-  if(current) showHome();
+const firebaseConfig = {
+  apiKey: "AIzaSyC5AozWCgi95dL8-9b1tIlRVVGvWrWJI",
+  authDomain: "greentaskearn.firebaseapp.com",
+  projectId: "greentaskearn",
+  storageBucket: "greentaskearn.firebasestorage.app",
+  messagingSenderId: "373532797507",
+  appId: "1:373532797507:web:dfb025fc06596b631b82f6",
+  measurementId: "G-19QL0W3GV57"
 };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+let me = JSON.parse(localStorage.getItem("g_me")||"null");
+let urlRef = new URLSearchParams(location.search).get("ref") || "";
 
-function register(){
-  let mobile = document.getElementById("m").value.trim();
-  let name = document.getElementById("n").value.trim();
-  let pass = document.getElementById("p").value.trim();
-  let refBy = document.getElementById("ref").value.trim();
-  if(!mobile || !name || !pass) return alert("બધું ભરો!");
-  let users = JSON.parse(localStorage.getItem("g_users") || "[]");
-  if(!users.find(u => u.mobile == mobile)){
-    users.push({mobile, name, password: pass, refBy, earning: 0});
-    localStorage.setItem("g_users", JSON.stringify(users));
-  }
-  current = {mobile, name};
-  localStorage.setItem("g_current", JSON.stringify(current));
-  showHome();
+function doLogin(){
+let name=document.getElementById("name").value.trim();
+let mobile=document.getElementById("mobile").value.trim();
+if(name.length<3) return alert("Naam lakho!");
+if(mobile.length!=10) return alert("10 Digit Mobile lakho!");
+me={name:name,mobile:mobile,refBy:urlRef||"Direct",earning:0,joined:new Date().toLocaleDateString()};
+localStorage.setItem("g_me",JSON.stringify(me));
+db.collection("users").doc(mobile).set(me).then(()=>{ showMain(); }).catch(e=>{ alert("Firebase Error: "+e.message+" - Rules check karo!"); showMain(); });
 }
-
-async function showHome(){
-  document.getElementById("loginDiv").classList.add("hidden");
-  document.getElementById("homeDiv").classList.remove("hidden");
-  document.getElementById("uName").innerText = current.name;
-  document.getElementById("refLink").innerText = location.href.split("?")[0] + "?ref=" + current.mobile;
-  updateEarning();
-  checkWithdraw();
-  try{
-    let ads = await fetch("ads.json?v=" + Date.now()).then(r => r.json());
-    if(ads.length > 0){
-      currentAd = ads[0];
-      document.getElementById("adBox").classList.remove("hidden");
-      document.getElementById("adName").innerText = "🔥 " + currentAd.name;
-      document.getElementById("adRate").innerText = currentAd.rate;
-      document.getElementById("adVideo").src = currentAd.video;
-      startTimer();
-    }
-  }catch(e){}
+function showMain(){
+if(!me) return;
+document.getElementById("loginBox").style.display="none";
+document.getElementById("mainBox").style.display="block";
+document.getElementById("uName").innerText=me.name;
+document.getElementById("refLink").value=location.origin+location.pathname+"?ref="+me.mobile;
+refreshData();
 }
-
-function getMyEarning(){
-  let users = JSON.parse(localStorage.getItem("g_users") || "[]");
-  let me = users.find(u => u.mobile == current.mobile);
-  let team = users.filter(u => u.refBy == current.mobile);
-  let myEarn = me ? Number(me.earning) : 0;
-  if(isNaN(myEarn)) myEarn = 0;
-  return myEarn + (team.length * 25);
+function refreshData(){
+db.collection("users").where("refBy","==",me.mobile).get().then(s=>{
+let team=s.size;
+document.getElementById("teamCount").innerText=team;
+let earn=(me.earning||0)+team*25;
+document.getElementById("myEarn").innerText="₹"+earn;
+});
+db.collection("withdraws").where("mobile","==",me.mobile).orderBy("date","desc").limit(1).get().then(s=>{
+if(!s.empty) document.getElementById("wStatus").innerText=s.docs[0].data().status+" - ₹"+s.docs[0].data().amount;
+});
 }
-
-function updateEarning(){
-  let users = JSON.parse(localStorage.getItem("g_users") || "[]");
-  let team = users.filter(u => u.refBy == current.mobile);
-  document.getElementById("teamCount").innerText = team.length;
-  document.getElementById("earnCount").innerText = getMyEarning();
+function claimTask(){
+me.earning=(me.earning||0)+1;
+localStorage.setItem("g_me",JSON.stringify(me));
+db.collection("users").doc(me.mobile).update({earning:me.earning});
+alert("₹1 Madyu! 🎉");
+refreshData();
 }
-
-function checkWithdraw(){
-  let total = getMyEarning();
-  let reqs = JSON.parse(localStorage.getItem("g_withdraw") || "[]");
-  let pending = reqs.find(r => r.mobile == current.mobile && r.status == "Pending");
-  if(pending){
-    document.getElementById("wStatus").innerText = "⏳ તમારી ₹" + pending.amount + " ની Request Pending છે!";
-    document.getElementById("wMsg").innerText = "UPI: " + pending.upi + " - Ramesh Sir 24 કલાક માં Pay કરશે!";
-    document.getElementById("wBtn").disabled = true;
-    document.getElementById("wBtn").innerText = "Pending...";
-  } else if(total < 250){
-    document.getElementById("wStatus").innerText = "Min Withdraw: ₹250 - હજી ₹" + (250 - total) + " બાકી છે!";
-  } else {
-    document.getElementById("wStatus").innerText = "✅ તમે ₹" + total + " Withdraw કરી શકો છો!";
-  }
+function doWithdraw(){
+let upi=document.getElementById("upi").value.trim();
+if(upi.length<5) return alert("UPI ID lakho!");
+db.collection("users").where("refBy","==",me.mobile).get().then(s=>{
+let total=(me.earning||0)+s.size*25;
+if(total<250) return alert("Withdraw mate ₹250 joiye! Atare ₹"+total+" chhe. Vadhare Refer karo!");
+db.collection("withdraws").add({name:me.name,mobile:me.mobile,upi:upi,amount:total,status:"Pending",date:new Date().toLocaleString()}).then(()=>{ alert("Withdraw Request Moklai Gayi! Admin jaldhi Pay karse."); refreshData(); });
+});
 }
-
-function startTimer(){
-  let sec = 10;
-  let t = setInterval(() => {
-    document.getElementById("timerText").innerText = sec + " Sec બાકી...";
-    sec--;
-    if(sec < 0){
-      clearInterval(t);
-      let b = document.getElementById("claimBtn");
-      b.disabled = false;
-      b.innerText = "₹" + currentAd.rate + " Claim કરો";
-      document.getElementById("timerText").innerText = "હવે Claim કરો! ✅";
-    }
-  }, 1000);
+function shareWA(){
+let txt="Mane GreenTaskEarn ma ₹1 malyu! Tame pan Join karo: "+document.getElementById("refLink").value;
+window.open("https://wa.me/?text="+encodeURIComponent(txt));
 }
-
-function claimAd(){
-  let users = JSON.parse(localStorage.getItem("g_users") || "[]");
-  let me = users.find(u => u.mobile == current.mobile);
-  if(me){
-    let cur = Number(me.earning) || 0;
-    me.earning = cur + Number(currentAd.rate);
-    localStorage.setItem("g_users", JSON.stringify(users));
-  }
-  alert("₹" + currentAd.rate + " Add થઈ ગયા! 🎉");
-  location.reload();
-}
-
-function withdraw(){
-  let total = getMyEarning();
-  let upi = document.getElementById("upi").value.trim();
-  if(total < 250) return alert("₹250 થયા પછી જ Withdraw થશે! હજી ₹" + (250 - total) + " બાકી છે!");
-  if(!upi) return alert("UPI ID નાખો!");
-  if(!upi.includes("@")) return alert("સાચી UPI ID નાખો - @ વાળી!");
-  let reqs = JSON.parse(localStorage.getItem("g_withdraw") || "[]");
-  reqs.push({mobile: current.mobile, name: current.name, amount: total, upi: upi, date: new Date().toLocaleString(), status: "Pending"});
-  localStorage.setItem("g_withdraw", JSON.stringify(reqs));
-  let users = JSON.parse(localStorage.getItem("g_users") || "[]");
-  let me = users.find(u => u.mobile == current.mobile);
-  if(me){ me.earning = 0; localStorage.setItem("g_users", JSON.stringify(users)); }
-  alert("Withdraw Request મોકલાઈ ગઈ! ₹" + total + " - 24 કલાક માં મળશે! 🎉");
-  location.reload();
-}
-
-function share(){
-  window.open("https://wa.me/?text=" + encodeURIComponent("Green Task Earn Join કરો: " + document.getElementById("refLink").innerText));
-}
-function logout(){
-  localStorage.removeItem("g_current");
-  location.reload();
-}
+function doLogout(){ localStorage.removeItem("g_me"); location.reload(); }
+if(me) showMain();
 </script>
 </body>
 </html>
