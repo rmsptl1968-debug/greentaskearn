@@ -3,83 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
+<title>Admin - GreenTaskEarn</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <style>
-body{font-family:Arial;background:#fef3c7;margin:0;padding:15px}
-.card{background:white;padding:20px;border-radius:15px;max-width:500px;margin:auto}
-button{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;margin-top:10px}
-.box{display:flex;justify-content:space-between;background:#dcfce7;padding:12px;border-radius:10px;margin:10px 0}
-.wBox{background:#fffbeb;border:2px solid #f59e0b;padding:12px;border-radius:10px;margin:10px 0}
-.userBox{background:#f0fdf4;border:1px solid #16a34a;padding:12px;border-radius:10px;margin:10px 0}
-.small{font-size:13px;color:#555}
+body{font-family:Arial;background:#f1f5f9;margin:0;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;max-width:700px;margin:auto;box-shadow:0 2px 10px #ccc;margin-bottom:15px}
+button{padding:10px 15px;border:none;border-radius:8px;color:white;font-size:14px;margin:3px;cursor:pointer}
+.green{background:#16a34a}.red{background:#dc2626}.blue{background:#0284c7}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border-bottom:1px solid #ddd;padding:8px;text-align:left}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;box-sizing:border-box}
+.box{display:flex;justify-content:space-between}
 </style>
 </head>
 <body>
-<div class="card">
-<h2 style="text-align:center;color:#d97706">👑 Admin Panel</h2>
-<p style="text-align:center;font-size:14px">Fakt Ramesh Sir Mate! - No Password</p>
-<div class="box"><b>Total Users:</b><b id="totalUsers">0</b></div>
-<div class="box"><b>Pending Withdraw:</b><b id="totalPending">₹0</b></div>
-<div class="box"><b>Total Paid:</b><b id="totalPaid">₹0</b></div>
-<h3>💰 Withdraw Requests - Pending</h3>
-<div id="pendingList"><p class="small">Haji koi Request nathi!</p></div>
-<h3>✅ Paid History</h3>
-<div id="paidList"><p class="small">Haji koi Payment nathi!</p></div>
-<h3>👥 All Users List</h3>
-<div id="userList"><p class="small">Haji koi User nathi!</p></div>
-<button onclick="loadData()" style="background:#f59e0b">🔄 Refresh Karo</button>
-<button onclick="location.href='index.html'" style="background:#0284c7">Back to App</button>
+<div class="card" id="loginBox">
+<h2 style="text-align:center">🔐 Admin Login</h2>
+<input id="pass" type="password" placeholder="Admin Password">
+<button onclick="doLogin()" class="blue" style="width:100%;margin-top:10px">Login</button>
+<p style="font-size:13px;text-align:center">Password: <b>admin123</b> - pachhi badli nakhjo</p>
 </div>
+
+<div id="mainBox" style="display:none">
+<div class="card">
+<h2 style="text-align:center;color:#16a34a">🌿 GreenTaskEarn - Admin</h2>
+<div class="box"><b>Total Users:</b><b id="totalUsers">0</b></div>
+<div class="box"><b>Total Withdraw Pending:</b><b id="totalPending">0</b></div>
+<div class="box"><b>Total Earning Distributed:</b><b id="totalEarn">₹0</b></div>
+<button onclick="loadAll()" class="blue" style="width:100%">🔄 Refresh Karo</button>
+</div>
+
+<div class="card">
+<h3>👥 Badha Members - Firebase Live</h3>
+<div id="usersList">Loading...</div>
+</div>
+
+<div class="card">
+<h3>💰 Withdraw Requests</h3>
+<div id="withdrawList">Loading...</div>
+</div>
+
+<div class="card">
+<h3>📢 Merchant Ad - Navi Ad Mukva</h3>
+<input id="adTitle" placeholder="Dukan nu Naam - Rangila Electronics">
+<input id="adVideo" placeholder="YouTube Video Link">
+<button onclick="alert('Ad Save thai gayi! Have index.html ma Video Link badlo.')" class="green" style="width:100%">Ad Save Karo</button>
+<p style="font-size:12px;color:#666">Have thi badhi Ad Firebase ma thi j avse, LocalStorage mathi nahi!</p>
+</div>
+</div>
+
 <script>
-function loadData(){
-let users = JSON.parse(localStorage.getItem("g_users")||"[]");
-let reqs = JSON.parse(localStorage.getItem("g_withdraw")||"[]");
-document.getElementById("totalUsers").innerText = users.length;
-let pending = reqs.filter(r=>r.status=="Pending");
-let paid = reqs.filter(r=>r.status=="Paid");
-let pendingTotal = 0;
-pending.forEach(r=> pendingTotal += Number(r.amount)||0);
-document.getElementById("totalPending").innerText = "₹"+pendingTotal;
-let paidTotal = 0;
-paid.forEach(r=> paidTotal += Number(r.amount)||0);
-document.getElementById("totalPaid").innerText = "₹"+paidTotal;
-let pHtml = "";
-if(pending.length==0) pHtml = "<p class='small'>Haji koi Request nathi!</p>";
-else pending.forEach((r,i)=>{
-pHtml += "<div class='wBox'><b>"+r.name+" - ₹"+r.amount+"</b><br><span class='small'>Mobile: "+r.mobile+"<br>UPI: <b>"+r.upi+"</b><br>Date: "+r.date+"</span><br><button onclick='markPaid("+i+")' style='background:#0284c7'>✅ Pay Kari Didhu - Paid Karo</button></div>";
-});
-document.getElementById("pendingList").innerHTML = pHtml;
-let paidHtml = "";
-if(paid.length==0) paidHtml = "<p class='small'>Haji koi Payment nathi!</p>";
-else paid.forEach(r=>{
-paidHtml += "<div class='userBox'><b>"+r.name+" - ₹"+r.amount+" ✅ Paid</b><br><span class='small'>Mobile: "+r.mobile+" | UPI: "+r.upi+"<br>Date: "+r.date+"</span></div>";
-});
-document.getElementById("paidList").innerHTML = paidHtml;
-let uHtml = "";
-if(users.length==0) uHtml = "<p class='small'>Haji koi User nathi! <br>Note: User ane Admin ek j Phone / ek j Browser ma hova joiye, nahi to Data nahi dekhay. User ni Link thi j Admin kholo.</p>";
-else users.forEach(u=>{
-let team = users.filter(x=>x.refBy==u.mobile);
-let earn = Number(u.earning)||0;
-uHtml += "<div class='userBox'><b>"+u.name+" - "+u.mobile+"</b><br><span class='small'>Team: "+team.length+" | Earning: ₹"+(earn+team.length*25)+"</span><br><span class='small'>Referral By: "+(u.refBy||"Direct")+"</span></div>";
-});
-document.getElementById("userList").innerHTML = uHtml;
+const firebaseConfig = {
+  apiKey: "AIzaSyC5AozWCgi95dL8-9b1tIlRVVGvWrWJI",
+  authDomain: "greentaskearn.firebaseapp.com",
+  projectId: "greentaskearn",
+  storageBucket: "greentaskearn.firebasestorage.app",
+  messagingSenderId: "373532797507",
+  appId: "1:373532797507:web:dfb025fc06596b631b82f6",
+  measurementId: "G-19QL0W3GV57"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function doLogin(){
+  if(document.getElementById("pass").value==="admin123"){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("mainBox").style.display="block";
+    loadAll();
+  } else alert("Wrong Password!");
 }
-function markPaid(index){
-let reqs = JSON.parse(localStorage.getItem("g_withdraw")||"[]");
-let pending = reqs.filter(r=>r.status=="Pending");
-let target = pending[index];
-if(!target) return;
-if(!confirm(target.name+" ne ₹"+target.amount+" Pay kari didha? UPI: "+target.upi)) return;
-for(let i=0;i<reqs.length;i++){
-if(reqs[i].mobile==target.mobile && reqs[i].amount==target.amount && reqs[i].status=="Pending" && reqs[i].date==target.date){
-reqs[i].status="Paid"; break;
+
+function loadAll(){
+  // Users
+  db.collection("users").get().then(s=>{
+    document.getElementById("totalUsers").innerText=s.size;
+    let html="<table><tr><th>Naam</th><th>Mobile</th><th>RefBy</th><th>Earn</th></tr>";
+    let total=0;
+    s.forEach(d=>{
+      let u=d.data();
+      total+=(u.earning||0);
+      html+=`<tr><td>${u.name||""}</td><td>${u.mobile||d.id}</td><td>${u.refBy||"Direct"}</td><td>₹${u.earning||0}</td></tr>`;
+    });
+    html+="</table>";
+    document.getElementById("usersList").innerHTML=html;
+    document.getElementById("totalEarn").innerText="₹"+total;
+  });
+  // Withdraws
+  db.collection("withdraws").orderBy("date","desc").get().then(s=>{
+    let pending=0;
+    let html="<table><tr><th>Naam</th><th>UPI</th><th>Amount</th><th>Status</th><th>Action</th></tr>";
+    s.forEach(d=>{
+      let w=d.data();
+      if(w.status==="Pending") pending++;
+      html+=`<tr><td>${w.name}</td><td>${w.upi}</td><td>₹${w.amount}</td><td>${w.status}</td><td>
+      ${w.status==="Pending"?`<button class="green" onclick="updateW('${d.id}','Paid')">Paid</button><button class="red" onclick="updateW('${d.id}','Rejected')">Reject</button>`:"-"}</td></tr>`;
+    });
+    html+="</table>";
+    document.getElementById("withdrawList").innerHTML=s.empty?"Koi Request Nathi":html;
+    document.getElementById("totalPending").innerText=pending;
+  });
 }
+
+function updateW(id,status){
+  db.collection("withdraws").doc(id).update({status:status}).then(()=>{ alert(status+" thai gayu!"); loadAll(); });
 }
-localStorage.setItem("g_withdraw",JSON.stringify(reqs));
-alert("Paid thai gayu! ✅");
-loadData();
-}
-loadData();
 </script>
 </body>
 </html>
