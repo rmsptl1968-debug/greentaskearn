@@ -1,74 +1,20 @@
-<!DOCTYPE html>
-<html lang="gu">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn</title>
-<style>
-body{font-family:Arial;background:#f0fff4;margin:0;padding:15px}
-.card{background:white;padding:20px;border-radius:15px;max-width:400px;margin:auto;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
-input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
-button{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;margin-top:10px;cursor:pointer}
-button:disabled{background:gray}
-.box{display:flex;justify-content:space-between;background:#dcfce7;padding:12px;border-radius:10px;margin:10px 0}
-.hidden{display:none}
-.adBox{background:#fffbeb;border:2px solid #f59e0b;padding:15px;border-radius:12px;margin:15px 0;text-align:center}
-.videoWrap{position:relative;width:100%;padding-bottom:125%;height:0;overflow:hidden;border-radius:10px;background:black}
-.videoWrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-.refBox{background:#fef9c3;padding:10px;border-radius:10px;word-break:break-all;font-size:13px}
-</style>
-</head>
-<body>
-<div class="card">
-
-<div id="loginDiv">
-<h2 style="text-align:center;color:#16a34a">🌱 Green Task Earn</h2>
-<p style="text-align:center;font-size:14px">Video જુઓ - પૈસા કમાઓ!</p>
-<input id="m" placeholder="Mobile Number - 10 અંક" type="tel">
-<input id="n" placeholder="Full Name - પૂરું નામ">
-<input id="p" type="password" placeholder="Password બનાવો">
-<input id="ref" placeholder="Referral Mobile (હોય તો)">
-<button onclick="register()">Register / Login</button>
-<p style="text-align:center;font-size:12px"><a href="merchant.html">Merchant Panel - Ad મૂકવા માટે</a></p>
-</div>
-
-<div id="homeDiv" class="hidden">
-<h2>Welcome, <span id="uName"></span> 👋</h2>
-<p style="font-size:13px">Mobile: <span id="uMobile"></span></p>
-<div class="box"><b>My Team:</b><b id="teamCount">0</b></div>
-<div class="box"><b>My Earning:</b><b>₹<span id="earnCount">0</span></b></div>
-
-<div class="adBox">
-<p style="font-weight:bold;margin:0">🔥 Rangila Electronics - Gandhidham</p>
-<p style="font-size:13px;margin:5px 0">આ Video 10 Sec જુઓ - <b>₹5 મળશે!</b></p>
-<div class="videoWrap">
-<iframe src="https://www.youtube.com/embed/QrhsduEJNMg?autoplay=0&mute=0&controls=1&loop=1&playlist=QrhsduEJNMg" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
-<p id="timerText" style="color:red;font-weight:bold">10 Sec રાહ જુઓ...</p>
-<button id="claimBtn" onclick="claimAd()" disabled>રાહ જુઓ...</button>
-<p style="font-size:11px;color:#666">Note: Video જોયા વગર Claim નહીં થાય!</p>
-</div>
-
-<p>તમારી Referral Link (Share કરો - ₹25 મળશે):</p>
-<div class="refBox" id="refLink"></div>
-<button onclick="share()" style="background:#25D366">WhatsApp પર Share કરો</button>
-<button onclick="logout()" style="background:#ef4444">Logout</button>
-</div>
-
-</div>
+<!DOCTYPE html><html lang="gu"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Green Task Earn</title>
+<style>body{font-family:Arial;background:#f0fff4;margin:0;padding:15px}.card{background:white;padding:20px;border-radius:15px;max-width:400px;margin:auto}input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}button{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;margin-top:10px}button:disabled{background:gray}.box{display:flex;justify-content:space-between;background:#dcfce7;padding:12px;border-radius:10px;margin:10px 0}.hidden{display:none}.adBox{background:#fffbeb;border:2px solid #f59e0b;padding:15px;border-radius:12px;margin:15px 0;text-align:center}.videoWrap{position:relative;width:100%;padding-bottom:125%;height:0;overflow:hidden;border-radius:10px;background:black}.videoWrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}.refBox{background:#fef9c3;padding:10px;border-radius:10px;word-break:break-all;font-size:13px}</style></head>
+<body><div class="card">
+<div id="loginDiv"><h2 style="text-align:center;color:#16a34a">🌱 Green Task Earn</h2><p style="text-align:center;font-size:14px">Video જુઓ - પૈસા કમાઓ!</p><input id="m" placeholder="Mobile Number" type="tel"><input id="n" placeholder="Full Name"><input id="p" type="password" placeholder="Password"><input id="ref" placeholder="Referral Mobile (હોય તો)"><button onclick="register()">Register / Login</button><p style="text-align:center;font-size:12px"><a href="merchant.html">Merchant Panel</a></p></div>
+<div id="homeDiv" class="hidden"><h2>Welcome, <span id="uName"></span> 👋</h2><div class="box"><b>My Team:</b><b id="teamCount">0</b></div><div class="box"><b>My Earning:</b><b>₹<span id="earnCount">0</span></b></div>
+<div id="adBox" class="adBox hidden"><p id="adName" style="font-weight:bold;margin:0"></p><p style="font-size:13px">આ Video 10 Sec જુઓ - <b>₹<span id="adRate"></span> મળશે!</b></p><div class="videoWrap"><iframe id="adVideo" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe></div><p id="timerText" style="color:red;font-weight:bold">10 Sec રાહ જુઓ...</p><button id="claimBtn" onclick="claimAd()" disabled>રાહ જુઓ...</button></div>
+<p>તમારી Referral Link:</p><div class="refBox" id="refLink"></div><button onclick="share()" style="background:#25D366">WhatsApp પર Share કરો</button><button onclick="logout()" style="background:#ef4444">Logout</button></div></div>
 <script>
-let current = JSON.parse(localStorage.getItem("g_current")||"null");
-window.onload=()=>{
-  let r=new URLSearchParams(location.search).get("ref");
-  if(r) document.getElementById("ref").value=r;
-  if(current) showHome();
-};
-function register(){
-  let mobile=document.getElementById("m").value.trim();
-  let name=document.getElementById("n").value.trim();
-  let pass=document.getElementById("p").value.trim();
-  let refBy=document.getElementById("ref").value.trim();
-  if(!mobile||!name||!pass) return alert("બધું ભરો!");
-  if(mobile.length<10) return alert("સાચો Mobile નંબર નાખો!");
-  let users=JSON.parse(localStorage.getItem("g_users")||"[]");
-  let found=users.find(u=>u.mobile==
+let currentAd=null;
+let current=JSON.parse(localStorage.getItem("g_current")||"null");
+window.onload=()=>{let r=new URLSearchParams(location.search).get("ref"); if(r) document.getElementById("ref").value=r; if(current) showHome();}
+function register(){let mobile=document.getElementById("m").value.trim(),name=document.getElementById("n").value.trim(),pass=document.getElementById("p").value.trim(),refBy=document.getElementById("ref").value.trim(); if(!mobile||!name||!pass) return alert("બધું ભરો!"); let users=JSON.parse(localStorage.getItem("g_users")||"[]"); if(!users.find(u=>u.mobile==mobile)){users.push({mobile,name,password:pass,refBy,earning:0}); localStorage.setItem("g_users",JSON.stringify(users));} current={mobile,name}; localStorage.setItem("g_current",JSON.stringify(current)); showHome();}
+async function showHome(){document.getElementById("loginDiv").classList.add("hidden"); document.getElementById("homeDiv").classList.remove("hidden"); document.getElementById("uName").innerText=current.name; document.getElementById("refLink").innerText=location.href.split("?")[0]+"?ref="+current.mobile; updateEarning();
+try{let ads=await fetch("ads.json?v="+Date.now()).then(r=>r.json()); if(ads.length>0){currentAd=ads[0]; document.getElementById("adBox").classList.remove("hidden"); document.getElementById("adName").innerText="🔥 "+currentAd.name; document.getElementById("adRate").innerText=currentAd.rate; document.getElementById("adVideo").src=currentAd.video; startTimer();}}catch(e){}}
+function updateEarning(){let users=JSON.parse(localStorage.getItem("g_users")||"[]"); let me=users.find(u=>u.mobile==current.mobile); let team=users.filter(u=>u.refBy==current.mobile); document.getElementById("teamCount").innerText=team.length; document.getElementById("earnCount").innerText=(me?me.earning:0)+(team.length*25);}
+function startTimer(){let sec=10; let t=setInterval(()=>{document.getElementById("timerText").innerText=sec+" Sec બાકી..."; sec--; if(sec<0){clearInterval(t); let b=document.getElementById("claimBtn"); b.disabled=false; b.innerText="₹"+currentAd.rate+" Claim કરો"; document.getElementById("timerText").innerText="હવે Claim કરો! ✅";}},1000);}
+function claimAd(){let users=JSON.parse(localStorage.getItem("g_users")||"[]"); let me=users.find(u=>u.mobile==current.mobile); if(me){me.earning=(me.earning||0)+Number(currentAd.rate); localStorage.setItem("g_users",JSON.stringify(users));} alert("₹"+currentAd.rate+" Add થઈ ગયા! 🎉"); location.reload();}
+function share(){window.open("https://wa.me/?text="+encodeURIComponent("Green Task Earn Join કરો: "+document.getElementById("refLink").innerText));}
+function logout(){localStorage.removeItem("g_current"); location.reload();}
+</script></body></html>
