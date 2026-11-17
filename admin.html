@@ -3,151 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task - Super Admin</title>
+<title>Admin Panel</title>
 <style>
-*{box-sizing:border-box} body{font-family:Arial;background:#e8f5e9;margin:0;padding:0}
-.header{background:linear-gradient(90deg,green,#2e7d32);color:white;padding:15px;text-align:center}
-.menu{display:flex;overflow-x:auto;background:white;position:sticky;top:0;z-index:10;box-shadow:0 2px 5px #0002}
-.menu b{flex:1;min-width:80px;padding:12px 5px;text-align:center;font-size:13px;border-bottom:3px solid transparent}
-.menu b.active{border-color:green;color:green;background:#f1f8e9}
-.card{background:white;margin:10px;padding:15px;border-radius:12px;display:none;box-shadow:0 1px 3px #0001}
-.card.active{display:block}
-.user{border-left:4px solid green;background:#f1f8e9;padding:10px;border-radius:6px;margin:8px 0;font-size:14px}
-.btn{padding:8px 12px;border:none;border-radius:6px;font-weight:bold;margin:2px}
-.g{background:green;color:white}.r{background:red;color:white}.bl{background:#1976d2;color:white}.o{background:orange;color:white}
-input,select,textarea{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:6px}
-.small{font-size:12px;color:#666}
+body{font-family:Arial;background:#fef3c7;margin:0;padding:15px}
+.card{background:white;padding:20px;border-radius:15px;max-width:500px;margin:auto}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;margin-top:10px}
+.box{display:flex;justify-content:space-between;background:#dcfce7;padding:12px;border-radius:10px;margin:10px 0}
+.hidden{display:none}
+.wBox{background:#fffbeb;border:2px solid #f59e0b;padding:12px;border-radius:10px;margin:10px 0}
+.userBox{background:#f0fdf4;border:1px solid #16a34a;padding:12px;border-radius:10px;margin:10px 0}
+.small{font-size:13px;color:#555}
 </style>
 </head>
 <body>
-<div class="header"><h3 style="margin:0">🌱 GT8167 SUPER ADMIN</h3><small id="topInfo">Loading...</small></div>
-
-<div id="login" class="card active" style="display:block">
-<h3>Login</h3>
-<input id="pass" value="admin123" style="font-size:18px">
-<button class="btn g" style="width:100%;padding:12px;font-size:18px;margin-top:10px" onclick="login()">LOGIN</button>
+<div class="card">
+<div id="loginDiv">
+<h2 style="text-align:center;color:#d97706">🔐 Admin Panel</h2>
+<p style="text-align:center;font-size:14px">Fakt Ramesh Sir Mate!</p>
+<input id="adminPass" type="password" placeholder="Password">
+<button onclick="adminLogin()">Login</button>
+<p style="text-align:center;font-size:12px"><a href="index.html">Back to App</a></p>
 </div>
-
-<div id="main" style="display:none">
-<div class="menu">
-<b onclick="tab(0)" id="m0" class="active">📊 DASH</b>
-<b onclick="tab(1)" id="m1">👥 USERS</b>
-<b onclick="tab(2)" id="m2">🔗 7 LEVEL</b>
-<b onclick="tab(3)" id="m3">📝 TASKS</b>
-<b onclick="tab(4)" id="m4">💰 WITHDRAW</b>
-<b onclick="tab(5)" id="m5">⚙️ SETTING</b>
-</div>
-
-<div id="c0" class="card active">
-<h3>📊 Dashboard</h3>
-<p>ID: <b id="myid" style="color:green;font-size:20px">GT8167</b></p>
-<p>Balance: ₹<b id="mybal" style="font-size:28px">52</b></p>
-<p>Total Users: <b id="tusers">1</b> | Withdraw Req: <b id="tw">0</b></p>
-<p class="small">Refer Link: <span id="rlink"></span></p>
-<button class="btn g" onclick="loadAll()">🔄 Refresh</button>
-<button class="btn bl" onclick="exportData()">📤 Export</button>
-</div>
-
-<div id="c1" class="card">
-<h3>👥 Users Menu - Full Control</h3>
-<div id="usersList"></div>
-<input id="newId" placeholder="New ID like GT1234"><input id="newBal" type="number" placeholder="Balance like 100">
-<button class="btn g" onclick="addUser()">+ Add User</button>
-</div>
-
-<div id="c2" class="card">
-<h3>🔗 7 Level Team - Full</h3>
-<p class="small">Level 1: ₹50, L2:₹20, L3:₹10, L4:₹5, L5:₹5, L6:₹3, L7:₹2</p>
-<div id="levelList"></div>
-<button class="btn bl" onclick="addRefer()">+ Add Refer (Test)</button>
-</div>
-
-<div id="c3" class="card">
-<h3>📝 Tasks Menu - Full Control</h3>
-<div id="tasksList"></div>
-<input id="tName" placeholder="Task Name"><input id="tAmt" type="number" placeholder="Amount">
-<button class="btn g" onclick="addTask()">+ Add New Task</button>
-</div>
-
-<div id="c4" class="card">
-<h3>💰 Withdraw Menu + QR Approve</h3>
-<div id="withList">Loading...</div>
-<h4>QR Setting</h4>
-<input id="upiId" placeholder="Your UPI ID like 9723xxxx@oksbi">
-<input id="qrNote" placeholder="QR Note">
-<button class="btn g" onclick="saveQR()">Save UPI</button>
-<p class="small" id="qrShow"></p>
-</div>
-
-<div id="c5" class="card">
-<h3>⚙️ Settings Menu - Full</h3>
-<label>Min Withdraw (₹)</label><input id="minW" value="200">
-<label>Refer Bonus L1 (₹)</label><input id="refB" value="50">
-<label>Admin Pass</label><input id="adminP" value="admin123">
-<button class="btn g" style="width:100%" onclick="saveSet()">💾 Save All Settings</button>
-<hr>
-<div id="debug" style="background:#eee;padding:10px;font-size:11px;word-break:break-all"></div>
-<button class="btn r" style="width:100%;margin-top:10px" onclick="if(confirm('બધો Data Clear કરવો છે?')){localStorage.clear();loadAll();}">🗑️ CLEAR ALL DATA</button>
+<div id="adminDiv" class="hidden">
+<h2 style="text-align:center;color:#d97706">👑 Admin Panel</h2>
+<div class="box"><b>Total Users:</b><b id="totalUsers">0</b></div>
+<div class="box"><b>Pending Withdraw:</b><b id="totalPending">₹0</b></div>
+<div class="box"><b>Total Paid:</b><b id="totalPaid">₹0</b></div>
+<h3>💰 Withdraw Requests - Pending</h3>
+<div id="pendingList"><p class="small">Haji koi Request nathi!</p></div>
+<h3>✅ Paid History</h3>
+<div id="paidList"><p class="small">Haji koi Payment nathi!</p></div>
+<h3>👥 All Users List</h3>
+<div id="userList"><p class="small">Haji koi User nathi!</p></div>
+<button onclick="loadData()" style="background:#f59e0b">🔄 Refresh Karo</button>
+<button onclick="adminLogout()" style="background:#ef4444">Logout</button>
 </div>
 </div>
-</div>
-
 <script>
-let TASKS_KEY='gt_tasks'; let USERS_KEY='gt_all_users'; let WITH_KEY='gt_withdraw'; let LEVEL_KEY='gt_levels';
-function login(){
- if(document.getElementById('pass').value.trim().toLowerCase()=='admin123'){
-  document.getElementById('login').style.display='none';
-  document.getElementById('main').style.display='block';
-  loadAll();
- }else alert('admin123');
+let ADMIN_PASS = "ramesh123";
+function adminLogin(){
+let p = document.getElementById("adminPass").value.trim();
+if(p == ADMIN_PASS){
+localStorage.setItem("g_admin","yes");
+showAdmin();
+} else {
+alert("Khoto Password! Password che: ramesh123");
 }
-function tab(n){
- document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
- document.querySelectorAll('#main .card').forEach(c=>c.classList.remove('active'));
- document.getElementById('c'+n).classList.add('active');
- document.querySelectorAll('.menu b').forEach(b=>b.classList.remove('active'));
- document.getElementById('m'+n).classList.add('active');
 }
-function loadAll(){
- let id=localStorage.getItem('gt_myId')||localStorage.getItem('my_code')||'GT8167';
- let bal=localStorage.getItem('gt_bal')||localStorage.getItem('my_bal')||'52';
- document.getElementById('myid').innerText=id;
- document.getElementById('mybal').innerText=bal;
- document.getElementById('topInfo').innerText=id+' | ₹'+bal;
- document.getElementById('rlink').innerText=location.origin+'/greentaskearn/?ref='+id;
- document.getElementById('tusers').innerText=JSON.parse(localStorage.getItem(USERS_KEY)||'[]').length+1;
- // Users
- let users=JSON.parse(localStorage.getItem(USERS_KEY)||'[]');
- let uHtml='<div class=user><b>'+id+'</b> - ₹'+bal+' (Main Admin) <span style=color:green>Active</span></div>';
- users.forEach((u,i)=>{uHtml+=`<div class=user>${u.id} - ₹${u.bal} <button class="btn r" onclick="delUser(${i})">Del</button> <button class="btn bl" onclick="editBal(${i})">Edit Bal</button></div>`});
- document.getElementById('usersList').innerHTML=uHtml;
- // Levels
- let lvls=JSON.parse(localStorage.getItem(LEVEL_KEY)||'[]');
- let lHtml=''; for(let i=1;i<=7;i++){let count=lvls.filter(l=>l.level==i).length; lHtml+=`<div class=user>Level ${i}: ${count} Users - Bonus ₹${[50,20,10,5,5,3,2][i-1]}</div>`}
- lvls.forEach((l,i)=>{lHtml+=`<div class=user>${l.id} - Level ${l.level} <button class="btn r" onclick="delLevel(${i})">X</button></div>`});
- document.getElementById('levelList').innerHTML=lHtml;
- // Tasks
- let tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[{"name":"Watch Video Ad","amt":10},{"name":"Visit Site","amt":15},{"name":"Share","amt":20}]');
- let tHtml=''; tasks.forEach((t,i)=>{tHtml+=`<div class=user>${t.name} - ₹${t.amt} <button class="btn r" onclick="delTask(${i})">Del</button></div>`});
- document.getElementById('tasksList').innerHTML=tHtml;
- // Withdraw
- let withs=JSON.parse(localStorage.getItem(WITH_KEY)||'[]');
- document.getElementById('tw').innerText=withs.length;
- let wHtml=''; if(withs.length==0) wHtml='<div class=user>No Withdraw Request</div>'; else withs.forEach((w,i)=>{wHtml+=`<div class=user>${w.id||'GTxxx'} - ₹${w.amt} - UPI:${w.upi||''} - ${w.status||'Pending'} <br><button class="btn g" onclick="approveW(${i})">Approve</button> <button class="btn r" onclick="rejectW(${i})">Reject</button></div>`});
- document.getElementById('withList').innerHTML=wHtml;
- document.getElementById('qrShow').innerText='Saved UPI: '+(localStorage.getItem('gt_upi')||'Not Set');
- let all=''; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); all+=k+':'+localStorage.getItem(k).substring(0,80)+'<br>';}
- document.getElementById('debug').innerHTML=all;
+window.onload = () => {
+if(localStorage.getItem("g_admin")=="yes") showAdmin();
+};
+function showAdmin(){
+document.getElementById("loginDiv").classList.add("hidden");
+document.getElementById("adminDiv").classList.remove("hidden");
+loadData();
 }
-function addUser(){let id=document.getElementById('newId').value||'GT'+Math.floor(Math.random()*9000+1000); let bal=document.getElementById('newBal').value||0; let arr=JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); arr.push({id,bal}); localStorage.setItem(USERS_KEY,JSON.stringify(arr)); loadAll();}
-function delUser(i){let arr=JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); arr.splice(i,1); localStorage.setItem(USERS_KEY,JSON.stringify(arr)); loadAll();}
-function editBal(i){let nb=prompt('New Balance:'); if(nb!==null){let arr=JSON.parse(localStorage.getItem(USERS_KEY)||'[]'); arr[i].bal=nb; localStorage.setItem(USERS_KEY,JSON.stringify(arr)); loadAll();}}
-function addRefer(){let id='GT'+Math.floor(Math.random()*9000+1000); let lvl=prompt('Level 1-7?','1')||1; let arr=JSON.parse(localStorage.getItem(LEVEL_KEY)||'[]'); arr.push({id,level:lvl}); localStorage.setItem(LEVEL_KEY,JSON.stringify(arr)); loadAll();}
-function delLevel(i){let arr=JSON.parse(localStorage.getItem(LEVEL_KEY)||'[]'); arr.splice(i,1); localStorage.setItem(LEVEL_KEY,JSON.stringify(arr)); loadAll();}
-function addTask(){let n=document.getElementById('tName').value; let a=document.getElementById('tAmt').value; if(!n) return alert('Name likho'); let arr=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]'); arr.push({name:n,amt:a}); localStorage.setItem(TASKS_KEY,JSON.stringify(arr)); loadAll();}
-function delTask(i){let arr=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]'); arr.splice(i,1); localStorage.setItem(TASKS_KEY,JSON.stringify(arr)); loadAll();}
-function approveW(i){let arr=JSON.parse(localStorage.getItem(WITH_KEY)||'[]'); arr[i].status='Approved'; localStorage.setItem(WITH_KEY,JSON.stringify(arr)); loadAll(); alert('Approved!');}
-function rejectW(i){let arr=JSON.parse(localStorage.getItem(WITH_KEY)||'[]'); arr[i].status='Rejected'; localStorage.setItem(WITH_KEY,JSON.stringify(arr)); loadAll();}
-function saveQR(){localStorage.setItem('gt_upi',document.getElementById('upiId').value); loadAll(); alert('UPI Saved!');}
-function saveSet(){localStorage.setItem('gt_minW',document.getElementById('minW').value); localStorage.setItem('gt_refB',document.getElementById('refB').value); alert('Settings Saved!');}
-function exportData(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);}
+function loadData(){
+let users = JSON.parse(localStorage.getItem("g_users")||"[]");
+let reqs = JSON.parse(localStorage.getItem("g_withdraw")||"[]");
+document.getElementById("totalUsers").innerText = users.length;
+let pending = reqs.filter(r=>r.status=="Pending");
+let paid = reqs.filter(r=>r.status=="Paid");
+let pendingTotal = 0;
+pending.forEach(r=> pendingTotal += Number(r.amount)||0);
+document.getElementById("totalPending").innerText = "₹"+pendingTotal;
+let paidTotal = 0;
+paid.forEach(r=> paidTotal += Number(r.amount)||0);
+document.getElementById("totalPaid").innerText = "₹"+paidTotal;
+let pHtml = "";
+if(pending.length==0) pHtml = "<p class='small'>Haji koi Request nathi!</p>";
+else pending.forEach((r,i)=>{
+pHtml += "<div class='wBox'><b>"+r.name+" - ₹"+r.amount+"</b><br><span class='small'>Mobile: "+r.mobile+"<br>UPI: <b>"+r.upi+"</b><br>Date: "+r.date+"</span><br><button onclick='markPaid("+i+")' style='background:#0284c7'>✅ Pay Kari Didhu - Paid Karo</button></div>";
+});
+document.getElementById("pendingList").innerHTML = pHtml;
+let paidHtml = "";
+if(paid.length==0) paidHtml
