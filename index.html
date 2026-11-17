@@ -1,97 +1,97 @@
 <!DOCTYPE html>
 <html lang="gu">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Green Task Earn</title>
 <style>
 body{font-family:Arial;background:#f0fff4;margin:0;padding:15px}
 .card{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 10px #0001;max-width:400px;margin:auto}
-input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px}
 button{width:100%;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;font-size:16px;margin-top:10px}
 h2{text-align:center;color:#16a34a}
 .box{display:flex;justify-content:space-between;background:#dcfce7;padding:12px;border-radius:10px;margin:10px 0}
 .refBox{background:#fef9c3;padding:10px;border-radius:10px;word-break:break-all;margin:10px 0;font-size:13px}
 .hidden{display:none}
-</style>
-</head>
+.adBox{background:#fffbeb;border:2px solid #f59e0b;padding:15px;border-radius:12px;margin:15px 0;text-align:center}
+.adBox img{width:100%;border-radius:10px}
+.timer{color:red;font-weight:bold}
+</style></head>
 <body>
 <div class="card">
-<div id="loginDiv">
-<h2>🌱 Green Task Earn</h2>
-<input id="m" placeholder="Mobile Number">
-<input id="n" placeholder="Full Name">
-<input id="p" type="password" placeholder="Password">
-<input id="ref" placeholder="Referral Mobile (Optional)">
+<div id="loginDiv"><h2>🌱 Green Task Earn</h2>
+<input id="m" placeholder="Mobile Number"><input id="n" placeholder="Full Name">
+<input id="p" type="password" placeholder="Password"><input id="ref" placeholder="Referral Mobile (Optional)">
 <button onclick="register()">Register / Login</button>
-<p style="text-align:center;font-size:12px;color:gray">Referral Link થી આવ્યા હો તો Referral Auto ભરાઈ જશે</p>
-</div>
-
+<p style="text-align:center;font-size:12px;color:gray">Referral Link થી આવ્યા હો તો Auto ભરાઈ જશે</p></div>
 <div id="homeDiv" class="hidden">
 <h2>Welcome, <span id="uName"></span> 👋</h2>
 <div class="box"><b>My Mobile:</b><span id="uMobile"></span></div>
 <div class="box"><b>My Team:</b><b id="teamCount">0</b></div>
 <div class="box"><b>My Earning:</b><b>₹<span id="earnCount">0</span></b></div>
-<p style="font-weight:bold">તમારી Referral Link:</p>
-<div class="refBox" id="refLink"></div>
+
+<!-- નવી વેપારી Ad Box -->
+<div id="merchantAdBox" class="adBox hidden">
+<p id="adMerchantName" style="font-weight:bold"></p>
+<img id="adMerchantPhoto" src="">
+<p>આ Ad 10 સેકન્ડ જુઓ અને ₹<span id="adRate">1</span> કમાઓ</p>
+<div class="timer" id="timerText">10 સેકન્ડ રાહ જુઓ...</div>
+<button id="claimBtn" onclick="claimAd()" disabled style="background:gray">રાહ જુઓ...</button>
+<p style="font-size:11px">બાકી Views: <span id="adRemaining"></span></p>
+</div>
+
+<p style="font-weight:bold">તમારી Referral Link:</p><div class="refBox" id="refLink"></div>
 <button onclick="share()">WhatsApp પર Share કરો</button>
 <button onclick="logout()" style="background:#ef4444">Logout</button>
-</div>
-</div>
-
+<p style="text-align:center"><a href="merchant.html" style="font-size:12px;color:green">Merchant Panel</a></p>
+</div></div>
 <script>
-let users = JSON.parse(localStorage.getItem("g_users")||"[]");
-let current = JSON.parse(localStorage.getItem("g_current")||"null");
-
-function getParam(name){return new URLSearchParams(window.location.search).get(name)}
-
-window.onload=function(){
- let r = getParam("ref");
- if(r) document.getElementById("ref").value = r;
- if(current) showHome();
-}
-
+let users=JSON.parse(localStorage.getItem("g_users")||"[]");
+let current=JSON.parse(localStorage.getItem("g_current")||"null");
+function getParam(n){return new URLSearchParams(window.location.search).get(n)}
+window.onload=function(){let r=getParam("ref");if(r)document.getElementById("ref").value=r;if(current)showHome();}
 function register(){
  let mobile=document.getElementById("m").value.trim();
  let name=document.getElementById("n").value.trim();
  let pass=document.getElementById("p").value.trim();
  let refBy=document.getElementById("ref").value.trim();
  if(!mobile||!name||!pass){alert("બધું ભરો!");return;}
- let found = users.find(u=>u.mobile==mobile);
- if(found){
-   if(found.password!=pass){alert("Password ખોટો છે!");return;}
-   current=found;
- } else {
-   let newUser={mobile,name,password:pass,refBy};
-   users.push(newUser);
-   current=newUser;
-   localStorage.setItem("g_users",JSON.stringify(users));
- }
- localStorage.setItem("g_current",JSON.stringify(current));
- showHome();
+ let found=users.find(u=>u.mobile==mobile);
+ if(found){if(found.password!=pass){alert("Password ખોટો!");return;}current=found;}
+ else{let newUser={mobile,name,password:pass,refBy,merchantEarn:0};users.push(newUser);current=newUser;localStorage.setItem("g_users",JSON.stringify(users));}
+ localStorage.setItem("g_current",JSON.stringify(current));showHome();
 }
-
 function showHome(){
  document.getElementById("loginDiv").classList.add("hidden");
  document.getElementById("homeDiv").classList.remove("hidden");
  document.getElementById("uName").innerText=current.name;
  document.getElementById("uMobile").innerText=current.mobile;
- let link = window.location.origin + window.location.pathname + "?ref=" + current.mobile;
+ let link=window.location.origin+window.location.pathname+"?ref="+current.mobile;
  document.getElementById("refLink").innerText=link;
- let team = users.filter(u=>u.refBy==current.mobile).length;
+ let team=users.filter(u=>u.refBy==current.mobile).length;
  document.getElementById("teamCount").innerText=team;
- document.getElementById("earnCount").innerText=team*25;
+ let base=team*25;let extra=(users.find(u=>u.mobile==current.mobile)?.merchantEarn||0);
+ document.getElementById("earnCount").innerText=base+extra;showMerchantAd();
 }
-
-function share(){
- let link=document.getElementById("refLink").innerText;
- window.open("https://wa.me/?text="+encodeURIComponent("Join Green Task Earn - મારી Link થી Join થાઓ: "+link));
+function showMerchantAd(){
+ let ads=JSON.parse(localStorage.getItem("merchantAds")||"[]");
+ if(ads.length==0) return;let ad=ads[0];if(ad.remaining<=0) return;
+ document.getElementById("merchantAdBox").classList.remove("hidden");
+ document.getElementById("adMerchantName").innerText=ad.name;
+ document.getElementById("adMerchantPhoto").src=ad.photo;
+ document.getElementById("adRate").innerText=ad.rate;
+ document.getElementById("adRemaining").innerText=ad.remaining+"/"+ad.total;
+ let sec=10;let timer=setInterval(()=>{
+  document.getElementById("timerText").innerText=sec+" સેકન્ડ બાકી...";sec--;
+  if(sec<0){clearInterval(timer);document.getElementById("timerText").innerText="હવે Claim કરો!";
+   let btn=document.getElementById("claimBtn");btn.disabled=false;btn.style.background="#16a34a";btn.innerText="₹"+ad.rate+" Claim કરો";}},1000);
 }
-
-function logout(){
- localStorage.removeItem("g_current");
- location.reload();
+function claimAd(){
+ let ads=JSON.parse(localStorage.getItem("merchantAds")||"[]");let ad=ads[0];
+ let idx=users.findIndex(u=>u.mobile==current.mobile);
+ if(idx>=0){users[idx].merchantEarn=(users[idx].merchantEarn||0)+ad.rate;current.merchantEarn=users[idx].merchantEarn;
+  localStorage.setItem("g_users",JSON.stringify(users));localStorage.setItem("g_current",JSON.stringify(current));}
+ ads[0].remaining--;if(ads[0].remaining<=0)ads.shift();localStorage.setItem("merchantAds",JSON.stringify(ads));
+ alert("₹"+ad.rate+" Earning માં Add થયું!");location.reload();
 }
-</script>
-</body>
-</html>
+function share(){let link=document.getElementById("refLink").innerText;window.open("https://wa.me/?text="+encodeURIComponent("Join Green Task Earn - મારી Link થી: "+link));}
+function logout(){localStorage.removeItem("g_current");location.reload();}
+</script></body></html>
