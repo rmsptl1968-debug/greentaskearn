@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merchant Ad Panel - GreenTaskEarn</title>
+<style>body{font-family:Arial;padding:15px;background:#f0fff0} .box{background:white;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px #ccc} input,button{width:100%;padding:10px;margin:5px 0} button{background:green;color:white;border:none;border-radius:5px;font-weight:bold} img{width:100%;border-radius:10px}</style>
+</head>
+<body>
+<h2>🛒 વેપારી Ad Panel</h2>
+
+<div class="box">
+<h3>નવી Ad ઉમેરો</h3>
+વેપારી નું નામ: <input id="mname" placeholder="Ex: Raj Kirana Gandhidham">
+Ad નો ફોટો: <input type="file" id="mphoto" accept="image/*">
+કુલ View: <input id="mviews" type="number" value="1000">
+1 View ના કેટલા ₹: <input id="mrate" type="number" value="1">
+<button onclick="saveAd()">Ad Save કરો</button>
+</div>
+
+<div class="box">
+<h3>ચાલુ Ad List</h3>
+<div id="adList"></div>
+</div>
+
+<script>
+function saveAd(){
+  let reader = new FileReader();
+  let file = document.getElementById('mphoto').files[0];
+  if(!file) return alert("ફોટો પસંદ કરો!");
+  reader.onload = function(e){
+    let ads = JSON.parse(localStorage.getItem('merchantAds')||'[]');
+    ads.push({
+      name: document.getElementById('mname').value,
+      photo: e.target.result,
+      total: parseInt(document.getElementById('mviews').value),
+      remaining: parseInt(document.getElementById('mviews').value),
+      rate: parseFloat(document.getElementById('mrate').value)
+    });
+    localStorage.setItem('merchantAds', JSON.stringify(ads));
+    alert("Ad Save થઈ ગઈ!");
+    showAds();
+  };
+  reader.readAsDataURL(file);
+}
+function showAds(){
+  let ads = JSON.parse(localStorage.getItem('merchantAds')||'[]');
+  let html = "";
+  ads.forEach((a,i)=>{
+    html+=`<div class="box"><b>${a.name}</b><br><img src="${a.photo}"><br>બાકી View: ${a.remaining} / ${a.total} | Rate: ₹${a.rate}<br><button onclick="deleteAd(${i})" style="background:red">Delete</button></div>`;
+  });
+  document.getElementById('adList').innerHTML = html || "કોઈ Ad નથી";
+}
+function deleteAd(i){
+  let ads = JSON.parse(localStorage.getItem('merchantAds')||'[]');
+  ads.splice(i,1);
+  localStorage.setItem('merchantAds', JSON.stringify(ads));
+  showAds();
+}
+showAds();
+</script>
+</body>
+</html>
