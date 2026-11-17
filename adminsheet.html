@@ -1,1 +1,78 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><style>body{font-family:Arial;background:#f0fff4;padding:10px}.card{background:#fff;padding:15px;border-radius:12px;max-width:600px;margin:auto}table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}th,td{border:1px solid #ddd;padding:6px}th{background:#16a34a;color:#fff}.box{background:#dcfce7;padding:10px;border-radius:8px;text-align:center;flex:1;margin:5px}.top{display:flex}button{padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;width:100%;margin-top:10px;font-size:15px}input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}#dataBox{width:100%;height:100px;margin-top:10px;display:none}</style></head><body><div class="card"><h2 style="text-align:center;color:#16a34a">👑 Admin Panel</h2><div id="loginBox"><input type="password" id="pass" placeholder="Password 1234"><button onclick="login()">Login</button></div><div id="panel" style="display:none"><div class="top"><div class="box"><b id="total">0</b><br>Total Users</div><div class="box"><b id="today">0</b><br>With Referral</div></div><table id="tbl"></table><button onclick="showData()">Excel માટે Data જુઓ</button><textarea id="dataBox"></textarea><button onclick="clearAll()" style="background:#ef4444">બધો Data Delete</button><p style="font-size:10px;color:gray;text-align:center">Data તમારા Mobile માં જ છે. Main site પર Register કરો તો અહીં દેખાશે.</p></div></div><script>function login(){if(document.getElementById("pass").value!="1234"){alert("Password 1234 છે");return;}document.getElementById("loginBox").style.display="none";document.getElementById("panel").style.display="block";load();}function load(){let users=JSON.parse(localStorage.getItem("g_users")||"[]");document.getElementById("total").innerText=users.length;document.getElementById("today").innerText=users.filter(u=>u.refBy).length;let html="<tr><th>Mobile</th><th>Name</th><th>Ref By</th><th>Team</th></tr>";users.forEach(u=>{let team=users.filter(x=>x.refBy==u.mobile).length;html+=`<tr><td>${u.mobile}</td><td>${u.name}</td><td>${u.refBy||"-"}</td><td>${team}</td></tr>`;});document.getElementById("tbl").innerHTML=html;if(users.length==0){document.getElementById("tbl").innerHTML+="<tr><td colspan=4 style=text-align:center;color:red>હજી કોઈ User નથી - Main Site પર Register કરો</td></tr>";}}function showData(){let users=JSON.parse(localStorage.getItem("g_users")||"[]");if(users.length==0){alert("હજી કોઈ Data નથી! પહેલા Main Site પર Register કરો");return;}let text="Mobile,Name,RefBy\n";users.forEach(u=>{text+=`${u.mobile},${u.name},${u.refBy||""}\n`;});let box=document.getElementById("dataBox");box.style.display="block";box.value=text;box.select();alert("નીચે Box માં Data આવી ગયું - Long Press કરીને Copy કરી શકો છો!");}function clearAll(){if(confirm("બધો Data Delete કરવો છે?")){localStorage.removeItem("g_users");localStorage.removeItem("g_current");location.reload();}}</script></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin</title>
+<style>
+body{font-family:Arial;background:#f0fff4;padding:10px}
+.card{background:#fff;padding:15px;border-radius:12px;max-width:600px;margin:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+th,td{border:1px solid #ddd;padding:6px}
+th{background:#16a34a;color:#fff}
+.box{background:#dcfce7;padding:10px;border-radius:8px;text-align:center;flex:1;margin:5px}
+.top{display:flex}
+button{padding:12px;background:#16a34a;color:white;border:none;border-radius:8px;width:100%;margin-top:10px}
+input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px}
+#dataBox{width:100%;height:80px;display:none;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="card">
+<h2 style="text-align:center;color:#16a34a">Admin Panel</h2>
+<div id="loginBox">
+<input type="password" id="pass" placeholder="Password 1234">
+<button onclick="login()">Login</button>
+</div>
+<div id="panel" style="display:none">
+<div class="top">
+<div class="box"><b id="total">0</b><br>Total</div>
+<div class="box"><b id="ref">0</b><br>Referral</div>
+</div>
+<table id="tbl"></table>
+<button onclick="showData()">Excel Data જુઓ</button>
+<textarea id="dataBox"></textarea>
+<button onclick="clearAll()" style="background:#ef4444">Delete All</button>
+</div>
+</div>
+<script>
+function login(){
+if(document.getElementById("pass").value!="1234"){
+alert("Password 1234 છે");return;
+}
+document.getElementById("loginBox").style.display="none";
+document.getElementById("panel").style.display="block";
+load();
+}
+function load(){
+let users=JSON.parse(localStorage.getItem("g_users")||"[]");
+document.getElementById("total").innerText=users.length;
+document.getElementById("ref").innerText=users.filter(u=>u.refBy).length;
+let html="<tr><th>Mobile</th><th>Name</th><th>Ref By</th><th>Team</th></tr>";
+users.forEach(u=>{
+let team=users.filter(x=>x.refBy==u.mobile).length;
+html+="<tr><td>"+u.mobile+"</td><td>"+u.name+"</td><td>"+(u.refBy||"-")+"</td><td>"+team+"</td></tr>";
+});
+document.getElementById("tbl").innerHTML=html;
+}
+function showData(){
+let users=JSON.parse(localStorage.getItem("g_users")||"[]");
+if(users.length==0){alert("Data નથી!");return;}
+let text="Mobile,Name,RefBy\n";
+users.forEach(u=>{
+text+=u.mobile+","+u.name+","+(u.refBy||"")+"\n";
+});
+let box=document.getElementById("dataBox");
+box.style.display="block";
+box.value=text;
+}
+function clearAll(){
+if(confirm("Delete કરવું છે?")){
+localStorage.removeItem("g_users");
+localStorage.removeItem("g_current");
+location.reload();
+}
+}
+</script>
+</body>
+</html>
