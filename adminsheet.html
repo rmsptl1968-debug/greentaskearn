@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - Green Task Earn</title>
+<style>
+body{font-family:Arial;background:#f0fff4;padding:10px}
+.card{background:#fff;padding:15px;border-radius:12px;max-width:600px;margin:auto;box-shadow:0 4px 10px #0001}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+th,td{border:1px solid #ddd;padding:8px;text-align:left}
+th{background:#16a34a;color:white}
+.top{display:flex;justify-content:space-between}
+.box{background:#dcfce7;padding:10px;border-radius:8px;text-align:center;flex:1;margin:5px}
+button{padding:10px;background:#16a34a;color:white;border:none;border-radius:8px;width:100%;margin-top:10px}
+input{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+</style>
+</head>
+<body>
+<div class="card">
+<h2 style="text-align:center;color:#16a34a">👑 Admin Panel</h2>
+<input type="password" id="pass" placeholder="Admin Password લખો (1234)">
+<button onclick="login()">Login</button>
+
+<div id="panel" style="display:none">
+<div class="top">
+<div class="box"><b id="total">0</b><br>Total Users</div>
+<div class="box"><b id="today">0</b><br>With Referral</div>
+</div>
+
+<table id="tbl">
+<tr><th>Mobile</th><th>Name</th><th>Ref By</th><th>Team</th></tr>
+</table>
+
+<button onclick="download()">Excel માટે Copy કરો</button>
+<button onclick="clearAll()" style="background:#ef4444">બધો Data Delete</button>
+<p style="font-size:11px;color:gray;text-align:center;margin-top:15px">આ Data તમારા જ Mobile/ Laptop માં Save છે. બીજા Mobile નો Data જોવો હોય તો તે Mobile પર આજ Page ખોલો.</p>
+</div>
+</div>
+
+<script>
+function login(){
+ if(document.getElementById("pass").value!="1234"){alert("Password 1234 છે");return;}
+ document.getElementById("panel").style.display="block";
+ load();
+}
+function load(){
+ let users=JSON.parse(localStorage.getItem("g_users")||"[]");
+ document.getElementById("total").innerText=users.length;
+ document.getElementById("today").innerText=users.filter(u=>u.refBy).length;
+ let html="";
+ users.forEach(u=>{
+   let team = users.filter(x=>x.refBy==u.mobile).length;
+   html+=`<tr><td>${u.mobile}</td><td>${u.name}</td><td>${u.refBy||"-"}</td><td>${team}</td></tr>`;
+ });
+ document.getElementById("tbl").innerHTML="<tr><th>Mobile</th><th>Name</th><th>Ref By</th><th>Team</th></tr>"+html;
+}
+function download(){
+ let users=JSON.parse(localStorage.getItem("g_users")||"[]");
+ let text="Mobile,Name,RefBy\n";
+ users.forEach(u=>{text+=`${u.mobile},${u.name},${u.refBy||""}\n`});
+ navigator.clipboard.writeText(text);
+ alert("Copy થઈ ગયું! હવે Google Sheet માં Paste કરી દો!");
+}
+function clearAll(){
+ if(confirm("ખરેખર બધો Data Delete કરવો છે?")){
+   localStorage.removeItem("g_users");
+   localStorage.removeItem("g_current");
+   location.reload();
+ }
+}
+</script>
+</body>
+</html>
