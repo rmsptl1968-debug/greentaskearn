@@ -22,14 +22,25 @@ body{background:#0a0a0a;color:#fff;padding-bottom:40px}
 .card h3{font-size:14px;color:#ffcc00;margin-bottom:6px} .card p{font-size:13px;line-height:1.6;color:#ddd}
 .task{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;border-bottom:1px solid #222;font-size:13px}
 .free{background:#00e676;color:#000;font-size:10px;padding:2px 5px;border-radius:4px;font-weight:700;margin-left:4px}
-.btn-get{background:#ffcc00;color:#000;border:0;padding:7px 10px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;min-width:78px}
-.btn-done{background:#00e676;color:#000;border:0;padding:7px 10px;border-radius:6px;font-weight:800;font-size:12px;min-width:78px}
+.btn-get{background:#ffcc00;color:#000;border:0;padding:7px 10px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;min-width:82px}
+.btn-done{background:#00e676;color:#000;border:0;padding:7px 10px;border-radius:6px;font-weight:800;font-size:12px;min-width:82px}
 table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px} th,td{border:1px solid #333;padding:8px;text-align:left} th{background:#222}
 input{width:100%;padding:11px;border:1px solid #333;border-radius:8px;margin:6px 0;background:#222;color:#fff}
 .btn-big{display:block;text-align:center;background:#00e676;color:#000;padding:12px;border-radius:8px;text-decoration:none;font-weight:800;margin-top:10px;border:0;width:100%}
 .btn-orange{background:#ff6b00;color:#fff}
 .hidden{display:none} .small{font-size:11px;color:#999;line-height:1.5} .green{color:#00e676;font-weight:700}
+/* AD POPUP - ANDAR J KHULSE */
+#adModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.92);z-index:999;display:none;align-items:center;justify-content:center;padding:16px}
+#adModal.show{display:flex}
+.modal-box{background:#111;border:2px solid #ffcc00;border-radius:14px;padding:16px;width:100%;max-width:400px;text-align:center}
+.timer-big{font-size:42px;font-weight:900;color:#ffcc00;margin:10px 0}
+.ad-frame{background:#fff;color:#000;border-radius:10px;padding:14px;margin:10px 0;min-height:120px}
+.btn-claim{background:#00e676;color:#000;border:0;padding:12px;border-radius:8px;font-weight:800;width:100%;font-size:15px}
+.btn-claim:disabled{background:#444;color:#888}
 </style>
+<script>
+function show(id,btn){var pages=['dashboard','profile','pin','team','commission','withdrawal','support'];for(var i=0;i<pages.length;i++){var p=document.getElementById(pages[i]);if(p)p.classList.add('hidden');}var cur=document.getElementById(id);if(cur)cur.classList.remove('hidden');var all=document.querySelectorAll('.menu button');for(var j=0;j<all.length;j++){all[j].classList.remove('active');}if(btn)btn.classList.add('active');window.scrollTo(0,0);}
+</script>
 </head>
 <body>
 <div class="top-yellow">10 સેકન્ડ Ad = ₹0.25 | રોજ 100+ Ad = ₹25+ | પહેલા 2 Ad FREE</div>
@@ -51,17 +62,9 @@ Today: <b><span id="todayCount">4</span> / 100+</b> | Pin Status: <b class="gree
 <div id="dashboard">
 <div class="card">
 <h3>📺 આજના Tasks - 100+ Ad</h3>
-<p class="small">✅ 1-2 FREE છે, 3 થી 30 ના 30 Pin જોઈએ છે.<br>દરેક Ad - 10 સેકન્ડ જુઓ - ₹0.25 મેળવો</p>
+<p class="small">✅ 1-2 FREE છે, 3 થી 30 ના 30 Pin જોઈએ છે.<br>દરેક Ad - 10 સેકન્ડ જુઓ - ₹0.25 મેળવો. Ad અંદર જ ખુલશે, બહાર નહીં જાય.</p>
 <div id="taskList"></div>
 </div>
-<div class="card" style="text-align:center"><p class="small">Sponsored - Adsterra Native Banner</p>
+<div class="card" style="text-align:center"><p class="small">Sponsored - Adsterra Native Banner - અંદર જ Ad</p>
 <script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
-<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
-</div>
-<div class="card" style="text-align:center"><p class="small">Sponsored - Google AdSense</p><div style="background:#222;padding:16px;border-radius:8px;margin-top:6px;color:#aaa;font-size:12px">Google AdSense Ad Space</div></div>
-<a class="btn-big btn-orange" href="https://arwf.org/4/71c629698b098809841a9971deed43dc" target="_blank" style="display:block">🎁 Special Offer Juo - Ahi Click Karo</a>
-</div>
-<div id="profile" class="hidden"><div class="card"><h3>👤 Profile</h3><p>Name: <b>RAMESHKUMAR GIRDHARLAL PATEL</b><br>Mobile: <b>99040 78804</b><br>City: <b>Adalaj, Gujarat</b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input id="upiId" placeholder="Tamaro UPI ID lakho"><p class="small">Payment aaj UPI ID par aavse.</p><button class="btn-big" onclick="alert('UPI ID Save Thai Gayu!')">UPI ID Save Karo</button></div></div>
-<div id="pin" class="hidden"><div class="card"><h3>📌 Pin Status</h3><p>Pin Status: <b class="green">Active ✅</b><br>Pin lidha pachi roj 100+ Ads joi shako cho.</p><p style="margin-top:10px"><b>Tamaro Referral Link:</b></p><input value="https://rmsptl1968-debug.github.io/?ref=YOURMOBILE" readonly onclick="this.select()"></div></div>
-<div id="team" class="hidden"><div class="card"><h3>👥 My Team</h3><p>Total Team: <b>0</b><br>Level 1: 0 | Level 2: 0 | Level 3: 0 | Level 4: 0 | Level 5: 0</p></div></div>
-<div id="commission" class="hidden"><div class="card"><h3>💰 Commission - Level Income</h3><p>15% Admin Charge kapi ne UPI thi pay thase.</p><table><tr><th>Level</th><th>Pura</th><th>15% Admin</th><th>Malse</th></tr><tr><td>Level 1</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 2</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 3</td><td>Rs.60</td><td>- Rs.9.00</td><td><b>Rs.51.00</b></td></tr><tr><td>Level 4</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 5</td><td
+<div id="container-c40e448bbdab3d4306bdef
