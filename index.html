@@ -67,4 +67,68 @@ Today: <b><span id="todayCount">4</span> / 100+</b> | Pin Status: <b class="gree
 </div>
 <div class="card" style="text-align:center"><p class="small">Sponsored - Adsterra Native Banner - અંદર જ Ad</p>
 <script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
-<div id="container-c40e448bbdab3d4306bdef
+<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
+</div>
+<div class="card" style="text-align:center"><p class="small">Sponsored - Google AdSense</p><div style="background:#222;padding:16px;border-radius:8px;margin-top:6px;color:#aaa;font-size:12px">Google AdSense Ad Space</div></div>
+</div>
+<div id="profile" class="hidden"><div class="card"><h3>👤 Profile</h3><p>Name: <b>RAMESHKUMAR GIRDHARLAL PATEL</b><br>Mobile: <b>99040 78804</b><br>City: <b>Adalaj, Gujarat</b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input id="upiId" placeholder="Tamaro UPI ID lakho"><p class="small">Payment aaj UPI ID par aavse.</p><button class="btn-big" onclick="alert('UPI ID Save Thai Gayu!')">UPI ID Save Karo</button></div></div>
+<div id="pin" class="hidden"><div class="card"><h3>📌 Pin Status</h3><p>Pin Status: <b class="green">Active ✅</b><br>Pin lidha pachi roj 100+ Ads joi shako cho.</p><p style="margin-top:10px"><b>Tamaro Referral Link:</b></p><input value="https://rmsptl1968-debug.github.io/?ref=YOURMOBILE" readonly onclick="this.select()"></div></div>
+<div id="team" class="hidden"><div class="card"><h3>👥 My Team</h3><p>Total Team: <b>0</b><br>Level 1: 0 | Level 2: 0 | Level 3: 0 | Level 4: 0 | Level 5: 0</p></div></div>
+<div id="commission" class="hidden"><div class="card"><h3>💰 Commission - Level Income</h3><p>15% Admin Charge kapi ne UPI thi pay thase.</p><table><tr><th>Level</th><th>Pura</th><th>15% Admin</th><th>Malse</th></tr><tr><td>Level 1</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 2</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 3</td><td>Rs.60</td><td>- Rs.9.00</td><td><b>Rs.51.00</b></td></tr><tr><td>Level 4</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 5</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><th>Total</th><th>Rs.180</th><th>Rs.27</th><th>Rs.153</th></tr></table></div></div>
+<div id="withdrawal" class="hidden"><div class="card"><h3>💰 Withdrawal - UPI Thi</h3><p>Minimum Withdrawal: <b>Rs.100</b><br>Payment: <b>Fakt UPI ID thi</b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input placeholder="Tamaro UPI ID ahi lakho"><div style="background:#2a1a08;padding:10px;border-radius:8px;margin-top:10px;border:1px solid #ff6b00;font-size:13px"><b>Ad Payment Tarikho:</b><br>✅ 1lo Hapto: <b>5 thi 7 Tarikhe</b><br>✅ 2jo Hapto: <b>20 thi 22 Tarikhe</b></div><button class="btn-big" onclick="alert('Withdrawal Request Mokli Didhi!')">Withdrawal Karo</button></div></div>
+<div id="support" class="hidden"><div class="card"><h3>📞 Support</h3><p><b>Rameshkumar Patel, Adalaj, Gujarat</b><br>Mobile: <b>99040 78804</b><br><br>Ads: Google AdSense + Adsterra Native Banner. Adult / Dating / Gambling Ads Block che.</p></div></div>
+
+<!-- AD MODAL - ANDAR POPUP -->
+<div id="adModal"><div class="modal-box">
+<h3 style="color:#ffcc00">📺 Ad Chali Rahi Che...</h3>
+<p class="small" style="color:#ccc">Ad ne 10 second sudhi juo, pachhi paisa malse. Bahar nahi javanu.</p>
+<div class="timer-big" id="modalTimer">10</div>
+<div class="ad-frame">
+<b>Gujarat na Vyapari ni Ad</b><br><span style="font-size:12px;color:#555">Ahi Adsterra ni Ad aavse - Tamari Dukan ni Ad Ahi Mukso?</span><br><br>
+<a href="https://arwf.org/4/71c629698b098809841a9971deed43dc" target="_blank" style="color:#0b6e4f;font-weight:800">🎁 Special Offer Juo</a>
+</div>
+<button class="btn-claim" id="claimBtn" disabled onclick="claimAd()">10 second raho...</button>
+<p class="small" style="margin-top:8px;color:#888">Timer puro thase etle button chalu thase.</p>
+</div></div>
+
+<script>
+var done=4; var earn=0.50; var currentBtn=null;
+function openAd(btn){
+  currentBtn=btn;
+  document.getElementById('adModal').classList.add('show');
+  var t=10;
+  var timerEl=document.getElementById('modalTimer');
+  var claim=document.getElementById('claimBtn');
+  claim.disabled=true; claim.innerText='10 second raho...'; timerEl.innerText=t;
+  var iv=setInterval(function(){
+    t--; timerEl.innerText=t;
+    if(t>0){ claim.innerText=t+' second raho...'; }
+    else { clearInterval(iv); timerEl.innerText='✅ Puri!'; claim.disabled=false; claim.innerText='₹0.25 Melya - Claim Karo ✅'; }
+  },1000);
+}
+function claimAd(){
+  document.getElementById('adModal').classList.remove('show');
+  done++; earn=earn+0.25;
+  var nb=document.createElement('button'); nb.className='btn-done'; nb.innerText='Done Rs.0.25';
+  if(currentBtn) currentBtn.parentNode.replaceChild(nb,currentBtn);
+  document.getElementById('todayCount').innerText=done;
+  document.getElementById('totalEarn').innerText=earn.toFixed(2);
+  document.getElementById('adEarn').innerText=earn.toFixed(2);
+  alert('Ad Joi Lidi! Rs.0.25 malse. Payment 5-7 / 20-22 tarikhe UPI thi malse.');
+}
+function buildTasks(){
+  var list=document.getElementById('taskList'); if(!list) return; list.innerHTML='';
+  for(var i=1;i<=105;i++){
+    var row=document.createElement('div'); row.className='task';
+    var left=document.createElement('span'); left.innerHTML='<b>'+i+'. Ad Juo - 10 Second</b>';
+    if(i<=2){ var f=document.createElement('span'); f.className='free'; f.innerText='FREE'; left.appendChild(f); }
+    var right;
+    if(i<=4){ right=document.createElement('button'); right.className='btn-done'; right.innerText = i<=2 ? 'Done Rs.0' : 'Done Rs.0.25'; }
+    else { right=document.createElement('button'); right.className='btn-get'; right.innerText='Rs.0.25 Melvo'; (function(b){ b.onclick=function(){ openAd(b); }; })(right); }
+    row.appendChild(left); row.appendChild(right); list.appendChild(row);
+  }
+}
+buildTasks();
+</script>
+</body>
+</html>
