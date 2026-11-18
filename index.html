@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Task Earn</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0b0f0a;color:#fff;padding:12px;padding-bottom:80px}
+.header{text-align:center;background:#145a1e;padding:14px;border-radius:12px;border:2px solid #2ecc71}
+.header h1{font-size:26px}.header h1 span{color:#f1c40f}
+.header p{color:#a9f5b2;font-size:13px}
+.rate{background:#f1c40f;color:#000;text-align:center;padding:8px;border-radius:8px;font-weight:bold;margin-top:10px;font-size:14px}
+.card{background:#1a2317;padding:14px;border-radius:12px;margin-top:12px;border:1px solid #2ecc71}
+.card h3{color:#f1c40f;margin-bottom:8px}
+.btn{background:#2ecc71;color:#000;border:0;padding:10px;border-radius:8px;font-weight:bold;width:100%;margin-top:8px;cursor:pointer}
+.btn-y{background:#f1c40f}.btn-r{background:#e74c3c;color:#fff}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin-top:8px}
+.task{display:flex;justify-content:space-between;align-items:center;background:#222;padding:10px;border-radius:8px;margin-top:8px}
+.task button{background:#f1c40f;border:0;padding:7px 10px;border-radius:6px;font-weight:bold;cursor:pointer;min-width:85px}
+.task button:disabled{background:#2ecc71;color:#fff}
+.hidden{display:none}
+.menu{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.menu button{background:#222;color:#fff;border:1px solid #2ecc71;padding:8px 10px;border-radius:20px;cursor:pointer;font-size:13px}
+.menu button.active{background:#f1c40f;color:#000;font-weight:bold}
+.submenu button{background:#333;border:1px solid #555;font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
+td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
+#adBox{background:#000;border:2px solid #f1c40f;border-radius:12px;padding:14px;text-align:center;margin-top:10px}
+#timer{font-size:45px;color:#f1c40f;font-weight:bold}
+.ad-frame{background:#fff;border-radius:8px;padding:8px;min-height:200px;color:#000;display:flex;align-items:center;justify-content:center;text-align:center;margin-top:8px}
+.small{font-size:12px;color:#aaa;text-align:center;margin-top:10px}
+.topbar{display:flex;justify-content:space-between;margin-top:10px}
+.topbar button{flex:1;margin:2px;padding:10px;border-radius:8px;border:0;font-weight:bold;cursor:pointer}
+.free-badge{background:#2ecc71;color:#000;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>🌿 Green <span>Task Earn</span></h1>
+<p>જે આવશે.. શરુ કરશે.. એ કમાશે..</p>
+<p>રોજેરોજ Ad જુવો.. Ad આપો અને Reward મેળવો</p>
+</div>
+<div class="rate">⭐ 10 સેકન્ડ Ad = ₹1 | રોજ 30 Ad = ₹30 | પહેલા 2 Ad FREE ⭐</div>
+
+<div class="card" id="loginCard">
+<h3>🔐 Login / Register - 20 મિત્રો અહીંથી શરૂ કરે</h3>
+<input id="userName" placeholder="તમારું નામ">
+<input id="userMobile" placeholder="Mobile Number">
+<input id="referCode" placeholder="Refer Code (હોય તો - નહિ તો ખાલી રાખો)">
+<button class="btn btn-y" onclick="doLogin()">Login / Register કરો</button>
+<p style="font-size:12px;color:#aaa;margin-top:8px;text-align:center">નવા મિત્રને પહેલા 2 Ad FREE મળશે. Pin વગર.</p>
+<button class="btn" onclick="showAdminLogin()" style="background:#333;color:#fff">Admin Login</button>
+</div>
+
+<div class="card hidden" id="adminLoginBox">
+<h3>🔐 Admin Login</h3>
+<input type="password" id="adminPass" placeholder="Admin Password">
+<button class="btn" onclick="checkAdmin()">Admin Login</button>
+<p id="adminMsg" style="color:red;text-align:center;margin-top:8px"></p>
+<p style="font-size:12px;color:#aaa;text-align:center">Admin Password: Ramesh@123</p>
+</div>
+
+<div id="mainApp" class="hidden">
+<div class="topbar">
+<button style="background:#f1c40f" onclick="switchPanel('user')">👤 USER PANEL</button>
+<button style="background:#2ecc71" onclick="switchPanel('admin')">🛡️ ADMIN PANEL</button>
+<button style="background:#e74c3c;color:#fff" onclick="logout()">Logout</button>
+</div>
+
+<div id="userPanel">
+<div class="card">
+<h3>👋 નમસ્તે <span id="dispName">Rameshkumar</span>! Dashboard</h3>
+<p>Total Earning: <b id="userEarn">₹25</b> | Adsterra: <b>₹0</b> | Gujarat Business: <b>₹0</b></p>
+<p>Today: <b id="taskCount">0 / 30</b> | Pin Status: <b id="pinStatus">FREE - 2 Ad બાકી</b> | Team: <b>0 Direct</b></p>
+</div>
+
+<div class="menu" id="userMenu">
+<button class="active" onclick="showUserTab('dash',this)">Dashboard</button>
+<button onclick="showUserTab('profile',this)">Profile</button>
+<button onclick="showUserTab('pin',this)">Pin</button>
+<button onclick="showUserTab('team',this)">Team</button>
+<button onclick="showUserTab('comm',this)">Commission</button>
+<button onclick="showUserTab('withdraw',this)">Withdrawal</button>
+<button onclick="showUserTab('support',this)">Support</button>
+</div>
+
+<div class="card" id="u-dash">
+<h3>📺 આજના Tasks - 30 Ad</h3>
+<p style="font-size:13px;color:#2ecc71">✅ 1-2 નંબર FREE છે. 3 થી 30 માટે Pin Activation જોઈશે.</p>
+<div id="adBox" class="hidden">
+<h3>📺 Ad ચાલી રહી છે... <span id="adNo"></span></h3>
+<div id="timer">10</div>
+<p>Ad પૂરી થાય ત્યાં સુધી રાહ જુઓ</p>
+<div class="ad-frame"><div><b>🟢 Green Task Earn</b><br>તમારી દુકાનની જાહેરાત<br><span style="font-size:12px">વેપાર-ધંધાની Ad મૂકી આપીશું</span></div></div>
+</div>
+<div id="taskList"></div>
+</div>
+
+<div class="card hidden" id="u-profile">
+<h3>👤 Profile - View / Edit / Password</h3>
+<p>Name: <b id="pName">Rameshkumar</b></p><p>Mobile: <b id="pMobile">99040 78804</b></p><p>Refer Code: <b>GTE-1001</b></p>
+<input id="editName" placeholder="નવું નામ"><input id="editPass" type="password" placeholder="નવો Password">
+<button class="btn" onclick="saveProfile()">Profile Save કરો</button>
+</div>
+
+<div class="card hidden" id="u-pin">
+<h3>📌 Pin - Request / Activation / Transfer</h3>
+<p>તમારો Pin: <b id="myPin">FREE TRIAL - 2 Ad</b></p>
+<button class="btn btn-y" onclick="requestPin()">📌 Request Pin (Admin ને જશે)</button>
+<input id="actPin" placeholder="Activation Pin નાખો">
+<button class="btn" onclick="activatePin()">✅ Activation Pin લગાવો</button>
+<input id="transPinTo" placeholder="કેને Transfer કરવો છે? Mobile">
+<button class="btn" onclick="alert('Pin Transfer Request Admin ને ગઈ!')">🔄 Transfer Pin</button>
+<h3 style="margin-top:12px">Pin History / Pin Report</h3>
+<table><tr><th>Date</th><th>Type</th><th>Status</th></tr><tr><td>Today</td><td>Free Trial 2 Ad</td><td>Active</td></tr><tr><td id="pinHisDate">-</td><td id="pinHisType">-</td><td>Pending</td></tr></table>
+</div>
+
+<div class="card hidden" id="u-team">
+<h3>👥 Team - My Direct / My Tree</h3>
+<p>તમારી Refer Link:</p>
+<input id="myLink" value="https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001" readonly>
+<button class="btn" onclick="copyLink()">📋 Link Copy કરો - 20 મિત્રોને મોકલો</button>
+<table><tr><th>Level</th><th>Members</th><th>Commission</th></tr><tr><td>Level 1 - Direct</td><td>0</td><td>₹0</td></tr><tr><td>Level 2</td><td>0</td><td>₹0</td></tr><tr><td>Level 3</td><td>0</td><td>₹0</td></tr></table>
+</div>
+
+<div class="card hidden" id="u-comm">
+<h3>💸 Commission - Adsterra Ad / Gujarat Business Ad</h3>
+<table><tr><th>Type</th><th>Ads</th><th>Earning</th></tr><tr><td>Adsterra Ad</td><td>0</td><td>₹0</td></tr><tr><td>Gujarat Business Ad</td><td>0</td><td>₹0</td></tr><tr><td>Team Commission</td><td>-</td><td>₹0</td></tr></table>
+</div>
+
+<div class="card hidden" id="u-withdraw">
+<h3>💰 Withdrawal - Request / Payout / Transaction History</h3>
+<input id="upi" placeholder="UPI ID / Mobile Number">
+<input type="number" id="amt" placeholder="Amount (Min ₹100)">
+<button class="btn btn-y" onclick="withdraw()">Withdraw Request મોકલો</button>
+<p id="wMsg" style="text-align:center;margin-top:8px;color:#2ecc71"></p>
+<h3 style="margin-top:10px">Payout Details / Transaction History</h3>
+<table><tr><th>Date</th><th>Amount</th><th>Status</th></tr><tr><td>-</td><td>-</td><td>No History</td></tr></table>
+</div>
+
+<div class="card hidden" id="u-support">
+<h3>🆘 Support - Ticket History</h3>
+<textarea id="ticketText" placeholder="તમારો પ્રશ્ન લખો..."></textarea>
+<button class="btn" onclick="sendTicket()">Ticket મોકલો</button>
+<table><tr><th>Ticket</th><th>Status</th></tr><tr><td id="ticketHis">કોઈ Ticket નથી</td><td>Open</td></tr></table>
+</div>
+</div>
+
+<div id="adminPanel" class="hidden">
+<div class="card"><h3>🛡️ Admin Dashboard</h3><p>Total Users: <b>1</b> | Total Earning: <b id="aEarn">₹25</b> | Withdraw Request: <b id="aWithdraw">0</b> | Today Traffic: <b id="aTraffic">0 Views</b></p></div>
+<div class="menu" id="adminMenu">
+<button class="active" onclick="showAdminTab('adash',this)">Dashboard</button>
+<button onclick="showAdminTab('apin',this)">Pin</button>
+<button onclick="showAdminTab('areg',this)">Registration</button>
+<button onclick="showAdminTab('ateam',this)">Our Team</button>
+<button onclick="showAdminTab('aad',this)">Ad View</button>
+<button onclick="showAdminTab('apay',this)">Payment</button>
+<button onclick="showAdminTab('acomm',this)">Commission</button>
+<button onclick="showAdminTab('asup',this)">Support</button>
+</div>
+<div class="card" id="a-adash"><h3>Admin Dashboard</h3><p>આજે 20 મિત્રોને 2 Free Ad આપો - Traffic વધશે તો વેપારી Ad આપશે.</p><button class="btn btn-y" onclick="alert('20 મિત્રોની લિંક: https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001')">📋 20 મિત્રોને મોકલવાની લિંક</button></div>
+<div class="card hidden" id="a-apin"><h3>📌 Pin - Create / Send / History</h3><input id="newPinUser" placeholder="Mobile નાખો"><button class="btn" onclick="createPin()">Pin Create કરો</button><table><tr><th>Pin</th><th>User</th><th>Status</th></tr><tr><td>GTE-PIN-1234</td><td>Demo</td><td>Active</td></tr></table></div>
+<div class="card hidden" id="a-areg"><h3>📝 Registration - View / Edit / Password / Block</h3><table><tr><th>User</th><th>Mobile</th><th>Action</th></tr><tr><td>Rameshkumar</td><td>99040 78804</td><td><button onclick="alert('Edit Profile ખુલ્યું')">Edit</button> <button onclick="alert('User Blocked!')" style="background:#e74c3c;color:#fff;border:0;padding:4px 8px;border-radius:4px">Block ID</button></td></tr></table><input placeholder="User નો નવો Password"><button class="btn" onclick="alert('Password બદલાઈ ગયો')">User Password બદલો</button></div>
+<div class="card hidden" id="a-ateam"><h3>👥 Our Team - Direct / Tree / Level</h3><table><tr><th>Direct List</th><th>Tree View</th><th>Team Level</th></tr><tr><td>0</td><td>Level 1</td><td>1</td></tr></table></div>
+<div class="card hidden" id="a-aad"><h3>📺 Ad View - Adsterra Ad / Gujarat Business Ad</h3><table><tr><th>Ad Type</th><th>Today Views</th><th>Earning</th></tr><tr><td>Adsterra Ad</td><td>0</td><td>₹0</td></tr><tr><td>Gujarat Business Ad</td><td>0</td><td>₹0</td></tr></table><p>Gujarat Business Ad ઉમેરવા માટે:</p><input id="bizName" placeholder="વેપારીનું નામ / દુકાનનું નામ"><button class="btn" onclick="addBizAd()">+ Business Ad ઉમેરો</button><p id="bizMsg" style="color:#2ecc71;text-align:center"></p></div>
+<div class="card hidden" id="a-apay"><h3>💰 Payment - Withdrawal - Request - History</h3><table><tr><th>User</th><th>Amount</th><th>UPI</th><th>Action</th></tr><tr><td>કોઈ Request નથી</td><td>-</td><td>-</td><td>-</td></tr></table></div>
+<div class="card hidden" id="a-acomm"><h3>💸 Commission - Adsterra / Gujarat Business</h3><table><tr><th>Type</th><th>Total</th></tr><tr><td>Adsterra Ad Commission</td><td>₹0</td></tr><tr><td>Gujarat Business Ad Commission</td><td>₹0</td></tr></table></div>
+<div class="card hidden" id="a-asup"><h3>🆘 Support - Ticket History</h3><table><tr><th>Ticket</th><th>User</th><th>Status</th></tr><tr><td>કોઈ Ticket નથી</td><td>-</td><td>-</td><td>-</td></tr></table></div>
+</div>
+
+<div class="card"><h3>📢 વેપારીઓ માટે</h3><p>વેપાર-ધંધા ની Ad મૂકી આપીશું, વધુ ગ્રાહકો સુધી પહોંચાડીશું</p><p>વધુ માહિતી રૂબરૂ માં આપીશું</p><p style="color:#ff8fab">Website : https://rmsptl1968-debug.github.io/greentaskearn</p><p style="text-align:center;font-weight:bold">RAMESHKUMAR : 99040 78804</p></div>
+</div>
+
+<p class="small">© 2026 Green Task Earn - 10 Sec = ₹1 | Daily 30 Ads | 2 Free Ads</p>
+
+<script>
+let earn=25, done=0, totalTasks=30, isAdmin=false, pinActive=false, freeLeft=2;
+let list=document.getElementById("taskList");
+for(let i=1;i<=totalTasks;i++){
+  let freeTag = i<=2 ? '<span class="free-badge">FREE</span>' : '';
+  list.innerHTML+=`<div class="task"><span>${i}. Ad જુઓ - 10 સેકન્ડ ${freeTag}</span><button id="btn${i}" onclick="playAd(${i})">₹1 મેળવો</button></div>`;
+}
+function doLogin(){
+  let n=document.getElementById("userName").value||"Rameshkumar";
+  let m=document.getElementById("userMobile").value||"99040 78804";
+  document.getElementById("dispName").innerText=n;
+  document.getElementById("pName").innerText=n;
+  document.getElementById("pMobile").innerText=m;
+  document.getElementById("loginCard").classList.add("hidden");
+  document.getElementById("mainApp").classList.remove("hidden");
+  alert("Welcome "+n+"! પહેલા 2 Ad FREE છે, શરૂ કરો!");
+}
+function showAdminLogin(){ document.getElementById("adminLoginBox").classList.remove("hidden"); window.scrollTo(0,document.body.scrollHeight); }
+function checkAdmin(){
+  let pass = document.getElementById("adminPass").value;
+  if(pass === "Ramesh@123"){
+    isAdmin = true;
+    document.getElementById("adminLoginBox").classList.add("hidden");
+    document.getElementById("loginCard").classList.add("hidden");
+    document.getElementById("mainApp").classList.remove("hidden");
+    switchPanel('admin');
+    alert("Admin Login થઈ ગયું!");
+  } else {
+    document.getElementById("adminMsg").innerText = "ખોટો Password! સાચો Password: Ramesh@123";
+  }
+}
+function switchPanel(p){
+  if(p==='admin' && !isAdmin){ showAdminLogin(); return; }
+  document.getElementById("userPanel").classList.toggle("hidden", p!=='user');
+  document.getElementById("adminPanel").classList.toggle("hidden", p!=='admin');
+}
+function showUserTab(id,btn){
+  ['dash','profile','pin','team','comm','withdraw','support'].forEach(x=>document.getElementById("u-"+x).classList.add("hidden"));
+  document.getElementById("u-"+id).classList.remove("hidden");
+  document.querySelectorAll("#userMenu button").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
+}
+function showAdminTab(id,btn){
+  ['adash','apin','areg','ateam','aad','apay','acomm','asup'].forEach(x=>document.getElementById("a-"+x).classList.add("hidden"));
+  document.getElementById("a-"+id).classList.remove("hidden");
+  document.querySelectorAll("#adminMenu button").forEach(b=>b.classList.remove("active")); btn.classList.add("active");
+}
+function playAd(id){
+  if(id>2 && !pinActive){ alert("2 Free Ad પૂરા! આગળ માટે Pin Activation કરો."); showUserTab('pin', document.querySelectorAll("#userMenu button")[2]); return; }
+  let btn=document.getElementById("btn"+id); btn.disabled=true; btn.innerText="ચાલુ...";
+  document.getElementById("adBox").classList.remove("hidden");
+  document.getElementById("adNo").innerText="- Ad "+id+" / 30";
+  document.getElementById("adBox").scrollIntoView({behavior:"smooth"});
+  let sec=10; document.getElementById("timer").innerText=sec;
+  let t=setInterval(()=>{
+    sec--; document.getElementById("timer").innerText=sec;
+    if(sec<=0){
+      clearInterval(t); document.getElementById("adBox").classList.add("hidden");
+      earn+=1; done++;
+      document.getElementById("userEarn").innerText="₹"+earn;
+      document.getElementById("taskCount").innerText=done+" / "+totalTasks;
+      document.getElementById("aEarn").innerText="₹"+earn;
+      document.getElementById("aTraffic").innerText=done+" Views";
+      btn.innerText="✅ Done ₹1"; btn.style.background="#2ecc71";
+      if(id<=2){ freeLeft--; document.getElementById("pinStatus").innerText = freeLeft>0 ? "FREE - "+freeLeft+" Ad બાકી" : "Free પૂરા - Pin જોઈશે"; }
+      alert("₹1 મળ્યું! Ad "+id+"/30 પૂરી. Total: ₹"+earn);
+    }
+  },1000);
+}
+function requestPin(){ alert("Pin Request Admin ને મોકલાઈ ગઈ!"); document.getElementById("pinHisType").innerText="Pin Request"; document.getElementById("pinHisDate").innerText="Today"; }
+function activatePin(){
+  let p=document.getElementById("actPin").value;
+  if(!p){ alert("Pin નાખો"); return; }
+  pinActive=true; document.getElementById("pinStatus").innerText="Active ✅"; document.getElementById("myPin").innerText=p+" - Active"; alert("Pin Active! હવે 30 Ad ખુલી ગઈ!");
+}
+function createPin(){ let m=document.getElementById("newPinUser").value||"User"; alert("Pin બન્યો: GTE-PIN-"+Math.floor(1000+Math.random()*9000)+" - "+m+" ને મોકલ્યો"); }
+function saveProfile(){ let n=document.getElementById("editName").value; if(n){ document.getElementById("dispName").innerText=n; document.getElementById("pName").innerText=n; } alert("Profile Save થઈ ગઈ!"); }
+function copyLink(){ let l=document.getElementById("myLink"); l.select(); document.execCommand("copy"); alert("Link Copy થઈ ગઈ! 20 મિત્રોને WhatsApp પર મોકલો!"); }
+function sendTicket(){ let t=document.getElementById("ticketText").value; if(!t){ alert("પ્રશ્ન લખો"); return; } document.getElementById("ticketHis").innerText=t.substring(0,30)+"..."; alert("Ticket મોકલાઈ ગઈ!"); }
+function withdraw(){
+  let upi=document.getElementById("upi").value; let amt=document.getElementById("amt").value;
+  if(!upi||!amt){ alert("UPI અને Amount ભરો"); return; }
+  if(amt<100){ alert("Min ₹100"); return; }
+  if(amt>earn){ alert("પૈસા ઓછા છે. Total: ₹"+earn); return; }
+  document.getElementById("wMsg").innerText="Withdraw Request મોકલાઈ ગઈ!";
+  document.getElementById("aWithdraw").innerText="1";
+}
+function addBizAd(){ let b=document.getElementById("bizName").value; if(!b){ alert("વેપારીનું નામ નાખો"); return; } document.getElementById("bizMsg").innerText="✅ "+b+" ની Ad ઉમેરાઈ ગઈ!"; }
+function logout(){ location.reload(); }
+</script>
+</body>
+</html>
