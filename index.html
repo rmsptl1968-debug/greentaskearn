@@ -1,30 +1,44 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="google-adsense-account" content="ca-pub-1879540919601039">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1879540919601039" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn - RMSPTL</title>
+<title>Green Task Earn</title>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
-html,body{overflow-x:hidden}
-body{background:#0a0a0a;color:#fff;padding-bottom:40px}
-.green-head{background:#0d3b1a;border:1px solid #00e676;border-radius:10px;margin:8px;padding:12px;text-align:center}
-.green-head h1{color:#ffcc00;font-size:18px} .green-head p{font-size:11px;color:#ccc}
-.top-yellow{background:#ffcc00;color:#000;text-align:center;font-size:12px;font-weight:800;padding:7px 6px}
-.top-row{display:flex;gap:6px;padding:8px}
-.btn-blue{flex:1;background:#2b6cb0;color:#fff;border:0;padding:10px;border-radius:6px;font-weight:700}
-.btn-green{flex:1;background:#00a651;color:#fff;border:0;padding:10px;border-radius:6px;font-weight:700}
-.btn-red{flex:1;background:#e53e3e;color:#fff;border:0;padding:10px;border-radius:6px;font-weight:700}
-.dash{background:#111;border:1px solid #00e676;border-radius:10px;margin:0 8px;padding:12px}
-.dash h2{font-size:14px;color:#ffcc00} .dash p{font-size:12px;color:#ddd;line-height:1.6;margin-top:4px}
-.menu{display:flex;gap:6px;padding:10px 8px;overflow-x:auto;white-space:nowrap}
-.menu button{border:1px solid #333;background:#1a1a1a;color:#ccc;padding:7px 12px;border-radius:20px;font-size:12px;cursor:pointer}
-.menu button.active{background:#ffcc00;color:#000;font-weight:800;border-color:#ffcc00}
-.card{background:#111;border:1px solid #2a4a2a;border-radius:10px;margin:0 8px 10px;padding:12px;overflow:hidden}
-.card h3{font-size:14px;color:#ffcc00;margin-bottom:6px} .card p{font-size:13px;line-height:1.6;color:#ddd}
-.task{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;border-bottom:1px solid #222;font-size:
+</head>
+<body style="background:#0a0a0a;color:#fff;font-family:sans-serif;padding:12px">
+<div style="background:#0d3b1a;border:1px solid #00e676;border-radius:10px;padding:12px;text-align:center">
+<h2 style="color:#ffcc00">🌿 Green Task Earn</h2>
+<p style="font-size:12px">Ad Juo - Paisa Kamavo</p>
+</div>
+<div id="msg" style="background:#2a1a08;border:1px solid #ffcc00;color:#ffcc00;padding:10px;border-radius:8px;margin-top:10px;display:none"></div>
+<div id="authBox" style="background:#111;border:1px solid #333;border-radius:10px;padding:14px;margin-top:10px">
+<h3>Sign In</h3>
+<p>Mobile</p><input id="m" placeholder="9904078804" style="width:100%;padding:11px;background:#222;color:#fff;border:1px solid #333;border-radius:8px">
+<p>Password</p><input id="p" type="password" placeholder="Password" style="width:100%;padding:11px;background:#222;color:#fff;border:1px solid #333;border-radius:8px">
+<button onclick="login()" style="width:100%;background:#00e676;border:0;padding:12px;border-radius:8px;font-weight:800;margin-top:10px">Sign In Karo</button>
+<button onclick="signup()" style="width:100%;background:#ffcc00;border:0;padding:12px;border-radius:8px;font-weight:800;margin-top:8px">Navo Account - Sign Up</button>
+</div>
+<div id="dash" style="display:none;background:#111;border:1px solid #00e676;border-radius:10px;padding:14px;margin-top:10px">
+<h3>👋 Namaste <span id="nm">-</span></h3>
+<p>Balance: Rs.<b id="bal">0</b></p>
+<p>Mobile: <span id="mob">-</span></p>
+<button onclick="watchAd()" style="width:100%;background:#ffcc00;border:0;padding:12px;border-radius:8px;font-weight:800;margin-top:10px">📺 Ad Juo - Rs.0.25 Melvo</button>
+<button onclick="logout()" style="width:100%;background:#e53e3e;color:#fff;border:0;padding:12px;border-radius:8px;font-weight:800;margin-top:8px">Logout</button>
+</div>
+<script>
+var cfg={apiKey:"AIzaSyCSAoZwCci9sD5dI8-9IbI1lRVGvWrwJI",authDomain:"greentaskearn.firebaseapp.com",projectId:"greentaskearn",storageBucket:"greentaskearn.firebasestorage.app",messagingSenderId:"373532797507",appId:"1:373532797507:web:b5774ece8010560e11b82f6"};
+firebase.initializeApp(cfg);
+var auth=firebase.auth(); var db=firebase.firestore();
+function show(t){var e=document.getElementById('msg');e.style.display='block';e.innerText=t;alert(t);}
+function em(m){return m+'@greentaskearn.com'}
+function login(){var m=document.getElementById('m').value.trim();var p=document.getElementById('p').value;auth.signInWithEmailAndPassword(em(m),p).then(function(){openApp()}).catch(function(e){show('Error: '+e.message)})}
+function signup(){var m=document.getElementById('m').value.trim();var p=document.getElementById('p').value;if(m.length!=10){show('10 Ank no Mobile lakho');return}auth.createUserWithEmailAndPassword(em(m),p).then(function(c){return db.collection('users').doc(c.user.uid).set({name:'User',mobile:m,email:em(m),balance:0.50,done:4})}).then(function(){show('Account Bani Gayu!');openApp()}).catch(function(e){show('Error: '+e.message)})}
+function openApp(){var u=auth.currentUser;if(!u)return;db.collection('users').doc(u.uid).get().then(function(d){if(!d.exists()){show('User data nathi');return}var data=d.data();document.getElementById('authBox').style.display='none';document.getElementById('dash').style.display='block';document.getElementById('nm').innerText=data.name||'User';document.getElementById('bal').innerText=data.balance;document.getElementById('mob').innerText=data.mobile})}
+function watchAd(){var u=auth.currentUser;db.collection('users').doc(u.uid).get().then(function(d){var data=d.data();var nb=data.balance+0.25;return db.collection('users').doc(u.uid).update({balance:nb}).then(function(){document.getElementById('bal').innerText=nb;show('Rs.0.25 Malya! Balance: '+nb)})})}
+function logout(){auth.signOut();location.reload()}
+auth.onAuthStateChanged(function(u){if(u)openApp()});
+</script>
+</body>
+</html>
