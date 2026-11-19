@@ -5,13 +5,16 @@
 <meta name="google-adsense-account" content="ca-pub-1879540919601039">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1879540919601039" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RMSPTL - User Panel | Dashboard</title>
+<title>Green Task Earn - RMSPTL</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
 body{background:#0a0a0a;color:#fff;padding-bottom:40px}
+.green-head{background:#0d3b1a;border:1px solid #00e676;border-radius:10px;margin:8px;padding:12px;text-align:center}
+.green-head h1{color:#ffcc00;font-size:18px} .green-head p{font-size:11px;color:#ccc}
 .top-yellow{background:#ffcc00;color:#000;text-align:center;font-size:12px;font-weight:800;padding:7px 6px}
-.top-row{display:flex;gap:8px;padding:8px}
+.top-row{display:flex;gap:6px;padding:8px}
 .btn-blue{flex:1;background:#2b6cb0;color:#fff;border:0;padding:10px;border-radius:6px;font-weight:700}
+.btn-green{flex:1;background:#00a651;color:#fff;border:0;padding:10px;border-radius:6px;font-weight:700}
 .btn-red{flex:1;background:#e53e3e;color:#fff;border:0;padding:10px;border-radius:6px;font-weight:700}
 .dash{background:#111;border:1px solid #00e676;border-radius:10px;margin:0 8px;padding:12px}
 .dash h2{font-size:14px;color:#ffcc00} .dash p{font-size:12px;color:#ddd;line-height:1.6;margin-top:4px}
@@ -29,7 +32,6 @@ input{width:100%;padding:11px;border:1px solid #333;border-radius:8px;margin:6px
 .btn-big{display:block;text-align:center;background:#00e676;color:#000;padding:12px;border-radius:8px;text-decoration:none;font-weight:800;margin-top:10px;border:0;width:100%}
 .btn-orange{background:#ff6b00;color:#fff}
 .hidden{display:none} .small{font-size:11px;color:#999;line-height:1.5} .green{color:#00e676;font-weight:700}
-/* AD POPUP - ANDAR J KHULSE */
 #adModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.92);z-index:999;display:none;align-items:center;justify-content:center;padding:16px}
 #adModal.show{display:flex}
 .modal-box{background:#111;border:2px solid #ffcc00;border-radius:14px;padding:16px;width:100%;max-width:400px;text-align:center}
@@ -37,18 +39,56 @@ input{width:100%;padding:11px;border:1px solid #333;border-radius:8px;margin:6px
 .ad-frame{background:#fff;color:#000;border-radius:10px;padding:14px;margin:10px 0;min-height:120px}
 .btn-claim{background:#00e676;color:#000;border:0;padding:12px;border-radius:8px;font-weight:800;width:100%;font-size:15px}
 .btn-claim:disabled{background:#444;color:#888}
+.tab2{display:flex;gap:8px;margin-bottom:10px} .tab2 button{flex:1;padding:10px;border:0;border-radius:8px;font-weight:700;cursor:pointer;background:#222;color:#ccc} .tab2 button.active{background:#ffcc00;color:#000}
 </style>
 <script>
-function show(id,btn){var pages=['dashboard','profile','pin','team','commission','withdrawal','support'];for(var i=0;i<pages.length;i++){var p=document.getElementById(pages[i]);if(p)p.classList.add('hidden');}var cur=document.getElementById(id);if(cur)cur.classList.remove('hidden');var all=document.querySelectorAll('.menu button');for(var j=0;j<all.length;j++){all[j].classList.remove('active');}if(btn)btn.classList.add('active');window.scrollTo(0,0);}
+function show(id,btn){var pages=['dashboard','profile','pin','team','commission','withdrawal','support','adminpanel'];for(var i=0;i<pages.length;i++){var p=document.getElementById(pages[i]);if(p)p.classList.add('hidden');}var cur=document.getElementById(id);if(cur)cur.classList.remove('hidden');var all=document.querySelectorAll('.menu button');for(var j=0;j<all.length;j++){all[j].classList.remove('active');}if(btn)btn.classList.add('active');window.scrollTo(0,0);}
+function showAuth(tab){document.getElementById('authSignup').classList.add('hidden');document.getElementById('authSignin').classList.add('hidden');document.getElementById('authAdmin').classList.add('hidden');document.getElementById(tab).classList.remove('hidden');var btns=document.querySelectorAll('.tab2 button');for(var i=0;i<btns.length;i++)btns[i].classList.remove('active');if(tab=='authSignup')btns[0].classList.add('active');if(tab=='authSignin')btns[1].classList.add('active');if(tab=='authAdmin')btns[2].classList.add('active');}
 </script>
 </head>
 <body>
+
+<!-- LOGIN / SIGNUP SCREEN - PEHLA AAJ DEKHASE -->
+<div id="authScreen">
+<div class="green-head"><h1>🌿 Green Task Earn</h1><p>જો અખબારો.. કરો કામ.. કરો કમાણી..<br>રોજરોજ Ad જુઓ.. Ad જોવા માટે Reward મેળવો</p></div>
+<div class="card">
+<h3 style="text-align:center">👤 Join Karo - Sign Up / Sign In</h3>
+<div class="tab2"><button class="active" onclick="showAuth('authSignup')">Sign Up</button><button onclick="showAuth('authSignin')">Sign In</button><button onclick="showAuth('authAdmin')">Admin</button></div>
+
+<div id="authSignup">
+<p><b>Tamaru Naam:</b></p><input id="suName" placeholder="Puru Naam lakho">
+<p><b>Mobile Number:</b></p><input id="suMobile" placeholder="10 Ank no Mobile - jem ke 9904078804" inputmode="numeric">
+<p><b>Password Banavo:</b></p><input id="suPass" type="password" placeholder="4 thi vadhu akshar no Password">
+<p><b>Referral Code (Jo hoy to):</b></p><input id="suRef" placeholder="Jene tamne moklyo eno Mobile">
+<p class="small">Sign Up karso etle tamaru Account banse, tamari Earning tamara Mobile par save thase.</p>
+<button class="btn-big" onclick="doSignup()">✅ Sign Up Karo - Account Banavo</button>
+</div>
+
+<div id="authSignin" class="hidden">
+<p><b>Mobile Number:</b></p><input id="siMobile" placeholder="Tamaro Mobile Number" inputmode="numeric">
+<p><b>Password:</b></p><input id="siPass" type="password" placeholder="Tamaro Password">
+<button class="btn-big" onclick="doSignin()">🔑 Sign In Karo</button>
+<p class="small" style="margin-top:8px">Password bhuli gaya? Navu Account Sign Up thi banavo.</p>
+</div>
+
+<div id="authAdmin" class="hidden">
+<p><b>Admin Mobile:</b></p><input id="adMobile" placeholder="Admin Mobile" inputmode="numeric">
+<p><b>Admin Password:</b></p><input id="adPass" type="password" placeholder="Admin Password">
+<button class="btn-big btn-orange" onclick="doAdminLogin()">👑 Admin Login</button>
+<p class="small" style="margin-top:8px">Admin: Sir, niche Code ma ADMIN_PASS vali line ma tamaro Password badli nakhjo. Have atyare: <b>Admin Mobile: 9904078804 / Password: 123456</b> chhe. Chat ma koi Password mokalta nahi.</p>
+</div>
+</div>
+</div>
+
+<!-- MAIN APP - LOGIN PACHI DEKHASE -->
+<div id="mainApp" class="hidden">
+<div class="green-head"><h1>🌿 Green Task Earn</h1><p>જો અખબારો.. કરો કામ.. કરો કમાણી..</p></div>
 <div class="top-yellow">10 સેકન્ડ Ad = ₹0.25 | રોજ 100+ Ad = ₹25+ | પહેલા 2 Ad FREE</div>
-<div class="top-row"><button class="btn-blue">👤 USER PANEL</button><button class="btn-red" onclick="alert('Logout Thai Gayu')">Logout</button></div>
+<div class="top-row"><button class="btn-blue">👤 USER PANEL</button><button class="btn-green" onclick="show('adminpanel',null)">👑 ADMIN PANEL</button><button class="btn-red" onclick="doLogout()">Logout</button></div>
 <div class="dash">
-<h2>👋 નમસ્તે RAMESHKUMAR GIRDHARLAL PATEL! Dashboard</h2>
+<h2>👋 નમસ્તે <span id="userName">-</span>! Dashboard</h2>
 <p>Total Earning: <b>₹<span id="totalEarn">0.50</span></b> | Adsterra: <b>₹<span id="adEarn">0.50</span></b> | Gujarat Business: <b>₹0</b><br>
-Today: <b><span id="todayCount">4</span> / 100+</b> | Pin Status: <b class="green">Active ✅</b></p>
+Today: <b><span id="todayCount">4</span> / 100+</b> | Pin Status: <b class="green">Active ✅</b> | Team: <b><span id="teamCount">0</span> Direct</b></p>
 </div>
 <div class="menu">
 <button class="active" onclick="show('dashboard',this)">Dashboard</button>
@@ -59,76 +99,60 @@ Today: <b><span id="todayCount">4</span> / 100+</b> | Pin Status: <b class="gree
 <button onclick="show('withdrawal',this)">Withdrawal</button>
 <button onclick="show('support',this)">Support</button>
 </div>
-<div id="dashboard">
-<div class="card">
-<h3>📺 આજના Tasks - 100+ Ad</h3>
-<p class="small">✅ 1-2 FREE છે, 3 થી 30 ના 30 Pin જોઈએ છે.<br>દરેક Ad - 10 સેકન્ડ જુઓ - ₹0.25 મેળવો. Ad અંદર જ ખુલશે, બહાર નહીં જાય.</p>
-<div id="taskList"></div>
-</div>
-<div class="card" style="text-align:center"><p class="small">Sponsored - Adsterra Native Banner - અંદર જ Ad</p>
-<script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
-<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
-</div>
-<div class="card" style="text-align:center"><p class="small">Sponsored - Google AdSense</p><div style="background:#222;padding:16px;border-radius:8px;margin-top:6px;color:#aaa;font-size:12px">Google AdSense Ad Space</div></div>
-</div>
-<div id="profile" class="hidden"><div class="card"><h3>👤 Profile</h3><p>Name: <b>RAMESHKUMAR GIRDHARLAL PATEL</b><br>Mobile: <b>99040 78804</b><br>City: <b>Adalaj, Gujarat</b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input id="upiId" placeholder="Tamaro UPI ID lakho"><p class="small">Payment aaj UPI ID par aavse.</p><button class="btn-big" onclick="alert('UPI ID Save Thai Gayu!')">UPI ID Save Karo</button></div></div>
-<div id="pin" class="hidden"><div class="card"><h3>📌 Pin Status</h3><p>Pin Status: <b class="green">Active ✅</b><br>Pin lidha pachi roj 100+ Ads joi shako cho.</p><p style="margin-top:10px"><b>Tamaro Referral Link:</b></p><input value="https://rmsptl1968-debug.github.io/?ref=YOURMOBILE" readonly onclick="this.select()"></div></div>
-<div id="team" class="hidden"><div class="card"><h3>👥 My Team</h3><p>Total Team: <b>0</b><br>Level 1: 0 | Level 2: 0 | Level 3: 0 | Level 4: 0 | Level 5: 0</p></div></div>
+<div id="dashboard"><div class="card"><h3>📺 આજના Tasks - 100+ Ad</h3><p class="small">✅ 1-2 FREE છે, 3 થી 30 ના 30 Pin જોઈએ છે.<br>દરેક Ad - 10 સેકન્ડ જુઓ - ₹0.25 મેળવો. Ad અંદર જ ખુલશે.</p><div id="taskList"></div></div>
+<div class="card" style="text-align:center"><p class="small">Sponsored - Adsterra Native Banner</p><script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script><div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div></div>
+<div class="card" style="text-align:center"><p class="small">Sponsored - Google AdSense</p><div style="background:#222;padding:16px;border-radius:8px;margin-top:6px;color:#aaa;font-size:12px">Google AdSense Ad Space</div></div></div>
+<div id="profile" class="hidden"><div class="card"><h3>👤 Profile</h3><p>Name: <b id="pName">-</b><br>Mobile: <b id="pMobile">-</b><br>City: <b>Adalaj, Gujarat</b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input id="upiId" placeholder="Tamaro UPI ID lakho"><p class="small">Payment aaj UPI ID par aavse.</p><button class="btn-big" onclick="saveUPI()">UPI ID Save Karo</button></div></div>
+<div id="pin" class="hidden"><div class="card"><h3>📌 Pin Status</h3><p>Pin Status: <b class="green">Active ✅</b><br>Pin lidha pachi roj 100+ Ads joi shako cho.</p><p style="margin-top:10px"><b>Tamaro Referral Link:</b></p><input id="myRefLink" value="" readonly onclick="this.select()"><button class="btn-big" onclick="copyRef()">Referral Link Copy Karo</button></div></div>
+<div id="team" class="hidden"><div class="card"><h3>👥 My Team</h3><p>Total Team: <b id="teamTotal">0</b><br>Level 1: <span id="teamL1">0</span> | Level 2: 0 | Level 3: 0 | Level 4: 0 | Level 5: 0</p><p class="small" style="margin-top:8px">Mitro ne tamari Referral Link moklo, e Sign Up karse etle ahi Team vadse.</p><div id="teamList"></div></div></div>
 <div id="commission" class="hidden"><div class="card"><h3>💰 Commission - Level Income</h3><p>15% Admin Charge kapi ne UPI thi pay thase.</p><table><tr><th>Level</th><th>Pura</th><th>15% Admin</th><th>Malse</th></tr><tr><td>Level 1</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 2</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 3</td><td>Rs.60</td><td>- Rs.9.00</td><td><b>Rs.51.00</b></td></tr><tr><td>Level 4</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><td>Level 5</td><td>Rs.30</td><td>- Rs.4.50</td><td><b>Rs.25.50</b></td></tr><tr><th>Total</th><th>Rs.180</th><th>Rs.27</th><th>Rs.153</th></tr></table></div></div>
-<div id="withdrawal" class="hidden"><div class="card"><h3>💰 Withdrawal - UPI Thi</h3><p>Minimum Withdrawal: <b>Rs.100</b><br>Payment: <b>Fakt UPI ID thi</b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input placeholder="Tamaro UPI ID ahi lakho"><div style="background:#2a1a08;padding:10px;border-radius:8px;margin-top:10px;border:1px solid #ff6b00;font-size:13px"><b>Ad Payment Tarikho:</b><br>✅ 1lo Hapto: <b>5 thi 7 Tarikhe</b><br>✅ 2jo Hapto: <b>20 thi 22 Tarikhe</b></div><button class="btn-big" onclick="alert('Withdrawal Request Mokli Didhi!')">Withdrawal Karo</button></div></div>
+<div id="withdrawal" class="hidden"><div class="card"><h3>💰 Withdrawal - UPI Thi</h3><p>Minimum Withdrawal: <b>Rs.100</b><br>Payment: <b>Fakt UPI ID thi</b><br>Tamari Earning: <b>₹<span class="wEarn">0.50</span></b></p><p style="margin-top:10px"><b>Tamaro UPI ID:</b></p><input id="wUpi" placeholder="Tamaro UPI ID ahi lakho"><div style="background:#2a1a08;padding:10px;border-radius:8px;margin-top:10px;border:1px solid #ff6b00;font-size:13px"><b>Ad Payment Tarikho:</b><br>✅ 1lo Hapto: <b>5 thi 7 Tarikhe</b><br>✅ 2jo Hapto: <b>20 thi 22 Tarikhe</b></div><button class="btn-big" onclick="doWithdraw()">Withdrawal Karo</button></div></div>
 <div id="support" class="hidden"><div class="card"><h3>📞 Support</h3><p><b>Rameshkumar Patel, Adalaj, Gujarat</b><br>Mobile: <b>99040 78804</b><br><br>Ads: Google AdSense + Adsterra Native Banner. Adult / Dating / Gambling Ads Block che.</p></div></div>
-
-<!-- AD MODAL - ANDAR POPUP -->
-<div id="adModal"><div class="modal-box">
-<h3 style="color:#ffcc00">📺 Ad Chali Rahi Che...</h3>
-<p class="small" style="color:#ccc">Ad ne 10 second sudhi juo, pachhi paisa malse. Bahar nahi javanu.</p>
-<div class="timer-big" id="modalTimer">10</div>
-<div class="ad-frame">
-<b>Gujarat na Vyapari ni Ad</b><br><span style="font-size:12px;color:#555">Ahi Adsterra ni Ad aavse - Tamari Dukan ni Ad Ahi Mukso?</span><br><br>
-<a href="https://arwf.org/4/71c629698b098809841a9971deed43dc" target="_blank" style="color:#0b6e4f;font-weight:800">🎁 Special Offer Juo</a>
+<div id="adminpanel" class="hidden"><div class="card"><h3>👑 Admin Panel - Badha Users</h3><p>Total Users: <b id="adminTotalUsers">0</b> | Total Earning: <b>₹<span id="adminTotalEarn">0</span></b></p><div id="adminList" style="margin-top:10px"></div><p class="small" style="margin-top:10px">Note: Ahi fakt aaj Phone ma Sign Up thayela Users dekhase. Bija Phone na Users jova mate Firebase joise.</p><button class="btn-big" onclick="show('dashboard',null)">⬅️ User Panel ma Pacha Jao</button></div></div>
 </div>
-<button class="btn-claim" id="claimBtn" disabled onclick="claimAd()">10 second raho...</button>
-<p class="small" style="margin-top:8px;color:#888">Timer puro thase etle button chalu thase.</p>
-</div></div>
+
+<div id="adModal"><div class="modal-box"><h3 style="color:#ffcc00">📺 Ad Chali Rahi Che...</h3><p class="small" style="color:#ccc">Ad ne 10 second sudhi juo, pachhi paisa malse.</p><div class="timer-big" id="modalTimer">10</div><div class="ad-frame"><b>Gujarat na Vyapari ni Ad</b><br><span style="font-size:12px;color:#555">Ahi Adsterra ni Ad aavse</span><br><br><a href="https://arwf.org/4/71c629698b098809841a9971deed43dc" target="_blank" style="color:#0b6e4f;font-weight:800">🎁 Special Offer Juo</a></div><button class="btn-claim" id="claimBtn" disabled onclick="claimAd()">10 second raho...</button></div></div>
 
 <script>
-var done=4; var earn=0.50; var currentBtn=null;
-function openAd(btn){
-  currentBtn=btn;
-  document.getElementById('adModal').classList.add('show');
-  var t=10;
-  var timerEl=document.getElementById('modalTimer');
-  var claim=document.getElementById('claimBtn');
-  claim.disabled=true; claim.innerText='10 second raho...'; timerEl.innerText=t;
-  var iv=setInterval(function(){
-    t--; timerEl.innerText=t;
-    if(t>0){ claim.innerText=t+' second raho...'; }
-    else { clearInterval(iv); timerEl.innerText='✅ Puri!'; claim.disabled=false; claim.innerText='₹0.25 Melya - Claim Karo ✅'; }
-  },1000);
+var ADMIN_MOBILE='9904078804'; var ADMIN_PASS='123456'; // Sir, ahi tamaro Admin Password badlo - Chat ma mokalta nahi
+function getUsers(){try{return JSON.parse(localStorage.getItem('gte_users')||'{}')}catch(e){return {}}}
+function saveUsers(u){localStorage.setItem('gte_users',JSON.stringify(u))}
+function getCurrent(){return localStorage.getItem('gte_current')||''}
+function setCurrent(m){localStorage.setItem('gte_current',m)}
+// Referral from URL ?ref=Mobile
+(function(){var q=new URLSearchParams(window.location.search);var r=q.get('ref');if(r){document.getElementById('suRef').value=r;}})();
+function doSignup(){
+  var name=document.getElementById('suName').value.trim(); var mob=document.getElementById('suMobile').value.trim(); var pass=document.getElementById('suPass').value; var ref=document.getElementById('suRef').value.trim();
+  if(name.length<3){alert('Naam lakho');return} if(mob.length!=10){alert('10 Ank no Mobile lakho');return} if(pass.length<4){alert('Password ochama ochu 4 akshar no rakho');return}
+  var users=getUsers(); if(users[mob]){alert('Aa Mobile thi pehla thi Account chhe, Sign In karo');showAuth('authSignin');return}
+  users[mob]={name:name,mobile:mob,pass:pass,ref:ref,upi:'',earn:0.50,done:4,team:[]};
+  if(ref && users[ref]){users[ref].team.push(mob); users[ref].team=users[ref].team;}
+  saveUsers(users); setCurrent(mob); alert('Welcome '+name+'! Account bani gayu. Have Ads juo ane kamao.'); openApp();
 }
-function claimAd(){
-  document.getElementById('adModal').classList.remove('show');
-  done++; earn=earn+0.25;
-  var nb=document.createElement('button'); nb.className='btn-done'; nb.innerText='Done Rs.0.25';
-  if(currentBtn) currentBtn.parentNode.replaceChild(nb,currentBtn);
-  document.getElementById('todayCount').innerText=done;
-  document.getElementById('totalEarn').innerText=earn.toFixed(2);
-  document.getElementById('adEarn').innerText=earn.toFixed(2);
-  alert('Ad Joi Lidi! Rs.0.25 malse. Payment 5-7 / 20-22 tarikhe UPI thi malse.');
+function doSignin(){
+  var mob=document.getElementById('siMobile').value.trim(); var pass=document.getElementById('siPass').value;
+  var users=getUsers(); if(!users[mob]||users[mob].pass!==pass){alert('Mobile ke Password khoto chhe');return}
+  setCurrent(mob); openApp();
 }
-function buildTasks(){
-  var list=document.getElementById('taskList'); if(!list) return; list.innerHTML='';
-  for(var i=1;i<=105;i++){
-    var row=document.createElement('div'); row.className='task';
-    var left=document.createElement('span'); left.innerHTML='<b>'+i+'. Ad Juo - 10 Second</b>';
-    if(i<=2){ var f=document.createElement('span'); f.className='free'; f.innerText='FREE'; left.appendChild(f); }
-    var right;
-    if(i<=4){ right=document.createElement('button'); right.className='btn-done'; right.innerText = i<=2 ? 'Done Rs.0' : 'Done Rs.0.25'; }
-    else { right=document.createElement('button'); right.className='btn-get'; right.innerText='Rs.0.25 Melvo'; (function(b){ b.onclick=function(){ openAd(b); }; })(right); }
-    row.appendChild(left); row.appendChild(right); list.appendChild(row);
-  }
+function doAdminLogin(){
+  var mob=document.getElementById('adMobile').value.trim(); var pass=document.getElementById('adPass').value;
+  if(mob!==ADMIN_MOBILE||pass!==ADMIN_PASS){alert('Admin Mobile / Password khota chhe');return}
+  // Admin potanu pan User account hoy to e kholo, nahi to Admin Panel kholo
+  var users=getUsers(); if(!users[mob]){users[mob]={name:'RAMESHKUMAR GIRDHARLAL PATEL',mobile:mob,pass:pass,ref:'',upi:'',earn:0.50,done:4,team:[]}; saveUsers(users);}
+  setCurrent(mob); openApp(); setTimeout(function(){show('adminpanel',null)},300);
 }
-buildTasks();
-</script>
-</body>
-</html>
+function doLogout(){localStorage.removeItem('gte_current'); document.getElementById('mainApp').classList.add('hidden'); document.getElementById('authScreen').classList.remove('hidden');}
+function openApp(){
+  var mob=getCurrent(); var users=getUsers(); var u=users[mob]; if(!u){doLogout();return}
+  document.getElementById('authScreen').classList.add('hidden'); document.getElementById('mainApp').classList.remove('hidden');
+  document.getElementById('userName').innerText=u.name; document.getElementById('pName').innerText=u.name; document.getElementById('pMobile').innerText=u.mobile;
+  document.getElementById('upiId').value=u.upi||''; document.getElementById('wUpi').value=u.upi||'';
+  document.getElementById('myRefLink').value=window.location.origin+window.location.pathname+'?ref='+u.mobile;
+  refreshEarn(); buildTasks(); buildTeam(); buildAdmin();
+}
+function refreshEarn(){
+  var users=getUsers(); var u=users[getCurrent()]; if(!u)return;
+  document.getElementById('totalEarn').innerText=u.earn.toFixed(2); document.getElementById('adEarn').innerText=u.earn.toFixed(2);
+  document.getElementById('todayCount').innerText=u.done; document.getElementById('teamCount').innerText=u.team.length;
+  document.getElementById('teamTotal').innerText=u.team.length; document.getElementById('teamL1').innerText=u.team.length;
+  var w=document.querySelectorAll('.wEarn'); for(var i=0;i
