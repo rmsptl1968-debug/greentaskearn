@@ -43,6 +43,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 .level-note{font-size:12px;color:#a9f5b2;margin-top:6px}
 .offer-btn{display:block;text-align:center;padding:14px 10px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:17px;margin-bottom:10px;color:#fff !important}
 .plan-box{background:#f1c40f;color:#000;border-radius:10px;padding:10px;text-align:center;margin-top:10px;font-weight:bold}
+.ref-box{background:#000;border:2px dashed #f1c40f;padding:10px;border-radius:10px;text-align:center;margin-top:10px}
 </style>
 </head>
 <body>
@@ -108,6 +109,10 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <h3>👋 નમસ્તે <span id="dispName">Rameshkumar</span>! Dashboard</h3>
 <p>Total Earning: <b id="userEarn">₹25.00</b> | Ad Earning: <b id="adEarn">₹0</b> | Level Income: <b id="levelEarnTop">₹0</b></p>
 <p>Today: <b id="taskCount">0 / 100</b> | Pin Status: <b id="pinStatus">FREE - 2 Ad બાકી</b> | Plan: <b>₹502</b></p>
+<div class="ref-box">
+<b style="color:#f1c40f;">🔗 તમારો Refer Code: <span id="myReferCodeTop" style="font-size:18px;">GTE-1001</span></b><br>
+<span style="font-size:12px;">આ Code થી કોઈ Join થશે તો તમને Level Income મળશે</span>
+</div>
 </div>
 <div class="menu" id="userMenu">
 <button class="active" onclick="showUserTab('dash',this)">Dashboard</button>
@@ -143,7 +148,8 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <h3>👤 Profile - Edit કરી શકાય છે</h3>
 <p>Name: <b id="pName">Rameshkumar</b></p>
 <p>Mobile: <b id="pMobile">99040 78804</b></p>
-<p>Refer Code: <b>GTE-1001</b></p>
+<p>Refer Code: <b id="referCode" style="color:#f1c40f;font-size:18px;">GTE-1001</b></p>
+<p style="font-size:12px;color:#a9f5b2;">તમારી Refer Link Team માં છે - એ Copy કરીને મોકલો</p>
 <hr style="margin:10px 0;border-color:#444">
 <input id="editName" placeholder="નવું નામ">
 <input id="editMobile" placeholder="નવો Mobile Number">
@@ -155,6 +161,8 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <div class="card hidden" id="u-pin"><h3>📌 Pin - Price ₹502</h3><p>તમારો Pin: <b id="myPin">FREE TRIAL - 2 Ad</b></p><p style="font-size:13px">Pin Price: <b>₹502</b> | 2 Free Ad પછી Pin જોઈશે</p><button class="btn btn-y" onclick="requestPin()">📌 Request Pin - ₹502</button><input id="actPin" placeholder="Activation Pin - GTE-PIN-XXXXXX"><button class="btn" onclick="activatePin()">✅ Activation Pin લગાવો</button><input placeholder="કેને Transfer કરવો છે? Mobile"><button class="btn" onclick="alert('Pin Transfer Request Admin ને ગઈ!')">🔄 Transfer Pin</button><h3 style="margin-top:12px">Pin History</h3><table><tr><th>Date</th><th>Type</th><th>Status</th></tr><tr><td>Today</td><td>Free Trial 2 Ad</td><td>Active</td></tr><tr><td id="pinHisDate">-</td><td id="pinHisType">-</td><td>Pending</td></tr></table></div>
 <div class="card hidden" id="u-team">
 <h3>👥 Team - Level Income - Plan ₹502</h3>
+<p>તમારો Refer Code: <b id="referCodeTeam" style="color:#f1c40f;font-size:18px;">GTE-1001</b></p>
+<p style="font-size:13px;color:#a9f5b2;">આ Link Copy કરીને મિત્રોને મોકલો:</p>
 <input id="myLink" value="https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001" readonly><button class="btn" onclick="copyLink()">📋 Link Copy કરો</button>
 <table><tr><th>Level</th><th>Income</th><th>15% Admin કાપ્યા પછી</th><th>Members</th></tr>
 <tr><td>Level 1</td><td>₹50</td><td>₹42.50</td><td id="l1m">0</td></tr>
@@ -163,7 +171,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <tr><td>Level 4</td><td>₹50</td><td>₹42.50</td><td id="l4m">0</td></tr>
 <tr><td>Level 5</td><td>₹50</td><td>₹42.50</td><td id="l5m">0</td></tr>
 <tr><td><b>Total</b></td><td><b>₹300</b></td><td><b>₹255.00</b></td><td>-</td></tr></table>
-<p class="level-note">* દરેક Level પર 15% Admin Charge કપાશે. બાકીની રકમ તમારા ખાતામાં જમા થશે.</p>
+<p class="level-note">* દરેક Level પર 15% Admin Charge કપાશે.</p>
 <button class="btn btn-y" onclick="claimLevel()">💰 Level Income Claim કરો</button>
 <p id="levelMsg" style="text-align:center;color:#2ecc71;margin-top:8px"></p>
 </div>
@@ -209,12 +217,28 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 let earn=25, done=0, totalTasks=100, isAdmin=false, pinActive=false, freeLeft=2;
 let adEarnTotal=0, bizCount=0, levelClaimed=0;
 let allPins = [];
+let currentRefer = "GTE-1001";
 let list=document.getElementById("taskList");
 for(let i=1;i<=totalTasks;i++){
   let freeTag = i<=2 ? '<span class="free-badge">FREE</span>' : '';
   list.innerHTML+=`<div class="task"><span>${i}. Ad જુઓ - 10 સેકન્ડ ${freeTag}</span><button id="btn${i}" onclick="playAd(${i})">₹0.25 મેળવો</button></div>`;
 }
 function fmt(n){ return "₹"+n.toFixed(2); }
+function makeReferCode(name, mobile){
+  // Admin mate juno code j rakhvo
+  if(mobile==="9904078804" || mobile==="99040 78804"){ return "GTE-1001"; }
+  let last4 = mobile.replace(/\D/g,'').slice(-4);
+  let initials = name.trim().split(" ")[0].slice(0,2).toUpperCase();
+  if(!initials) initials = "GT";
+  return "GTE-" + last4 + "-" + initials;
+}
+function updateReferUI(code){
+  currentRefer = code;
+  document.getElementById("referCode").innerText = code;
+  document.getElementById("referCodeTeam").innerText = code;
+  document.getElementById("myReferCodeTop").innerText = code;
+  document.getElementById("myLink").value = "https://rmsptl1968-debug.github.io/greentaskearn/?ref=" + code;
+}
 function doLogin(){
   let n=document.getElementById("userName").value.trim();
   let m=document.getElementById("userMobile").value.trim();
@@ -222,8 +246,10 @@ function doLogin(){
   if(!n || !m || !p){ alert("નામ, Mobile અને Password ત્રણેય ભરો"); return; }
   if(p.length < 4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; }
   let saved = localStorage.getItem("user_"+m);
-  if(saved){ let u = JSON.parse(saved); if(u.pass !== p){ alert("ખોટો Password!"); return; } alert("Welcome Back "+u.name+"!"); }
-  else { localStorage.setItem("user_"+m, JSON.stringify({name:n, mobile:m, pass:p})); alert("Register થઈ ગયું "+n+"!"); }
+  let myCode = makeReferCode(n, m);
+  if(saved){ let u = JSON.parse(saved); if(u.pass !== p){ alert("ખોટો Password!"); return; } myCode = u.refer || myCode; alert("Welcome Back "+u.name+"! તમારો Refer Code: "+myCode); }
+  else { localStorage.setItem("user_"+m, JSON.stringify({name:n, mobile:m, pass:p, refer:myCode})); alert("Register થઈ ગયું "+n+"! તમારો Refer Code: "+myCode); }
+  updateReferUI(myCode);
   document.getElementById("dispName").innerText=n;
   document.getElementById("pName").innerText=n;
   document.getElementById("pMobile").innerText=m;
@@ -256,72 +282,4 @@ function saveProfile(){
 }
 function showAdminLogin(){ document.getElementById("adminLoginBox").classList.remove("hidden"); document.getElementById("adminLoginBox").scrollIntoView({behavior:"smooth"}); }
 function hideAdminLogin(){ document.getElementById("adminLoginBox").classList.add("hidden"); }
-function checkAdmin(){ let pass = document.getElementById("adminPass").value; if(pass === "Ramesh@123"){ isAdmin = true; document.getElementById("adminLoginBox").classList.add("hidden"); document.getElementById("loginCard").classList.add("hidden"); document.getElementById("mainApp").classList.remove("hidden"); document.getElementById("adminTopBtn").classList.remove("hidden"); switchPanel('admin'); alert("Admin Login થઈ ગયું!"); } else { document.getElementById("adminMsg").innerText = "ખોટો Password!"; } }
-function switchPanel(p){ if(p==='admin' && !isAdmin){ showAdminLogin(); return; } document.getElementById("userPanel").classList.toggle("hidden", p!=='user'); document.getElementById("adminPanel").classList.toggle("hidden", p!=='admin'); }
-function showUserTab(id,btn){ ['dash','profile','pin','team','comm','withdraw','support'].forEach(x=>document.getElementById("u-"+x).classList.add("hidden")); document.getElementById("u-"+id).classList.remove("hidden"); document.querySelectorAll("#userMenu button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); }
-function showAdminTab(id,btn){ ['adash','apin','areg','ateam','aad','apay','acomm','asup'].forEach(x=>document.getElementById("a-"+x).classList.add("hidden")); document.getElementById("a-"+id).classList.remove("hidden"); document.querySelectorAll("#adminMenu button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); }
-function openBizAd(name){ alert(name+" ની Ad ખુલી! - Gujarat Business Ad"); document.getElementById("adFrameInner").innerHTML="<b>🟢 "+name+"</b><br>આ વેપારીની Ad છે - ભાવનગર<br><span style='font-size:12px'>વધુ માહિતી માટે સંપર્ક કરો</span>"; }
-function claimLevel(){
-  if(levelClaimed>0){ alert("Level Income પહેલેથી Claim થઈ ગયું છે!"); return; }
-  let gross=50, net=gross*0.85;
-  levelClaimed=net; earn+=net;
-  document.getElementById("levelEarnTop").innerText=fmt(net);
-  document.getElementById("cLevel").innerText=fmt(net);
-  document.getElementById("userEarn").innerText=fmt(earn);
-  document.getElementById("aEarn").innerText=fmt(earn);
-  document.getElementById("aCharge").innerText=fmt(gross-net);
-  document.getElementById("levelMsg").innerText="✅ Level 1: ₹50 - 15% (₹7.50) = ₹42.50 તમારા ખાતામાં જમા!";
-  alert("Level Income મળ્યું! ₹42.50");
-}
-function playAd(id){
-  if(id>2 && !pinActive){ alert("2 Free Ad પૂરા! Pin Activation કરો - Pin Price ₹502"); showUserTab('pin', document.querySelectorAll("#userMenu button")[2]); return; }
-  let type=document.getElementById("adType").value;
-  let useGujarat = (type==="gujarat") || (type==="both" && id%2===0);
-  if(useGujarat){
-    bizCount++;
-    document.getElementById("adFrameInner").innerHTML="<b>🟢 Gujarat Business Ad</b><br>ભાવનગરના વેપારીની Ad - કપડાં / કરિયાણું / મોબાઈલ<br><span style='font-size:12px'>✅ Clean Ad - અંદર જ</span>";
-    document.getElementById("bizViewCount").innerText=bizCount;
-    document.getElementById("cBiz").innerText=bizCount;
-    document.getElementById("cBizEarn").innerText=fmt(bizCount*0.25);
-  } else {
-    document.getElementById("adFrameInner").innerHTML="<b>📺 Adsterra Native Ad</b><br>નીચેની Ad જુઓ - 10 સેકન્ડ રાહ જુઓ<br><span style='font-size:12px'>✅ અંદર જ ચાલે છે</span>";
-  }
-  let btn=document.getElementById("btn"+id); btn.disabled=true; btn.innerText="ચાલુ...";
-  document.getElementById("adBox").classList.remove("hidden"); document.getElementById("adNo").innerText="- Ad "+id+" / 100";
-  document.getElementById("adBox").scrollIntoView({behavior:"smooth"});
-  let sec=10; document.getElementById("timer").innerText=sec;
-  let t=setInterval(()=>{
-    sec--; document.getElementById("timer").innerText=sec;
-    if(sec<=0){
-      clearInterval(t); document.getElementById("adBox").classList.add("hidden");
-      earn+=0.25; done++; adEarnTotal+=0.25;
-      document.getElementById("userEarn").innerText=fmt(earn);
-      document.getElementById("adEarn").innerText=fmt(adEarnTotal);
-      document.getElementById("taskCount").innerText=done+" / 100";
-      document.getElementById("aEarn").innerText=fmt(earn);
-      document.getElementById("aTraffic").innerText=done+" Views";
-      document.getElementById("adViewCount").innerText=done;
-      document.getElementById("adViewEarn").innerText=fmt(adEarnTotal);
-      document.getElementById("cAd").innerText=done;
-      document.getElementById("cAdEarn").innerText=fmt(adEarnTotal);
-      btn.innerText="✅ Done ₹0.25"; btn.style.background="#2ecc71";
-      if(id<=2){ freeLeft--; document.getElementById("pinStatus").innerText = freeLeft>0 ? "FREE - "+freeLeft+" Ad બાકી" : "Free પૂરા - Pin ₹502 જોઈશે"; }
-      alert("₹0.25 મળ્યું! Ad "+id+"/100 પૂરી. Total: "+fmt(earn));
-    }
-  },1000);
-}
-function requestPin(){ alert("Pin Request Admin ને મોકલાઈ ગઈ! Pin Price ₹502"); document.getElementById("pinHisType").innerText="Pin Request ₹502"; document.getElementById("pinHisDate").innerText="Today"; }
-function activatePin(){ let p=document.getElementById("actPin").value.trim(); if(!p){ alert("Pin નાખો"); return; } if(allPins.includes(p) || p.startsWith("GTE-PIN-")){ pinActive=true; document.getElementById("pinStatus").innerText="Active ✅"; document.getElementById("myPin").innerText=p+" - Active"; alert("Pin Active! હવે 100 Ad ખુલી ગઈ!"); } else { alert("ખોટો Pin!"); } }
-function generateBulkPins(){ let count = parseInt(document.getElementById("pinCount").value); allPins = []; for(let i=1;i<=count;i++){ allPins.push("GTE-PIN-" + Math.floor(100000 + Math.random()*900000)); } document.getElementById("pinList").innerText = allPins.join("\n"); alert(count + " Pin બની ગયા!"); }
-function copyPins(){ if(allPins.length===0){ alert("પહેલા Pin બનાવો"); return; } let t = document.getElementById("pinList"); let range=document.createRange(); range.selectNode(t); window.getSelection().removeAllRanges(); window.getSelection().addRange(range); document.execCommand("copy"); alert("બધા "+allPins.length+" Pin Copy થઈ ગયા!"); }
-function createPin(){ let m=document.getElementById("newPinUser").value||"User"; let pin="GTE-PIN-"+Math.floor(100000+Math.random()*900000); allPins.push(pin); alert("Pin બન્યો: "+pin+" - Price ₹502"); }
-function resetUserPass(){ let np=document.getElementById("resetUserPass").value; if(!np){ alert("નવો Password નાખો"); return; } alert("User નો Password બદલાઈ ગયો: "+np); }
-function editRegUser(){ let n=document.getElementById("editRegName").value; if(!n){ alert("નવું નામ નાખો"); return; } document.getElementById("regName").innerText=n; document.getElementById("dispName").innerText=n; document.getElementById("pName").innerText=n; alert("User Details Edit થઈ ગઈ!"); }
-function copyLink(){ let l=document.getElementById("myLink"); l.select(); document.execCommand("copy"); alert("Link Copy થઈ ગઈ!"); }
-function sendTicket(){ let t=document.getElementById("ticketText").value; if(!t){ alert("પ્રશ્ન લખો"); return; } document.getElementById("ticketHis").innerText=t.substring(0,30)+"..."; alert("Ticket મોકલાઈ ગઈ!"); }
-function withdraw(){ let upi=document.getElementById("upi").value; let amt=document.getElementById("amt").value; if(!upi||!amt){ alert("UPI અને Amount ભરો"); return; } if(amt<100){ alert("Min ₹100"); return; } if(amt>earn){ alert("પૈસા ઓછા છે. Total: "+fmt(earn)); return; } document.getElementById("wMsg").innerText="Withdraw Request મોકલાઈ ગઈ!"; document.getElementById("aWithdraw").innerText="1"; }
-function addBizAd(){ let b=document.getElementById("bizName").value; let pr=document.getElementById("bizPrice").value; if(!b){ alert("વેપારીનું નામ નાખો"); return; } document.getElementById("bizMsg").innerText="✅ "+b+" ની Ad ઉમેરાઈ ગઈ! Price: "+pr; }
-function logout(){ location.reload(); }
-</script>
-</body>
-</html>
+function checkAdmin(){ let pass = document.getElementById("adminPass").value; if(pass === "Ramesh@123"){ isAdmin =
