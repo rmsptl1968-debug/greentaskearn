@@ -45,6 +45,102 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 .plan-box{background:#f1c40f;color:#000;border-radius:10px;padding:10px;text-align:center;margin-top:10px;font-weight:bold}
 .ref-box{background:#000;border:2px dashed #f1c40f;padding:10px;border-radius:10px;text-align:center;margin-top:10px}
 </style>
+<script>
+// LOGIN SCRIPT - SAUTHI UPAR, ALAG - HAVE 100% CHALSE
+function makeReferCode(name, mobile){
+  mobile = mobile.replace(/\D/g,'');
+  if(mobile==="9904078804"){ return "GTE-1001"; }
+  var last4 = mobile.slice(-4);
+  var initials = name.trim().split(" ")[0].slice(0,2).toUpperCase();
+  if(!initials) initials = "GT";
+  return "GTE-" + last4 + "-" + initials;
+}
+function updateReferUI(code){
+  try{
+    document.getElementById("referCode").innerText = code;
+    document.getElementById("referCodeTeam").innerText = code;
+    document.getElementById("myReferCodeTop").innerText = code;
+    document.getElementById("myLink").value = "https://rmsptl1968-debug.github.io/greentaskearn/?ref=" + code;
+  }catch(e){}
+}
+function doLogin(){
+  try{
+    var n = document.getElementById("userName").value.trim();
+    var m = document.getElementById("userMobile").value.replace(/\D/g,'').trim();
+    var p = document.getElementById("userPass").value.trim();
+    if(!n || !m || !p){ alert("નામ, Mobile અને Password ત્રણેય ભરો"); return; }
+    if(p.length < 4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; }
+    var saved = localStorage.getItem("user_"+m);
+    var myCode = makeReferCode(n, m);
+    if(saved){
+      var u = JSON.parse(saved);
+      if(u.pass !== p){ alert("ખોટો Password! નીચે 'Password ભૂલી ગયા?' દબાવીને નવો બનાવો."); return; }
+      myCode = u.refer || myCode;
+      alert("Welcome Back "+u.name+"! તમારો Refer Code: "+myCode);
+    } else {
+      // juna mobile space vala thi pan check karo
+      var savedOld = localStorage.getItem("user_99040 78804");
+      if(m==="9904078804" && savedOld){
+        var u2 = JSON.parse(savedOld);
+        if(u2.pass !== p){ alert("ખોટો Password! જૂનો Password યાદ કરો કે 'Password ભૂલી ગયા?' દબાવો."); return; }
+        myCode = "GTE-1001";
+        localStorage.setItem("user_"+m, JSON.stringify({name:u2.name, mobile:m, pass:p, refer:myCode}));
+        alert("Welcome Back "+u2.name+"! તમારો Refer Code: "+myCode);
+        n = u2.name;
+      } else {
+        localStorage.setItem("user_"+m, JSON.stringify({name:n, mobile:m, pass:p, refer:myCode}));
+        alert("Register થઈ ગયું "+n+"! તમારો Refer Code: "+myCode);
+      }
+    }
+    updateReferUI(myCode);
+    document.getElementById("dispName").innerText = n;
+    document.getElementById("pName").innerText = n;
+    document.getElementById("pMobile").innerText = m;
+    var rn = document.getElementById("regName"); if(rn) rn.innerText = n;
+    var rm = document.getElementById("regMobile"); if(rm) rm.innerText = m;
+    document.getElementById("loginCard").classList.add("hidden");
+    document.getElementById("adminLoginBox").classList.add("hidden");
+    document.getElementById("mainApp").classList.remove("hidden");
+    window.scrollTo(0,0);
+  }catch(err){ alert("Login માં Error: "+err.message); }
+}
+function forgotPass(){
+  try{
+    var m = prompt("તમારો Mobile Number નાખો - જેમ કે 9904078804");
+    if(!m) return;
+    m = m.replace(/\D/g,'').trim();
+    var saved = localStorage.getItem("user_"+m) || localStorage.getItem("user_99040 78804");
+    if(!saved){ alert("આ Mobile થી કોઈ ID મળી નથી. પહેલા નામ + Mobile + નવો Password નાખીને Register કરો."); return; }
+    var np = prompt("નવો Password નાખો - ઓછામાં ઓછો 4 અંક - જેમ કે 1234");
+    if(!np || np.length < 4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; }
+    var u = JSON.parse(saved);
+    u.pass = np; u.mobile = m;
+    localStorage.setItem("user_"+m, JSON.stringify(u));
+    localStorage.setItem("user_99040 78804", JSON.stringify(u));
+    document.getElementById("userMobile").value = m;
+    document.getElementById("userPass").value = np;
+    document.getElementById("userName").value = u.name;
+    alert("✅ નવો Password બની ગયો! હવે Login દબાવો. નવો Password: "+np);
+  }catch(err){ alert("Error: "+err.message); }
+}
+function showAdminLogin(){
+  var b = document.getElementById("adminLoginBox");
+  b.classList.remove("hidden");
+  b.scrollIntoView({behavior:"smooth"});
+}
+function hideAdminLogin(){ document.getElementById("adminLoginBox").classList.add("hidden"); }
+function checkAdmin(){
+  var pass = document.getElementById("adminPass").value;
+  if(pass === "Ramesh@123"){
+    document.getElementById("adminLoginBox").classList.add("hidden");
+    document.getElementById("loginCard").classList.add("hidden");
+    document.getElementById("mainApp").classList.remove("hidden");
+    var ab = document.getElementById("adminTopBtn"); if(ab) ab.classList.remove("hidden");
+    if(typeof switchPanel === "function") switchPanel('admin');
+    alert("Admin Login થઈ ગયું!");
+  } else { document.getElementById("adminMsg").innerText = "ખોટો Password!"; }
+}
+</script>
 </head>
 <body>
 
@@ -76,8 +172,8 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 
 <div class="card" id="loginCard">
 <h3>🔐 User Login / Register - Password સાથે</h3>
-<input id="userName" placeholder="તમારું નામ">
-<input id="userMobile" placeholder="Mobile Number">
+<input id="userName" placeholder="તમારું નામ" value="PATEL RAMESHKUMAR">
+<input id="userMobile" placeholder="Mobile Number" value="9904078804">
 <input id="userPass" type="password" placeholder="Password - ઓછામાં ઓછા 4 અંક">
 <button class="btn btn-y" onclick="doLogin()">Login / Register કરો</button>
 <button class="btn" onclick="forgotPass()" style="background:#333;color:#f1c40f;border:1px solid #f1c40f;">🔑 Password ભૂલી ગયા? અહીંથી નવો બનાવો</button>
@@ -96,174 +192,4 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <div id="mainApp" class="hidden">
 <div class="topbar">
 <button style="background:#f1c40f" onclick="switchPanel('user')">👤 USER PANEL</button>
-<button style="background:#2ecc71" id="adminTopBtn" class="hidden" onclick="switchPanel('admin')">🛡️ ADMIN PANEL</button>
-<button style="background:#e74c3c;color:#fff" onclick="logout()">Logout</button>
-</div>
-
-<div id="userPanel">
-<div class="card" style="border-color:#f1c40f;">
-<h3>💰 Offerwall - Extra Kamao</h3>
-<a href="#" class="offer-btn" style="background:#ff6b00;">🎁 Torox Offerwall<br><span style="font-size:13px;font-weight:normal;">App Install + Game + Offer</span></a>
-<a href="#" class="offer-btn" style="background:#007bff;margin-bottom:0;">📝 Lootably Offerwall<br><span style="font-size:13px;font-weight:normal;">Survey + Game Task</span></a>
-</div>
-<div class="card">
-<h3>👋 નમસ્તે <span id="dispName">Rameshkumar</span>! Dashboard</h3>
-<p>Total Earning: <b id="userEarn">₹25.00</b> | Ad Earning: <b id="adEarn">₹0</b> | Level Income: <b id="levelEarnTop">₹0</b></p>
-<p>Today: <b id="taskCount">0 / 100</b> | Pin Status: <b id="pinStatus">FREE - 2 Ad બાકી</b> | Plan: <b>₹502</b></p>
-<div class="ref-box">
-<b style="color:#f1c40f;">🔗 તમારો Refer Code: <span id="myReferCodeTop" style="font-size:18px;">GTE-1001</span></b><br>
-<span style="font-size:12px;">આ Code થી કોઈ Join થશે તો તમને Level Income મળશે</span>
-</div>
-</div>
-<div class="menu" id="userMenu">
-<button class="active" onclick="showUserTab('dash',this)">Dashboard</button>
-<button onclick="showUserTab('profile',this)">Profile</button>
-<button onclick="showUserTab('pin',this)">Pin</button>
-<button onclick="showUserTab('team',this)">Team</button>
-<button onclick="showUserTab('comm',this)">Commission</button>
-<button onclick="showUserTab('withdraw',this)">Withdrawal</button>
-<button onclick="showUserTab('support',this)">Support</button>
-</div>
-<div class="card" id="u-dash">
-<h3>📺 આજના Tasks - 100 Ad - ₹0.25 દરેક - અંદર જ ચાલશે</h3>
-<p style="font-size:13px;color:#2ecc71">✅ 1-2 FREE છે. 3 થી 100 માટે Pin જોઈશે. Pin Price ₹502</p>
-<label style="font-size:13px">Ad નો પ્રકાર પસંદ કરો:</label>
-<select id="adType">
-<option value="adsterra">📺 Adsterra Ad - 10 Sec - ₹0.25 - અંદર જ</option>
-<option value="gujarat">🟢 Gujarat Business Ad - 10 Sec - ₹0.25 - અંદર જ</option>
-<option value="both">🔄 બંને - વારાફરતી - અંદર જ</option>
-</select>
-<div id="adBox" class="hidden">
-<h3>📺 Ad ચાલી રહી છે... <span id="adNo"></span></h3>
-<div id="timer">10</div>
-<p>Ad પૂરી થાય ત્યાં સુધી રાહ જુઓ</p>
-<div class="ad-frame" id="adFrameInner"><div><b>🟢 Green Task Earn - Clean Ad</b><br>તમારી દુકાનની જાહેરાત અહીં<br><span style="font-size:12px">કપડાં | કરિયાણું | મોબાઈલ | દવાખાનું</span></div></div>
-</div>
-<div id="taskList"></div>
-<div class="adsterra-box">
-<script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
-<div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
-</div>
-</div>
-<div class="card hidden" id="u-profile">
-<h3>👤 Profile - Edit કરી શકાય છે</h3>
-<p>Name: <b id="pName">Rameshkumar</b></p>
-<p>Mobile: <b id="pMobile">99040 78804</b></p>
-<p>Refer Code: <b id="referCode" style="color:#f1c40f;font-size:18px;">GTE-1001</b></p>
-<p style="font-size:12px;color:#a9f5b2;">તમારી Refer Link Team માં છે - એ Copy કરીને મોકલો</p>
-<hr style="margin:10px 0;border-color:#444">
-<input id="editName" placeholder="નવું નામ">
-<input id="editMobile" placeholder="નવો Mobile Number">
-<input id="editPass" type="password" placeholder="નવો Password - ઓછામાં ઓછો 4 અંક">
-<button class="btn" onclick="saveProfile()">💾 Profile Save કરો</button>
-<button class="btn btn-y" onclick="changePass()">🔑 Password બદલો</button>
-<p id="profileMsg" style="color:#2ecc71;text-align:center;margin-top:8px"></p>
-</div>
-<div class="card hidden" id="u-pin"><h3>📌 Pin - Price ₹502</h3><p>તમારો Pin: <b id="myPin">FREE TRIAL - 2 Ad</b></p><p style="font-size:13px">Pin Price: <b>₹502</b> | 2 Free Ad પછી Pin જોઈશે</p><button class="btn btn-y" onclick="requestPin()">📌 Request Pin - ₹502</button><input id="actPin" placeholder="Activation Pin - GTE-PIN-XXXXXX"><button class="btn" onclick="activatePin()">✅ Activation Pin લગાવો</button><input placeholder="કેને Transfer કરવો છે? Mobile"><button class="btn" onclick="alert('Pin Transfer Request Admin ને ગઈ!')">🔄 Transfer Pin</button><h3 style="margin-top:12px">Pin History</h3><table><tr><th>Date</th><th>Type</th><th>Status</th></tr><tr><td>Today</td><td>Free Trial 2 Ad</td><td>Active</td></tr><tr><td id="pinHisDate">-</td><td id="pinHisType">-</td><td>Pending</td></tr></table></div>
-<div class="card hidden" id="u-team">
-<h3>👥 Team - Level Income - Plan ₹502</h3>
-<p>તમારો Refer Code: <b id="referCodeTeam" style="color:#f1c40f;font-size:18px;">GTE-1001</b></p>
-<p style="font-size:13px;color:#a9f5b2;">આ Link Copy કરીને મિત્રોને મોકલો:</p>
-<input id="myLink" value="https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001" readonly><button class="btn" onclick="copyLink()">📋 Link Copy કરો</button>
-<table><tr><th>Level</th><th>Income</th><th>15% Admin કાપ્યા પછી</th><th>Members</th></tr>
-<tr><td>Level 1</td><td>₹50</td><td>₹42.50</td><td id="l1m">0</td></tr>
-<tr><td>Level 2</td><td>₹50</td><td>₹42.50</td><td id="l2m">0</td></tr>
-<tr><td>Level 3</td><td>₹100</td><td>₹85.00</td><td id="l3m">0</td></tr>
-<tr><td>Level 4</td><td>₹50</td><td>₹42.50</td><td id="l4m">0</td></tr>
-<tr><td>Level 5</td><td>₹50</td><td>₹42.50</td><td id="l5m">0</td></tr>
-<tr><td><b>Total</b></td><td><b>₹300</b></td><td><b>₹255.00</b></td><td>-</td></tr></table>
-<p class="level-note">* દરેક Level પર 15% Admin Charge કપાશે.</p>
-<button class="btn btn-y" onclick="claimLevel()">💰 Level Income Claim કરો</button>
-<p id="levelMsg" style="text-align:center;color:#2ecc71;margin-top:8px"></p>
-</div>
-<div class="card hidden" id="u-comm"><h3>💸 Commission - Plan ₹502</h3><table><tr><th>Type</th><th>Ads</th><th>Earning</th></tr><tr><td>Adsterra Ad - ₹0.25</td><td id="cAd">0</td><td id="cAdEarn">₹0</td></tr><tr><td>Gujarat Business Ad</td><td id="cBiz">0</td><td id="cBizEarn">₹0</td></tr><tr><td>Level Income (15% કાપ્યા પછી)</td><td>-</td><td id="cLevel">₹0</td></tr></table></div>
-<div class="card hidden" id="u-withdraw"><h3>💰 Withdrawal</h3><input id="upi" placeholder="UPI ID / Mobile"><input type="number" id="amt" placeholder="Amount (Min ₹100)"><button class="btn btn-y" onclick="withdraw()">Withdraw Request મોકલો</button><p id="wMsg" style="text-align:center;margin-top:8px;color:#2ecc71"></p><p style="font-size:12px;color:#aaa;text-align:center">Ad: ₹0.25 x 100 = ₹25 / દિવસ + Level Income ₹255</p></div>
-<div class="card hidden" id="u-support"><h3>🆘 Support</h3><textarea id="ticketText" placeholder="તમારો પ્રશ્ન લખો..."></textarea><button class="btn" onclick="sendTicket()">Ticket મોકલો</button><table><tr><th>Ticket</th><th>Status</th></tr><tr><td id="ticketHis">કોઈ Ticket નથી</td><td>Open</td></tr></table></div>
-</div>
-
-<div id="adminPanel" class="hidden">
-<div class="card"><h3>🛡️ Admin Dashboard - Plan ₹502</h3><p>Total Users: <b id="aUsers">1</b> | Total Earning: <b id="aEarn">₹25.00</b> | Withdraw: <b id="aWithdraw">0</b> | Traffic: <b id="aTraffic">0 Views</b> | Admin Charge (15%): <b id="aCharge">₹0</b></p></div>
-<div class="menu" id="adminMenu">
-<button class="active" onclick="showAdminTab('adash',this)">Dashboard</button>
-<button onclick="showAdminTab('apin',this)">Pin</button>
-<button onclick="showAdminTab('areg',this)">Registration</button>
-<button onclick="showAdminTab('ateam',this)">Our Team</button>
-<button onclick="showAdminTab('aad',this)">Ad View</button>
-<button onclick="showAdminTab('apay',this)">Payment</button>
-<button onclick="showAdminTab('acomm',this)">Commission</button>
-<button onclick="showAdminTab('asup',this)">Support</button>
-</div>
-<div class="card" id="a-adash"><h3>Admin Dashboard</h3><p>Adsterra Native + Gujarat Business બંને ON છે. 100 Ad x ₹0.25 - Ad અંદર જ ચાલશે.</p><p>Plan ₹502 - Level Income: 50 / 50 / 100 / 50 / 50 = ₹300 - 15% કાપીને ₹255 ચૂકવવાનું.</p><button class="btn btn-y" onclick="alert('લિંક: https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001')">📋 20 મિત્રોને મોકલવાની લિંક</button></div>
-<div class="card hidden" id="a-apin">
-<h3>📌 Pin - Bulk Generate - 50 / 100 / 200 - Price ₹502</h3>
-<select id="pinCount"><option value="50">50 Pin</option><option value="100">100 Pin</option><option value="200">200 Pin</option><option value="10">10 Pin - Test</option></select>
-<button class="btn btn-y" onclick="generateBulkPins()">⚡ એક સાથે Pin બનાવો</button>
-<button class="btn" onclick="copyPins()">📋 બધા Pin Copy કરો</button>
-<div class="pin-list" id="pinList">હજુ Pin બન્યા નથી.</div>
-<h3 style="margin-top:10px">એક Pin - ₹502</h3>
-<input id="newPinUser" placeholder="Mobile નાખો"><button class="btn" onclick="createPin()">Pin Create કરો</button>
-</div>
-<div class="card hidden" id="a-areg"><h3>📝 Registration - Edit કરી શકાય છે</h3><table><tr><th>User</th><th>Mobile</th><th>Password</th><th>Action</th></tr><tr><td id="regName">Rameshkumar</td><td id="regMobile">99040 78804</td><td>********</td><td><button onclick="alert('Edit ખુલ્યું')">Edit</button> <button onclick="alert('User Blocked!')" style="background:#e74c3c;color:#fff;border:0;padding:4px 8px;border-radius:4px">Block ID</button></td></tr></table><input id="resetUserPass" placeholder="User નો નવો Password"><button class="btn" onclick="resetUserPass()">User Password બદલો</button><input id="editRegName" placeholder="User નું નવું નામ"><button class="btn" onclick="editRegUser()">User Details Edit કરો</button></div>
-<div class="card hidden" id="a-ateam"><h3>👥 Our Team - Level Income Details - Plan ₹502</h3><table><tr><th>Level</th><th>Gross</th><th>Net (15% કાપ્યા પછી)</th></tr><tr><td>1</td><td>₹50</td><td>₹42.50</td></tr><tr><td>2</td><td>₹50</td><td>₹42.50</td></tr><tr><td>3</td><td>₹100</td><td>₹85.00</td></tr><tr><td>4</td><td>₹50</td><td>₹42.50</td></tr><tr><td>5</td><td>₹50</td><td>₹42.50</td></tr><tr><td><b>Total</b></td><td><b>₹300</b></td><td><b>₹255.00</b></td></tr></table></div>
-<div class="card hidden" id="a-aad"><h3>📺 Ad View - Gujarat Business + Adsterra</h3><table><tr><th>Ad Type</th><th>Views</th><th>Earning</th></tr><tr><td>Adsterra - ₹0.25</td><td id="adViewCount">0</td><td id="adViewEarn">₹0</td></tr><tr><td>Gujarat Business</td><td id="bizViewCount">0</td><td>₹0</td></tr></table><input id="bizName" placeholder="વેપારીનું નામ"><input id="bizPrice" placeholder="Price - જેમ કે ₹150 / 1000 Views"><button class="btn" onclick="addBizAd()">+ Business Ad ઉમેરો</button><p id="bizMsg" style="color:#2ecc71;text-align:center"></p></div>
-<div class="card hidden" id="a-apay"><h3>💰 Payment</h3><table><tr><th>User</th><th>Amount</th><th>UPI</th><th>Action</th></tr><tr><td>કોઈ Request નથી</td><td>-</td><td>-</td><td>-</td></tr></table></div>
-<div class="card hidden" id="a-acomm"><h3>💸 Commission - 15% Admin Charge - Plan ₹502</h3><table><tr><th>Type</th><th>Total</th></tr><tr><td>Level Income Gross</td><td>₹300</td></tr><tr><td>Admin Charge 15%</td><td>₹45</td></tr><tr><td>Net Payable</td><td>₹255</td></tr></table></div>
-<div class="card hidden" id="a-asup"><h3>🆘 Support</h3><table><tr><th>Ticket</th><th>User</th><th>Status</th></tr><tr><td>કોઈ Ticket નથી</td><td>-</td><td>-</td></tr></table></div>
-</div>
-<div class="card"><h3>📢 વેપારીઓ માટે - 100% Clean</h3><p>વેપાર-ધંધા ની Ad મૂકી આપીશું, વધુ ગ્રાહકો સુધી પહોંચાડીશું</p><p>વધુ માહિતી રૂબરૂ માં આપીશું</p><p style="color:#ff8fab">Website : https://rmsptl1968-debug.github.io/greentaskearn</p><p style="text-align:center;font-weight:bold">RAMESHKUMAR : 99040 78804</p></div>
-</div>
-<p class="small">© 2026 Green Task Earn | Plan ₹502 | 10 Sec = ₹0.25 | Daily 100 Ads | Level Income 15% Admin Charge પછી ₹255 | Ad અંદર જ ચાલશે</p>
-
-<script>
-let earn=25, done=0, totalTasks=100, isAdmin=false, pinActive=false, freeLeft=2;
-let adEarnTotal=0, bizCount=0, levelClaimed=0;
-let allPins = [];
-let currentRefer = "GTE-1001";
-let list=document.getElementById("taskList");
-for(let i=1;i<=totalTasks;i++){
-  let freeTag = i<=2 ? '<span class="free-badge">FREE</span>' : '';
-  list.innerHTML+=`<div class="task"><span>${i}. Ad જુઓ - 10 સેકન્ડ ${freeTag}</span><button id="btn${i}" onclick="playAd(${i})">₹0.25 મેળવો</button></div>`;
-}
-function fmt(n){ return "₹"+n.toFixed(2); }
-function makeReferCode(name, mobile){
-  if(mobile==="9904078804" || mobile==="99040 78804"){ return "GTE-1001"; }
-  let last4 = mobile.replace(/\D/g,'').slice(-4);
-  let initials = name.trim().split(" ")[0].slice(0,2).toUpperCase();
-  if(!initials) initials = "GT";
-  return "GTE-" + last4 + "-" + initials;
-}
-function updateReferUI(code){
-  currentRefer = code;
-  document.getElementById("referCode").innerText = code;
-  document.getElementById("referCodeTeam").innerText = code;
-  document.getElementById("myReferCodeTop").innerText = code;
-  document.getElementById("myLink").value = "https://rmsptl1968-debug.github.io/greentaskearn/?ref=" + code;
-}
-function doLogin(){
-  let n=document.getElementById("userName").value.trim();
-  let m=document.getElementById("userMobile").value.trim();
-  let p=document.getElementById("userPass").value.trim();
-  if(!n || !m || !p){ alert("નામ, Mobile અને Password ત્રણેય ભરો"); return; }
-  if(p.length < 4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; }
-  let saved = localStorage.getItem("user_"+m);
-  let myCode = makeReferCode(n, m);
-  if(saved){ let u = JSON.parse(saved); if(u.pass !== p){ alert("ખોટો Password! નીચે 'Password ભૂલી ગયા?' બટન દબાવીને નવો બનાવો."); return; } myCode = u.refer || myCode; alert("Welcome Back "+u.name+"! તમારો Refer Code: "+myCode); }
-  else { localStorage.setItem("user_"+m, JSON.stringify({name:n, mobile:m, pass:p, refer:myCode})); alert("Register થઈ ગયું "+n+"! તમારો Refer Code: "+myCode); }
-  updateReferUI(myCode);
-  document.getElementById("dispName").innerText=n;
-  document.getElementById("pName").innerText=n;
-  document.getElementById("pMobile").innerText=m;
-  document.getElementById("regName").innerText=n;
-  document.getElementById("regMobile").innerText=m;
-  document.getElementById("loginCard").classList.add("hidden");
-  document.getElementById("adminLoginBox").classList.add("hidden");
-  document.getElementById("mainApp").classList.remove("hidden");
-}
-function forgotPass(){
-  let m = prompt("તમારો Mobile Number નાખો - જેમ કે 9714920727");
-  if(!m){ return; }
-  m = m.trim();
-  let saved = localStorage.getItem("user_"+m);
-  if(!saved){ alert("આ Mobile થી કોઈ ID મળી નથી. પહેલા નામ + Mobile + નવો Password નાખીને Register કરો."); return; }
-  let np = prompt("નવો Password નાખો - ઓછામાં ઓછો 4 અંક - જેમ કે 1234");
-  if(!np || np.length < 4){ alert("Password ઓછામાં ઓછો 4 અં
+<button style="background:#2ecc71" id="adminTopBtn" class="hidden" onclick="
