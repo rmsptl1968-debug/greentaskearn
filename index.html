@@ -80,6 +80,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <input id="userMobile" placeholder="Mobile Number">
 <input id="userPass" type="password" placeholder="Password - ઓછામાં ઓછા 4 અંક">
 <button class="btn btn-y" onclick="doLogin()">Login / Register કરો</button>
+<button class="btn" onclick="forgotPass()" style="background:#333;color:#f1c40f;border:1px solid #f1c40f;">🔑 Password ભૂલી ગયા? અહીંથી નવો બનાવો</button>
 <p style="font-size:12px;color:#aaa;margin-top:8px;text-align:center">નવા મિત્રને પહેલા 2 Ad FREE મળશે. Pin Price ₹502</p>
 <button class="btn" onclick="showAdminLogin()" style="background:#333;color:#fff">Admin Login</button>
 </div>
@@ -225,7 +226,6 @@ for(let i=1;i<=totalTasks;i++){
 }
 function fmt(n){ return "₹"+n.toFixed(2); }
 function makeReferCode(name, mobile){
-  // Admin mate juno code j rakhvo
   if(mobile==="9904078804" || mobile==="99040 78804"){ return "GTE-1001"; }
   let last4 = mobile.replace(/\D/g,'').slice(-4);
   let initials = name.trim().split(" ")[0].slice(0,2).toUpperCase();
@@ -247,7 +247,7 @@ function doLogin(){
   if(p.length < 4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; }
   let saved = localStorage.getItem("user_"+m);
   let myCode = makeReferCode(n, m);
-  if(saved){ let u = JSON.parse(saved); if(u.pass !== p){ alert("ખોટો Password!"); return; } myCode = u.refer || myCode; alert("Welcome Back "+u.name+"! તમારો Refer Code: "+myCode); }
+  if(saved){ let u = JSON.parse(saved); if(u.pass !== p){ alert("ખોટો Password! નીચે 'Password ભૂલી ગયા?' બટન દબાવીને નવો બનાવો."); return; } myCode = u.refer || myCode; alert("Welcome Back "+u.name+"! તમારો Refer Code: "+myCode); }
   else { localStorage.setItem("user_"+m, JSON.stringify({name:n, mobile:m, pass:p, refer:myCode})); alert("Register થઈ ગયું "+n+"! તમારો Refer Code: "+myCode); }
   updateReferUI(myCode);
   document.getElementById("dispName").innerText=n;
@@ -259,27 +259,11 @@ function doLogin(){
   document.getElementById("adminLoginBox").classList.add("hidden");
   document.getElementById("mainApp").classList.remove("hidden");
 }
-function changePass(){
-  let np = prompt("નવો Password નાખો (ઓછામાં ઓછો 4 અંક)");
-  if(!np || np.length<4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; }
-  let m=document.getElementById("pMobile").innerText;
-  let u=JSON.parse(localStorage.getItem("user_"+m)||"{}"); u.pass=np; localStorage.setItem("user_"+m, JSON.stringify(u));
-  document.getElementById("profileMsg").innerText="✅ Password બદલાઈ ગયો!";
-  alert("Password બદલાઈ ગયો");
-}
-function saveProfile(){
-  let n=document.getElementById("editName").value.trim();
-  let newMob=document.getElementById("editMobile").value.trim();
-  let np=document.getElementById("editPass").value.trim();
-  let oldMob=document.getElementById("pMobile").innerText;
-  let u=JSON.parse(localStorage.getItem("user_"+oldMob)||"{}");
-  if(n){ u.name=n; document.getElementById("dispName").innerText=n; document.getElementById("pName").innerText=n; document.getElementById("regName").innerText=n; }
-  if(newMob){ u.mobile=newMob; document.getElementById("pMobile").innerText=newMob; document.getElementById("regMobile").innerText=newMob; localStorage.removeItem("user_"+oldMob); localStorage.setItem("user_"+newMob, JSON.stringify(u)); }
-  if(np){ if(np.length<4){ alert("Password ઓછામાં ઓછો 4 અંકનો રાખો"); return; } u.pass=np; localStorage.setItem("user_"+(newMob||oldMob), JSON.stringify(u)); }
-  else { localStorage.setItem("user_"+(newMob||oldMob), JSON.stringify(u)); }
-  document.getElementById("profileMsg").innerText="✅ Profile Save થઈ ગઈ!";
-  alert("Profile Save થઈ ગઈ!");
-}
-function showAdminLogin(){ document.getElementById("adminLoginBox").classList.remove("hidden"); document.getElementById("adminLoginBox").scrollIntoView({behavior:"smooth"}); }
-function hideAdminLogin(){ document.getElementById("adminLoginBox").classList.add("hidden"); }
-function checkAdmin(){ let pass = document.getElementById("adminPass").value; if(pass === "Ramesh@123"){ isAdmin =
+function forgotPass(){
+  let m = prompt("તમારો Mobile Number નાખો - જેમ કે 9714920727");
+  if(!m){ return; }
+  m = m.trim();
+  let saved = localStorage.getItem("user_"+m);
+  if(!saved){ alert("આ Mobile થી કોઈ ID મળી નથી. પહેલા નામ + Mobile + નવો Password નાખીને Register કરો."); return; }
+  let np = prompt("નવો Password નાખો - ઓછામાં ઓછો 4 અંક - જેમ કે 1234");
+  if(!np || np.length < 4){ alert("Password ઓછામાં ઓછો 4 અં
