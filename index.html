@@ -42,6 +42,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 .biz-ad button{background:#2ecc71;border:0;padding:7px 10px;border-radius:6px;font-weight:bold}
 .level-note{font-size:12px;color:#a9f5b2;margin-top:6px}
 .offer-btn{display:block;text-align:center;padding:14px 10px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:17px;margin-bottom:10px;color:#fff !important}
+.plan-box{background:#f1c40f;color:#000;border-radius:10px;padding:10px;text-align:center;margin-top:10px;font-weight:bold}
 </style>
 </head>
 <body>
@@ -52,6 +53,8 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <p>રોજેરોજ Ad જુવો.. Ad આપો અને Reward મેળવો</p>
 </div>
 
+<div class="plan-box">⭐ PLAN ₹502 | Level Income ₹50 - ₹50 - ₹100 - ₹50 - ₹50 = ₹300 | 15% Admin Charge પછી ₹255 મળશે ⭐</div>
+
 <div class="clean-box">
 <b>🟢 ગુજરાત બિઝનેસ Ad - સાફ અને પરિવારલક્ષી</b><br>
 <span style="font-size:13px">તમારી દુકાનની Ad અહીં આવશે - કપડાં, કરિયાણું, મોબાઈલ, દવાખાનું</span>
@@ -61,7 +64,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <span style="font-size:12px;color:green">✅ કોઈ ગંદી Ad નહીં - 100% Clean - Ad અંદર જ ચાલશે</span>
 </div>
 
-<div class="rate">⭐ 10 સેકન્ડ Ad = ₹0.25 | રોજ 100 Ad = ₹25 | પહેલા 2 Ad FREE ⭐</div>
+<div class="rate">⭐ 10 સેકન્ડ Ad = ₹0.25 | રોજ 100 Ad = ₹25 | પહેલા 2 Ad FREE | Pin Price ₹502 ⭐</div>
 
 <div class="card" style="border-color:#f1c40f;">
 <h3>💰 Offerwall - Survey + Game Task - Extra Kamao</h3>
@@ -76,7 +79,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <input id="userMobile" placeholder="Mobile Number">
 <input id="userPass" type="password" placeholder="Password - ઓછામાં ઓછા 4 અંક">
 <button class="btn btn-y" onclick="doLogin()">Login / Register કરો</button>
-<p style="font-size:12px;color:#aaa;margin-top:8px;text-align:center">નવા મિત્રને પહેલા 2 Ad FREE મળશે.</p>
+<p style="font-size:12px;color:#aaa;margin-top:8px;text-align:center">નવા મિત્રને પહેલા 2 Ad FREE મળશે. Pin Price ₹502</p>
 <button class="btn" onclick="showAdminLogin()" style="background:#333;color:#fff">Admin Login</button>
 </div>
 
@@ -104,7 +107,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <div class="card">
 <h3>👋 નમસ્તે <span id="dispName">Rameshkumar</span>! Dashboard</h3>
 <p>Total Earning: <b id="userEarn">₹25.00</b> | Ad Earning: <b id="adEarn">₹0</b> | Level Income: <b id="levelEarnTop">₹0</b></p>
-<p>Today: <b id="taskCount">0 / 100</b> | Pin Status: <b id="pinStatus">FREE - 2 Ad બાકી</b></p>
+<p>Today: <b id="taskCount">0 / 100</b> | Pin Status: <b id="pinStatus">FREE - 2 Ad બાકી</b> | Plan: <b>₹502</b></p>
 </div>
 <div class="menu" id="userMenu">
 <button class="active" onclick="showUserTab('dash',this)">Dashboard</button>
@@ -117,7 +120,7 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 </div>
 <div class="card" id="u-dash">
 <h3>📺 આજના Tasks - 100 Ad - ₹0.25 દરેક - અંદર જ ચાલશે</h3>
-<p style="font-size:13px;color:#2ecc71">✅ 1-2 FREE છે. 3 થી 100 માટે Pin જોઈશે.</p>
+<p style="font-size:13px;color:#2ecc71">✅ 1-2 FREE છે. 3 થી 100 માટે Pin જોઈશે. Pin Price ₹502</p>
 <label style="font-size:13px">Ad નો પ્રકાર પસંદ કરો:</label>
 <select id="adType">
 <option value="adsterra">📺 Adsterra Ad - 10 Sec - ₹0.25 - અંદર જ</option>
@@ -131,14 +134,10 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <div class="ad-frame" id="adFrameInner"><div><b>🟢 Green Task Earn - Clean Ad</b><br>તમારી દુકાનની જાહેરાત અહીં<br><span style="font-size:12px">કપડાં | કરિયાણું | મોબાઈલ | દવાખાનું</span></div></div>
 </div>
 <div id="taskList"></div>
-
-<!-- ADSTERRA HAVE NICHE DEKHASE - UPAR PAGE NE NAHI ROKSE -->
 <div class="adsterra-box">
 <script async="async" data-cfasync="false" src="https://bicea.org/21/c40e448bbdab3d4306bdef7d37b4fb29"></script>
 <div id="container-c40e448bbdab3d4306bdef7d37b4fb29"></div>
 </div>
-<!-- ADSTERRA END -->
-
 </div>
 <div class="card hidden" id="u-profile">
 <h3>👤 Profile - Edit કરી શકાય છે</h3>
@@ -153,28 +152,28 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <button class="btn btn-y" onclick="changePass()">🔑 Password બદલો</button>
 <p id="profileMsg" style="color:#2ecc71;text-align:center;margin-top:8px"></p>
 </div>
-<div class="card hidden" id="u-pin"><h3>📌 Pin</h3><p>તમારો Pin: <b id="myPin">FREE TRIAL - 2 Ad</b></p><button class="btn btn-y" onclick="requestPin()">📌 Request Pin</button><input id="actPin" placeholder="Activation Pin - GTE-PIN-XXXXXX"><button class="btn" onclick="activatePin()">✅ Activation Pin લગાવો</button><input placeholder="કેને Transfer કરવો છે? Mobile"><button class="btn" onclick="alert('Pin Transfer Request Admin ને ગઈ!')">🔄 Transfer Pin</button><h3 style="margin-top:12px">Pin History</h3><table><tr><th>Date</th><th>Type</th><th>Status</th></tr><tr><td>Today</td><td>Free Trial 2 Ad</td><td>Active</td></tr><tr><td id="pinHisDate">-</td><td id="pinHisType">-</td><td>Pending</td></tr></table></div>
+<div class="card hidden" id="u-pin"><h3>📌 Pin - Price ₹502</h3><p>તમારો Pin: <b id="myPin">FREE TRIAL - 2 Ad</b></p><p style="font-size:13px">Pin Price: <b>₹502</b> | 2 Free Ad પછી Pin જોઈશે</p><button class="btn btn-y" onclick="requestPin()">📌 Request Pin - ₹502</button><input id="actPin" placeholder="Activation Pin - GTE-PIN-XXXXXX"><button class="btn" onclick="activatePin()">✅ Activation Pin લગાવો</button><input placeholder="કેને Transfer કરવો છે? Mobile"><button class="btn" onclick="alert('Pin Transfer Request Admin ને ગઈ!')">🔄 Transfer Pin</button><h3 style="margin-top:12px">Pin History</h3><table><tr><th>Date</th><th>Type</th><th>Status</th></tr><tr><td>Today</td><td>Free Trial 2 Ad</td><td>Active</td></tr><tr><td id="pinHisDate">-</td><td id="pinHisType">-</td><td>Pending</td></tr></table></div>
 <div class="card hidden" id="u-team">
-<h3>👥 Team - Level Income</h3>
+<h3>👥 Team - Level Income - Plan ₹502</h3>
 <input id="myLink" value="https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001" readonly><button class="btn" onclick="copyLink()">📋 Link Copy કરો</button>
 <table><tr><th>Level</th><th>Income</th><th>15% Admin કાપ્યા પછી</th><th>Members</th></tr>
-<tr><td>Level 1</td><td>₹30</td><td>₹25.50</td><td id="l1m">0</td></tr>
-<tr><td>Level 2</td><td>₹30</td><td>₹25.50</td><td id="l2m">0</td></tr>
-<tr><td>Level 3</td><td>₹60</td><td>₹51.00</td><td id="l3m">0</td></tr>
-<tr><td>Level 4</td><td>₹30</td><td>₹25.50</td><td id="l4m">0</td></tr>
-<tr><td>Level 5</td><td>₹30</td><td>₹25.50</td><td id="l5m">0</td></tr>
-<tr><td><b>Total</b></td><td><b>₹180</b></td><td><b>₹153.00</b></td><td>-</td></tr></table>
-<p class="level-note">* દરેક Level પર 15% Admin Charge કપાશે.</p>
+<tr><td>Level 1</td><td>₹50</td><td>₹42.50</td><td id="l1m">0</td></tr>
+<tr><td>Level 2</td><td>₹50</td><td>₹42.50</td><td id="l2m">0</td></tr>
+<tr><td>Level 3</td><td>₹100</td><td>₹85.00</td><td id="l3m">0</td></tr>
+<tr><td>Level 4</td><td>₹50</td><td>₹42.50</td><td id="l4m">0</td></tr>
+<tr><td>Level 5</td><td>₹50</td><td>₹42.50</td><td id="l5m">0</td></tr>
+<tr><td><b>Total</b></td><td><b>₹300</b></td><td><b>₹255.00</b></td><td>-</td></tr></table>
+<p class="level-note">* દરેક Level પર 15% Admin Charge કપાશે. બાકીની રકમ તમારા ખાતામાં જમા થશે.</p>
 <button class="btn btn-y" onclick="claimLevel()">💰 Level Income Claim કરો</button>
 <p id="levelMsg" style="text-align:center;color:#2ecc71;margin-top:8px"></p>
 </div>
-<div class="card hidden" id="u-comm"><h3>💸 Commission</h3><table><tr><th>Type</th><th>Ads</th><th>Earning</th></tr><tr><td>Adsterra Ad - ₹0.25</td><td id="cAd">0</td><td id="cAdEarn">₹0</td></tr><tr><td>Gujarat Business Ad</td><td id="cBiz">0</td><td id="cBizEarn">₹0</td></tr><tr><td>Level Income (15% કાપ્યા પછી)</td><td>-</td><td id="cLevel">₹0</td></tr></table></div>
-<div class="card hidden" id="u-withdraw"><h3>💰 Withdrawal</h3><input id="upi" placeholder="UPI ID / Mobile"><input type="number" id="amt" placeholder="Amount (Min ₹100)"><button class="btn btn-y" onclick="withdraw()">Withdraw Request મોકલો</button><p id="wMsg" style="text-align:center;margin-top:8px;color:#2ecc71"></p><p style="font-size:12px;color:#aaa;text-align:center">Ad: ₹0.25 x 100 = ₹25 / દિવસ + Level Income</p></div>
+<div class="card hidden" id="u-comm"><h3>💸 Commission - Plan ₹502</h3><table><tr><th>Type</th><th>Ads</th><th>Earning</th></tr><tr><td>Adsterra Ad - ₹0.25</td><td id="cAd">0</td><td id="cAdEarn">₹0</td></tr><tr><td>Gujarat Business Ad</td><td id="cBiz">0</td><td id="cBizEarn">₹0</td></tr><tr><td>Level Income (15% કાપ્યા પછી)</td><td>-</td><td id="cLevel">₹0</td></tr></table></div>
+<div class="card hidden" id="u-withdraw"><h3>💰 Withdrawal</h3><input id="upi" placeholder="UPI ID / Mobile"><input type="number" id="amt" placeholder="Amount (Min ₹100)"><button class="btn btn-y" onclick="withdraw()">Withdraw Request મોકલો</button><p id="wMsg" style="text-align:center;margin-top:8px;color:#2ecc71"></p><p style="font-size:12px;color:#aaa;text-align:center">Ad: ₹0.25 x 100 = ₹25 / દિવસ + Level Income ₹255</p></div>
 <div class="card hidden" id="u-support"><h3>🆘 Support</h3><textarea id="ticketText" placeholder="તમારો પ્રશ્ન લખો..."></textarea><button class="btn" onclick="sendTicket()">Ticket મોકલો</button><table><tr><th>Ticket</th><th>Status</th></tr><tr><td id="ticketHis">કોઈ Ticket નથી</td><td>Open</td></tr></table></div>
 </div>
 
 <div id="adminPanel" class="hidden">
-<div class="card"><h3>🛡️ Admin Dashboard</h3><p>Total Users: <b id="aUsers">1</b> | Total Earning: <b id="aEarn">₹25.00</b> | Withdraw: <b id="aWithdraw">0</b> | Traffic: <b id="aTraffic">0 Views</b> | Admin Charge (15%): <b id="aCharge">₹0</b></p></div>
+<div class="card"><h3>🛡️ Admin Dashboard - Plan ₹502</h3><p>Total Users: <b id="aUsers">1</b> | Total Earning: <b id="aEarn">₹25.00</b> | Withdraw: <b id="aWithdraw">0</b> | Traffic: <b id="aTraffic">0 Views</b> | Admin Charge (15%): <b id="aCharge">₹0</b></p></div>
 <div class="menu" id="adminMenu">
 <button class="active" onclick="showAdminTab('adash',this)">Dashboard</button>
 <button onclick="showAdminTab('apin',this)">Pin</button>
@@ -185,26 +184,26 @@ td,th{border:1px solid #444;padding:6px;text-align:center}th{background:#145a1e}
 <button onclick="showAdminTab('acomm',this)">Commission</button>
 <button onclick="showAdminTab('asup',this)">Support</button>
 </div>
-<div class="card" id="a-adash"><h3>Admin Dashboard</h3><p>Adsterra Native + Gujarat Business બંને ON છે. 100 Ad x ₹0.25 - Ad અંદર જ ચાલશે.</p><p>Level Income: 30 / 30 / 60 / 30 / 30 - 15% કાપીને ચૂકવવાનું.</p><button class="btn btn-y" onclick="alert('લિંક: https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001')">📋 20 મિત્રોને મોકલવાની લિંક</button></div>
+<div class="card" id="a-adash"><h3>Admin Dashboard</h3><p>Adsterra Native + Gujarat Business બંને ON છે. 100 Ad x ₹0.25 - Ad અંદર જ ચાલશે.</p><p>Plan ₹502 - Level Income: 50 / 50 / 100 / 50 / 50 = ₹300 - 15% કાપીને ₹255 ચૂકવવાનું.</p><button class="btn btn-y" onclick="alert('લિંક: https://rmsptl1968-debug.github.io/greentaskearn/?ref=GTE-1001')">📋 20 મિત્રોને મોકલવાની લિંક</button></div>
 <div class="card hidden" id="a-apin">
-<h3>📌 Pin - Bulk Generate - 50 / 100 / 200</h3>
+<h3>📌 Pin - Bulk Generate - 50 / 100 / 200 - Price ₹502</h3>
 <select id="pinCount"><option value="50">50 Pin</option><option value="100">100 Pin</option><option value="200">200 Pin</option><option value="10">10 Pin - Test</option></select>
 <button class="btn btn-y" onclick="generateBulkPins()">⚡ એક સાથે Pin બનાવો</button>
 <button class="btn" onclick="copyPins()">📋 બધા Pin Copy કરો</button>
 <div class="pin-list" id="pinList">હજુ Pin બન્યા નથી.</div>
-<h3 style="margin-top:10px">એક Pin</h3>
+<h3 style="margin-top:10px">એક Pin - ₹502</h3>
 <input id="newPinUser" placeholder="Mobile નાખો"><button class="btn" onclick="createPin()">Pin Create કરો</button>
 </div>
 <div class="card hidden" id="a-areg"><h3>📝 Registration - Edit કરી શકાય છે</h3><table><tr><th>User</th><th>Mobile</th><th>Password</th><th>Action</th></tr><tr><td id="regName">Rameshkumar</td><td id="regMobile">99040 78804</td><td>********</td><td><button onclick="alert('Edit ખુલ્યું')">Edit</button> <button onclick="alert('User Blocked!')" style="background:#e74c3c;color:#fff;border:0;padding:4px 8px;border-radius:4px">Block ID</button></td></tr></table><input id="resetUserPass" placeholder="User નો નવો Password"><button class="btn" onclick="resetUserPass()">User Password બદલો</button><input id="editRegName" placeholder="User નું નવું નામ"><button class="btn" onclick="editRegUser()">User Details Edit કરો</button></div>
-<div class="card hidden" id="a-ateam"><h3>👥 Our Team - Level Income Details</h3><table><tr><th>Level</th><th>Gross</th><th>Net (15% કાપ્યા પછી)</th></tr><tr><td>1</td><td>₹30</td><td>₹25.50</td></tr><tr><td>2</td><td>₹30</td><td>₹25.50</td></tr><tr><td>3</td><td>₹60</td><td>₹51.00</td></tr><tr><td>4</td><td>₹30</td><td>₹25.50</td></tr><tr><td>5</td><td>₹30</td><td>₹25.50</td></tr></table></div>
+<div class="card hidden" id="a-ateam"><h3>👥 Our Team - Level Income Details - Plan ₹502</h3><table><tr><th>Level</th><th>Gross</th><th>Net (15% કાપ્યા પછી)</th></tr><tr><td>1</td><td>₹50</td><td>₹42.50</td></tr><tr><td>2</td><td>₹50</td><td>₹42.50</td></tr><tr><td>3</td><td>₹100</td><td>₹85.00</td></tr><tr><td>4</td><td>₹50</td><td>₹42.50</td></tr><tr><td>5</td><td>₹50</td><td>₹42.50</td></tr><tr><td><b>Total</b></td><td><b>₹300</b></td><td><b>₹255.00</b></td></tr></table></div>
 <div class="card hidden" id="a-aad"><h3>📺 Ad View - Gujarat Business + Adsterra</h3><table><tr><th>Ad Type</th><th>Views</th><th>Earning</th></tr><tr><td>Adsterra - ₹0.25</td><td id="adViewCount">0</td><td id="adViewEarn">₹0</td></tr><tr><td>Gujarat Business</td><td id="bizViewCount">0</td><td>₹0</td></tr></table><input id="bizName" placeholder="વેપારીનું નામ"><input id="bizPrice" placeholder="Price - જેમ કે ₹150 / 1000 Views"><button class="btn" onclick="addBizAd()">+ Business Ad ઉમેરો</button><p id="bizMsg" style="color:#2ecc71;text-align:center"></p></div>
 <div class="card hidden" id="a-apay"><h3>💰 Payment</h3><table><tr><th>User</th><th>Amount</th><th>UPI</th><th>Action</th></tr><tr><td>કોઈ Request નથી</td><td>-</td><td>-</td><td>-</td></tr></table></div>
-<div class="card hidden" id="a-acomm"><h3>💸 Commission - 15% Admin Charge</h3><table><tr><th>Type</th><th>Total</th></tr><tr><td>Level Income Gross</td><td>₹180</td></tr><tr><td>Admin Charge 15%</td><td>₹27</td></tr><tr><td>Net Payable</td><td>₹153</td></tr></table></div>
+<div class="card hidden" id="a-acomm"><h3>💸 Commission - 15% Admin Charge - Plan ₹502</h3><table><tr><th>Type</th><th>Total</th></tr><tr><td>Level Income Gross</td><td>₹300</td></tr><tr><td>Admin Charge 15%</td><td>₹45</td></tr><tr><td>Net Payable</td><td>₹255</td></tr></table></div>
 <div class="card hidden" id="a-asup"><h3>🆘 Support</h3><table><tr><th>Ticket</th><th>User</th><th>Status</th></tr><tr><td>કોઈ Ticket નથી</td><td>-</td><td>-</td></tr></table></div>
 </div>
 <div class="card"><h3>📢 વેપારીઓ માટે - 100% Clean</h3><p>વેપાર-ધંધા ની Ad મૂકી આપીશું, વધુ ગ્રાહકો સુધી પહોંચાડીશું</p><p>વધુ માહિતી રૂબરૂ માં આપીશું</p><p style="color:#ff8fab">Website : https://rmsptl1968-debug.github.io/greentaskearn</p><p style="text-align:center;font-weight:bold">RAMESHKUMAR : 99040 78804</p></div>
 </div>
-<p class="small">© 2026 Green Task Earn | 10 Sec = ₹0.25 | Daily 100 Ads | Level Income 15% Admin Charge પછી | Ad અંદર જ ચાલશે</p>
+<p class="small">© 2026 Green Task Earn | Plan ₹502 | 10 Sec = ₹0.25 | Daily 100 Ads | Level Income 15% Admin Charge પછી ₹255 | Ad અંદર જ ચાલશે</p>
 
 <script>
 let earn=25, done=0, totalTasks=100, isAdmin=false, pinActive=false, freeLeft=2;
@@ -264,18 +263,18 @@ function showAdminTab(id,btn){ ['adash','apin','areg','ateam','aad','apay','acom
 function openBizAd(name){ alert(name+" ની Ad ખુલી! - Gujarat Business Ad"); document.getElementById("adFrameInner").innerHTML="<b>🟢 "+name+"</b><br>આ વેપારીની Ad છે - ભાવનગર<br><span style='font-size:12px'>વધુ માહિતી માટે સંપર્ક કરો</span>"; }
 function claimLevel(){
   if(levelClaimed>0){ alert("Level Income પહેલેથી Claim થઈ ગયું છે!"); return; }
-  let gross=30, net=gross*0.85;
+  let gross=50, net=gross*0.85;
   levelClaimed=net; earn+=net;
   document.getElementById("levelEarnTop").innerText=fmt(net);
   document.getElementById("cLevel").innerText=fmt(net);
   document.getElementById("userEarn").innerText=fmt(earn);
   document.getElementById("aEarn").innerText=fmt(earn);
   document.getElementById("aCharge").innerText=fmt(gross-net);
-  document.getElementById("levelMsg").innerText="✅ Level 1: ₹30 - 15% (₹4.50) = ₹25.50 તમારા ખાતામાં જમા!";
-  alert("Level Income મળ્યું! ₹25.50");
+  document.getElementById("levelMsg").innerText="✅ Level 1: ₹50 - 15% (₹7.50) = ₹42.50 તમારા ખાતામાં જમા!";
+  alert("Level Income મળ્યું! ₹42.50");
 }
 function playAd(id){
-  if(id>2 && !pinActive){ alert("2 Free Ad પૂરા! Pin Activation કરો."); showUserTab('pin', document.querySelectorAll("#userMenu button")[2]); return; }
+  if(id>2 && !pinActive){ alert("2 Free Ad પૂરા! Pin Activation કરો - Pin Price ₹502"); showUserTab('pin', document.querySelectorAll("#userMenu button")[2]); return; }
   let type=document.getElementById("adType").value;
   let useGujarat = (type==="gujarat") || (type==="both" && id%2===0);
   if(useGujarat){
@@ -306,16 +305,16 @@ function playAd(id){
       document.getElementById("cAd").innerText=done;
       document.getElementById("cAdEarn").innerText=fmt(adEarnTotal);
       btn.innerText="✅ Done ₹0.25"; btn.style.background="#2ecc71";
-      if(id<=2){ freeLeft--; document.getElementById("pinStatus").innerText = freeLeft>0 ? "FREE - "+freeLeft+" Ad બાકી" : "Free પૂરા - Pin જોઈશે"; }
+      if(id<=2){ freeLeft--; document.getElementById("pinStatus").innerText = freeLeft>0 ? "FREE - "+freeLeft+" Ad બાકી" : "Free પૂરા - Pin ₹502 જોઈશે"; }
       alert("₹0.25 મળ્યું! Ad "+id+"/100 પૂરી. Total: "+fmt(earn));
     }
   },1000);
 }
-function requestPin(){ alert("Pin Request Admin ને મોકલાઈ ગઈ!"); document.getElementById("pinHisType").innerText="Pin Request"; document.getElementById("pinHisDate").innerText="Today"; }
+function requestPin(){ alert("Pin Request Admin ને મોકલાઈ ગઈ! Pin Price ₹502"); document.getElementById("pinHisType").innerText="Pin Request ₹502"; document.getElementById("pinHisDate").innerText="Today"; }
 function activatePin(){ let p=document.getElementById("actPin").value.trim(); if(!p){ alert("Pin નાખો"); return; } if(allPins.includes(p) || p.startsWith("GTE-PIN-")){ pinActive=true; document.getElementById("pinStatus").innerText="Active ✅"; document.getElementById("myPin").innerText=p+" - Active"; alert("Pin Active! હવે 100 Ad ખુલી ગઈ!"); } else { alert("ખોટો Pin!"); } }
 function generateBulkPins(){ let count = parseInt(document.getElementById("pinCount").value); allPins = []; for(let i=1;i<=count;i++){ allPins.push("GTE-PIN-" + Math.floor(100000 + Math.random()*900000)); } document.getElementById("pinList").innerText = allPins.join("\n"); alert(count + " Pin બની ગયા!"); }
 function copyPins(){ if(allPins.length===0){ alert("પહેલા Pin બનાવો"); return; } let t = document.getElementById("pinList"); let range=document.createRange(); range.selectNode(t); window.getSelection().removeAllRanges(); window.getSelection().addRange(range); document.execCommand("copy"); alert("બધા "+allPins.length+" Pin Copy થઈ ગયા!"); }
-function createPin(){ let m=document.getElementById("newPinUser").value||"User"; let pin="GTE-PIN-"+Math.floor(100000+Math.random()*900000); allPins.push(pin); alert("Pin બન્યો: "+pin); }
+function createPin(){ let m=document.getElementById("newPinUser").value||"User"; let pin="GTE-PIN-"+Math.floor(100000+Math.random()*900000); allPins.push(pin); alert("Pin બન્યો: "+pin+" - Price ₹502"); }
 function resetUserPass(){ let np=document.getElementById("resetUserPass").value; if(!np){ alert("નવો Password નાખો"); return; } alert("User નો Password બદલાઈ ગયો: "+np); }
 function editRegUser(){ let n=document.getElementById("editRegName").value; if(!n){ alert("નવું નામ નાખો"); return; } document.getElementById("regName").innerText=n; document.getElementById("dispName").innerText=n; document.getElementById("pName").innerText=n; alert("User Details Edit થઈ ગઈ!"); }
 function copyLink(){ let l=document.getElementById("myLink"); l.select(); document.execCommand("copy"); alert("Link Copy થઈ ગઈ!"); }
