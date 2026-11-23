@@ -146,5 +146,79 @@ function doLogin(){
   alert("Login થઈ ગયું! Welcome!");
 }
 </script>
+<script>
+function showUserTab(id,btn){
+  var tabs=['dash','profile','pin','team','comm','withdraw','support'];
+  for(var i=0;i<tabs.length;i++){
+    var el=document.getElementById("u-"+tabs[i]);
+    if(el) el.style.display="none";
+  }
+  var s=document.getElementById("u-"+id);
+  if(s) s.style.display="block";
+  var btns=document.querySelectorAll("#userMenu button");
+  for(var j=0;j<btns.length;j++){ btns[j].classList.remove("active"); }
+  if(btn) btn.classList.add("active");
+  window.scrollTo(0,0);
+}
+function showAdminTab(id,btn){
+  var tabs=['adash','apin','areg','ateam','aad','apay','acomm','asup'];
+  for(var i=0;i<tabs.length;i++){
+    var el=document.getElementById("a-"+tabs[i]);
+    if(el) el.style.display="none";
+  }
+  var s=document.getElementById("a-"+id);
+  if(s) s.style.display="block";
+  var btns=document.querySelectorAll("#adminMenu button");
+  for(var j=0;j<btns.length;j++){ btns[j].classList.remove("active"); }
+  if(btn) btn.classList.add("active");
+}
+function switchPanel(p){
+  var up=document.getElementById("userPanel");
+  var ap=document.getElementById("adminPanel");
+  if(up) up.style.display=(p==='user'?'block':'none');
+  if(ap) ap.style.display=(p==='admin'?'block':'none');
+}
+</script>
+<script>
+function activatePin(){
+  var p=document.getElementById("actPin").value.trim();
+  if(!p){ alert("Pin નાખો"); return; }
+  if(p.indexOf("GTE-PIN-")!==0){ alert("ખોટો Pin!"); return; }
+
+  // 1. આ ફોનમાં જ ચેક - પહેલા વપરાયો છે?
+  if(localStorage.getItem("used_"+p)==="1"){
+    alert("❌ આ Pin આ ફોનમાં વપરાઈ ગયો છે!");
+    return;
+  }
+
+  // 2. Firebase માં ચેક - બીજા ફોનમાં વપરાયો છે?
+  if(typeof db!=="undefined" && db){
+    db.collection("usedPins").doc(p).get().then(function(doc){
+      if(doc.exists){
+        alert("❌ આ Pin બીજા ફોનમાં વપરાઈ ગયો છે! નવો Pin લો.");
+      }else{
+        // પહેલી વખત - હવે વપરાયેલો માર્ક કરો
+        db.collection("usedPins").doc(p).set({mobile:currentMobile||"", time:new Date().toISOString()});
+        localStorage.setItem("used_"+p,"1");
+        pinActive=true;
+        document.getElementById("pinStatus").innerText="Active ✅";
+        document.getElementById("myPin").innerText=p+" - Active";
+        alert("Pin Active! હવે 100 Ad ખુલી ગઈ!");
+      }
+    }).catch(function(){
+      // Net ન હોય તો પણ એક વખત ચાલવા દો
+      localStorage.setItem("used_"+p,"1");
+      pinActive=true;
+      document.getElementById("pinStatus").innerText="Active ✅";
+      alert("Pin Active! હવે 100 Ad ખુલી ગઈ!");
+    });
+  }else{
+    localStorage.setItem("used_"+p,"1");
+    pinActive=true;
+    document.getElementById("pinStatus").innerText="Active ✅";
+    alert("Pin Active! હવે 100 Ad ખુલી ગઈ!");
+  }
+}
+</script>
 </body>
 </html>
