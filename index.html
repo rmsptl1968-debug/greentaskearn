@@ -132,3 +132,19 @@ function generateBulkPins(){var count=parseInt(document.getElementById("pinCount
 function copyPins(){if(allPins.length===0){alert("પહેલા Pin બનાવો");return;} var t=document.getElementById("pinList"); var r=document.createRange(); r.selectNode(t); window.getSelection().removeAllRanges(); window.getSelection().addRange(r); document.execCommand("copy"); alert("બધા Pin Copy થઈ ગયા!");}
 function createPin(){var m=document.getElementById("newPinUser").value||"User"; var pin="GTE-PIN-"+Math.floor(100000+Math.random()*900000); allPins.push(pin); alert("Pin બન્યો: "+pin+" - ₹502");}
 function sendTicket(){var t=document.getElementById("ticketText").value; if(!t){alert("પ્રશ્ન લખો");return;} document.getElementById("ticketHis").innerText=t.substring(0,30)+"..."; if(db) db.collection("support").add({mobile
+</script>
+<script>
+function doLogin(){
+  try{
+    var n=document.getElementById("userName").value;
+    if(n) document.getElementById("dispName").innerText=n;
+  }catch(e){}
+  document.getElementById("loginCard").classList.add("hidden");
+  var a=document.getElementById("adminLoginBox");
+  if(a) a.classList.add("hidden");
+  document.getElementById("mainApp").classList.remove("hidden");
+  alert("Login થઈ ગયું! Welcome!");
+}
+</script>
+</body>
+</html>
