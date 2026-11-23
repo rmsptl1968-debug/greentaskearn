@@ -377,5 +377,57 @@ function sendSupport(){
   alert("Support ને મેસેજ મોકલાઈ ગયો");
 }
 </script>
+<script>
+// === FORCE FIX - બધા બટન જબરદસ્તી ચલાવો ===
+setTimeout(function(){
+  // 1. User / Admin બટન પાછા લાવો - હંમેશા દેખાશે
+  var topBtns = document.querySelectorAll("#mainApp > div button");
+  for(var i=0;i<topBtns.length;i++){
+    topBtns[i].style.display="inline-block";
+  }
+
+  // 2. User Menu બટન - નામ પરથી ઓળખીને ચલાવો
+  var userBtns = document.querySelectorAll("#userMenu button");
+  var map = ["dash","profile","pin","team","comm","withdraw","support"];
+  for(var j=0;j<userBtns.length;j++){
+    (function(idx, btn){
+      btn.onclick = function(){
+        // બધા બટન નો કલર હટાવો
+        for(var k=0;k<userBtns.length;k++) userBtns[k].classList.remove("active");
+        btn.classList.add("active");
+        // બધા Tab છુપાવો
+        var ids=["dash","profile","pin","team","comm","withdraw","support"];
+        for(var t=0;t<ids.length;t++){
+          var el=document.getElementById("u-"+ids[t]);
+          if(el) el.style.display="none";
+        }
+        // જે દબાવ્યો એ બતાવો
+        var show=document.getElementById("u-"+map[idx]);
+        if(show){ show.style.display="block"; show.scrollIntoView(); }
+        else{ alert("Tab નથી મળતો: "+map[idx]); }
+      };
+    })(j, userBtns[j]);
+  }
+
+  // 3. User / Admin Panel બટન
+  var allBtns = document.querySelectorAll("button");
+  for(var b=0;b<allBtns.length;b++){
+    var txt = allBtns[b].innerText;
+    if(txt.indexOf("User Panel")>=0){
+      allBtns[b].onclick=function(){
+        document.getElementById("userPanel").style.display="block";
+        document.getElementById("adminPanel").style.display="none";
+      };
+    }
+    if(txt.indexOf("Admin Panel")>=0){
+      allBtns[b].onclick=function(){
+        document.getElementById("userPanel").style.display="none";
+        document.getElementById("adminPanel").style.display="block";
+      };
+    }
+  }
+  console.log("FORCE FIX લાગી ગયો");
+},1000);
+</script>
 </body>
 </html>
