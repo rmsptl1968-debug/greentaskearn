@@ -19,52 +19,29 @@ small{color:gray}
 <body>
 <div class="box">
 <h2>🌱 Green Task Earn<br><span style="font-size:16px;color:#333">Ahmedabad Team</span></h2>
-
-<div class="tagline">
-અમારી સાથે Connect થઈને<br>
-<b>Reward ની આવક મેળવો</b><br>
-<small style="color:#555">Rameshkumar Patel - Ahmedabad | શરૂઆત છે, મહેનત થી આગળ વધીશું</small>
-</div>
-
-<div class="tasklist">
-<b>👇 તમે આ બધું કરીને કમાઈ શકો છો:</b><br>
-📺 Ad જુઓ<br>
-📱 ડિજિટલ Task કરો<br>
-📝 સર્વે કરો<br>
-🎮 ગેમ રમો<br>
-📥 App Install કરો<br>
-🛒 Amazon Shopping કરો<br>
-🎧 Audio Book સાંભળો<br>
-🎬 Film Trailer જુઓ<br>
-🎵 Song સાંભળો<br>
-📺 TV Promo જુઓ અને જોવડાવો<br>
-<b>✅ અને Reward ની આવક મેળવો</b>
-</div>
-
-<input type="text" id="name" placeholder="તમારું નામ *" required>
-<input type="tel" id="phone" placeholder="WhatsApp Number *" required>
+<div class="tagline">અમારી સાથે Connect થઈને<br><b>Reward ની આવક મેળવો</b><br><small style="color:#555">Rameshkumar Patel - Ahmedabad | શરૂઆત છે, મહેનત થી આગળ વધીશું</small></div>
+<div class="tasklist"><b>👇 તમે આ બધું કરીને કમાઈ શકો છો:</b><br>📺 Ad જુઓ<br>📱 ડિજિટલ Task કરો<br>📝 સર્વે કરો<br>🎮 ગેમ રમો<br>📥 App Install કરો<br>🛒 Amazon Shopping કરો<br>🎧 Audio Book સાંભળો<br>🎬 Film Trailer જુઓ<br>🎵 Song સાંભળો<br>📺 TV Promo જુઓ અને જોવડાવો<br><b>✅ અને Reward ની આવક મેળવો</b></div>
+<input type="text" id="name" placeholder="તમારું નામ *">
+<input type="tel" id="phone" placeholder="WhatsApp Number *">
 <input type="text" id="ref" placeholder="કોણે મોકલ્યા?">
-
 <button onclick="join()">Connect થાઓ 🚀 WhatsApp પર</button>
 <p id="msg" style="text-align:center;color:green;margin-top:12px;font-weight:bold"></p>
-
 <hr>
-<p style="font-size:13px;color:#666;text-align:center;line-height:1.5">
-અમે Local વેપારીઓ અને Adsterra સાથે મળીને Ad Task લાવી રહ્યા છીએ.<br>
-શરૂઆત નો સમય છે - સાથે મહેનત કરીશું તો બધા આગળ વધીશું.
-</p>
-
+<p style="font-size:13px;color:#666;text-align:center;line-height:1.5">અમે Local વેપારીઓ અને Adsterra સાથે મળીને Ad Task લાવી રહ્યા છીએ.<br>શરૂઆત નો સમય છે - સાથે મહેનત કરીશું તો બધા આગળ વધીશું.</p>
 <a class="biglink" href="https://rmsptl1968-debug.github.io/greentaskearn/">🌐 WEBSITE જુઓ 👆</a>
-
 <p style="text-align:center"><a href="https://rmsptl1968-debug.github.io/greentaskearn/privacy-policy.html">Privacy Policy</a></p>
 </div>
-
 <script>
 function join(){
 let n=document.getElementById('name').value.trim();
 let p=document.getElementById('phone').value.trim();
 let r=document.getElementById('ref').value.trim();
 if(n==""||p==""){alert("નામ અને WhatsApp Number લખો!");return;}
-let c=parseInt(localStorage.getItem("gte_joins")||"0")+1;
-localStorage.setItem("gte_joins",c);
-let text=`*Green Task Earn - Connect Request*%0A%0A*Name:* ${n}%0
+let msg="Green Task Earn - Connect Request\n\nName: "+n+"\nPhone: "+p+"\nRef: "+r+"\n\nAd Dekhkar Extra Income Me Interested Hu. Connect Karo.";
+let url="https://wa.me/919904078804?text="+encodeURIComponent(msg);
+document.getElementById('msg').innerHTML="✅ WhatsApp ખોલીએ છીએ... SEND દબાવો!";
+window.location.href=url;
+}
+</script>
+</body>
+</html>
