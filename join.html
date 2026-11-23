@@ -40,7 +40,18 @@ small{color:gray}
 </div>
 
 <script>
-function join(){
+function join(function join(){
+let n=document.getElementById('name').value.trim();
+let p=document.getElementById('phone').value.trim();
+let r=document.getElementById('ref').value.trim();
+if(n==""||p==""){alert("નામ અને WhatsApp Number લખો!");return;}
+// Joining ગણો
+let c=parseInt(localStorage.getItem("gte_joins")||"0")+1;
+localStorage.setItem("gte_joins",c);
+let text=`*Green Task Earn - Connect Request*%0A%0A*Name:* ${n}%0A*Phone:* ${p}%0A*Ref:* ${r}%0A%0AAd Dekhkar Extra Income Me Interested Hu. Connect Karo.`;
+window.open(`https://wa.me/919904078804?text=${text}`,"_blank");
+document.getElementById('msg').innerHTML="✅ WhatsApp ખુલશે - SEND દબાવો!<br>અમે તમને Task ની માહિતી મોકલીશું!";
+}){
 let n=document.getElementById('name').value.trim();
 let p=document.getElementById('phone').value.trim();
 let r=document.getElementById('ref').value.trim();
