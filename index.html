@@ -222,3 +222,160 @@ function activatePin(){
 </script>
 </body>
 </html>
+<script>
+// ===== DATA =====
+let currentMobile="", currentName="", currentId="", pinActive=false, wallet=0, adsDone=0;
+let usedPins=JSON.parse(localStorage.getItem("gte_usedPins")||"[]");
+let allPins=JSON.parse(localStorage.getItem("gte_allPins")||"[]");
+let users=JSON.parse(localStorage.getItem("gte_users")||"[]");
+
+function saveAll(){
+  localStorage.setItem("gte_usedPins",JSON.stringify(usedPins));
+  localStorage.setItem("gte_allPins",JSON.stringify(allPins));
+  localStorage.setItem("gte_users",JSON.stringify(users));
+  localStorage.setItem("gte_wallet_"+currentMobile, wallet);
+  localStorage.setItem("gte_ads_"+currentMobile, adsDone);
+}
+
+// ===== LOGIN =====
+function doLogin(){
+  var n=document.getElementById("userName").value.trim();
+  var m=document.getElementById("userMobile").value.trim();
+  var p=document.getElementById("userPass").value.trim();
+  if(!n||!m){ alert("નામ અને મોબાઇલ નાખો"); return; }
+  if(m.length<10){ alert("સાચો 10 અંકનો મોબાઇલ નાખો"); return; }
+  currentName=n; currentMobile=m; currentId="GTE"+m.slice(-6);
+  document.getElementById("dispName").innerText=n;
+  document.getElementById("dispMobile").innerText=m;
+  document.getElementById("dispId").innerText=currentId;
+  document.getElementById("pName").innerText=n;
+  document.getElementById("pMobile").innerText=m;
+  document.getElementById("pId").innerText=currentId;
+  document.getElementById("pRef").innerText=currentId;
+  document.getElementById("refLink").innerText=location.href+"?ref="+currentId;
+  document.getElementById("editName").value=n;
+  wallet=parseInt(localStorage.getItem("gte_wallet_"+m)||"0");
+  adsDone=parseInt(localStorage.getItem("gte_ads_"+m)||"0");
+  if(localStorage.getItem("gte_pin_"+m)==="1"){ pinActive=true; document.getElementById("pinStatus").innerText="Active ✅"; document.getElementById("myPin").innerText="Active ✅"; }
+  updateDash();
+  document.getElementById("loginCard").classList.add("hidden");
+  document.getElementById("mainApp").classList.remove("hidden");
+  renderTasks();
+  alert("Welcome "+n+"! Login થઈ ગયું ✅");
+}
+function doLogout(){ location.reload(); }
+function saveProfile(){ var v=document.getElementById("editName").value.trim(); if(v){ currentName=v; document.getElementById("dispName").innerText=v; document.getElementById("pName").innerText=v; alert("Profile Save થઈ ગયું"); } }
+function copyRef(){ var t=document.getElementById("refLink").innerText; navigator.clipboard.writeText(t); alert("Refer Link Copy થઈ ગઈ!"); }
+
+// ===== TABS - આ જ મુખ્ય Fix છે =====
+function showUserTab(id,btn){
+  var btns=document.querySelectorAll("#userMenu button");
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove("active");
+  if(btn) btn.classList.add("active");
+  var ids=["dash","profile","pin","team","comm","withdraw","support"];
+  for(var j=0;j<ids.length;j++){
+    var el=document.getElementById("u-"+ids[j]);
+    if(el) el.style.display="none";
+  }
+  var show=document.getElementById("u-"+id);
+  if(show) show.style.display="block";
+  window.scrollTo(0,0);
+  if(show) setTimeout(function(){ show.scrollIntoView(); },50);
+}
+function showAdminTab(id,btn){
+  var btns=document.querySelectorAll("#adminMenu button");
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove("active");
+  if(btn) btn.classList.add("active");
+  var ids=["adash","apin","ateam"];
+  for(var j=0;j<ids.length;j++){
+    var el=document.getElementById("a-"+ids[j]);
+    if(el) el.style.display="none";
+  }
+  var show=document.getElementById("a-"+id);
+  if(show) show.style.display="block";
+  if(id==="apin") renderPins();
+  if(id==="ateam") renderAllUsers();
+  if(id==="adash"){ document.getElementById("aUsers").innerText=users.length; document.getElementById("aPins").innerText=usedPins.length; }
+}
+function switchPanel(p){
+  document.getElementById("userPanel").style.display=(p==="user"?"block":"none");
+  document.getElementById("adminPanel").style.display=(p==="admin"?"block":"none");
+}
+
+// ===== PIN - 1 PIN 1 વખત =====
+function genPin(){
+  var pin="GTE-PIN-"+Math.floor(1000+Math.random()*9000);
+  allPins.push(pin); saveAll(); renderPins(); alert("નવો Pin: "+pin);
+}
+function renderPins(){
+  var h=""; for(var i=0;i<allPins.length;i++){ var used=usedPins.includes(allPins[i])?" ❌ વપરાઈ ગયો":" ✅ નવો"; h+="<div class='task'><span>"+allPins[i]+used+"</span><button onclick=\"copyPin('"+allPins[i]+"')\">Copy</button></div>"; }
+  document.getElementById("pinList").innerHTML=h||"હજુ કોઈ Pin નથી";
+}
+function copyPin(p){ navigator.clipboard.writeText(p); alert("Pin Copy: "+p); }
+
+function activatePin(){
+  var p=document.getElementById("actPin").value.trim();
+  if(!p){ alert("Pin નાખો"); return; }
+  if(p.indexOf("GTE-PIN-")!==0){ alert("ખોટો Pin! GTE-PIN- થી શરૂ થવો જોઈએ"); return; }
+  if(usedPins.includes(p)){ alert("❌ આ Pin બીજા ફોનમાં / પહેલા વપરાઈ ગયો છે! નવો Pin લો."); return; }
+  // વપરાયેલો માર્ક કરો
+  usedPins.push(p); localStorage.setItem("gte_pin_"+currentMobile,"1"); saveAll();
+  pinActive=true;
+  document.getElementById("pinStatus").innerText="Active ✅";
+  document.getElementById("myPin").innerText=p+" - Active ✅";
+  renderTasks();
+  alert("Pin Active! હવે 100 Ads ખુલી ગઈ 🎉");
+}
+
+// ===== TASKS / ADS =====
+function updateDash(){
+  document.getElementById("walletBal").innerText=wallet;
+  document.getElementById("adsDone").innerText=adsDone;
+  document.getElementById("totalEarn").innerText=wallet;
+  document.getElementById("wBal").innerText=wallet;
+  document.getElementById("teamCount").innerText=0;
+}
+function renderTasks(){
+  var box=document.getElementById("taskList");
+  if(!pinActive){ box.innerHTML="<p>પહેલા Pin Active કરો. Pin વગર Ads નહીં ખુલે.</p>"; return; }
+  var h="";
+  for(var i=1;i<=20;i++){
+    var done=localStorage.getItem("gte_ad_"+currentMobile+"_"+i)==="1";
+    h+="<div class='task'><span>Ad "+i+" - ₹1</span><button class='"+(done?"":"green")+"' onclick=\"watchAd("+i+",this)\" "+(done?"disabled":"")+">"+(done?"✅ જોઈ લીધી":"જુઓ 👀")+"</button></div>";
+  }
+  h+="<p class='small'>20 Ads = ₹20 / દિવસ. બાકીની 80 Ads ટૂંક સમયમાં.</p>";
+  box.innerHTML=h;
+}
+function watchAd(n,btn){
+  if(!pinActive){ alert("પહેલા Pin Active કરો"); return; }
+  btn.innerText="જોઈ રહ્યા છો... 5 સેકન્ડ";
+  btn.disabled=true;
+  setTimeout(function(){
+    localStorage.setItem("gte_ad_"+currentMobile+"_"+n,"1");
+    wallet+=1; adsDone+=1; saveAll(); updateDash();
+    btn.innerText="✅ જોઈ લીધી";
+    alert("Ad "+n+" પૂરી! +₹1 મળ્યા. Wallet: ₹"+wallet);
+  },3000);
+}
+
+// ===== WITHDRAW / SUPPORT =====
+function doWithdraw(){
+  var amt=parseInt(document.getElementById("wAmt").value||"0");
+  var upi=document.getElementById("wUpi").value.trim();
+  if(amt<100){ alert("Min Withdraw ₹100 છે"); return; }
+  if(amt>wallet){ alert("Wallet માં આટલા પૈસા નથી"); return; }
+  if(!upi){ alert("UPI / Bank Details નાખો"); return; }
+  wallet-=amt; saveAll(); updateDash();
+  document.getElementById("wList").innerHTML+="<div class='task'><span>₹"+amt+" - "+upi+"</span><span>Pending ⏳</span></div>";
+  alert("Withdraw Request મોકલાઈ ગઈ! 24 કલાકમાં મળશે.");
+}
+function sendSupport(){
+  var m=document.getElementById("supMsg").value.trim();
+  if(!m){ alert("મેસેજ લખો"); return; }
+  document.getElementById("supList").innerHTML+="<div class='task'><span>"+m+"</span><span>Sent ✅</span></div>";
+  document.getElementById("supMsg").value="";
+  alert("Support ને મેસેજ મોકલાઈ ગયો");
+}
+</script>
+</body>
+</html>
