@@ -3,87 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Green Task Earn - ઘરે બેઠા કમાણી</title>
+<title>Green Task Earn</title>
 <style>
-body{font-family:Arial;background:#e8f5e9;margin:0;padding:0}
-.header{background:#145a1e;color:#fff;padding:14px;text-align:center}
-.header h1{margin:0;font-size:24px}
-.menu{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:2px solid #145a1e;z-index:99}
-.menu button{flex:1;padding:12px 2px;border:0;background:#fff;font-size:13px;font-weight:bold}
+body{font-family:Arial;background:#0a1f0d;color:#fff;margin:0;padding:0}
+.header{background:#145a1e;padding:14px;text-align:center;border:2px solid #f1c40f;border-radius:10px;margin:8px}
+.header h1{margin:0;color:#f1c40f}
+.menu{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;z-index:99}
+.menu button{flex:1;padding:12px 2px;border:0;background:#fff;font-weight:bold}
 .menu button.active{background:#145a1e;color:#fff}
-.page{padding:12px;padding-bottom:80px;max-width:600px;margin:auto}
+.page{padding:10px;padding-bottom:80px;max-width:600px;margin:auto}
 .hidden{display:none}
-.card{background:#fff;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px #ccc}
-.btn{background:#145a1e;color:#fff;border:0;padding:12px;width:100%;border-radius:10px;font-size:17px;font-weight:bold;margin-top:8px}
-.btn-y{background:#f1c40f;color:#000}
-input{width:100%;padding:12px;margin-top:8px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;font-size:16px}
-.topbar{display:flex;gap:8px;margin-bottom:12px}
-.topbar button{flex:1;padding:12px;border:0;border-radius:10px;font-weight:bold;font-size:15px}
-.pin-list{background:#f9f9f9;padding:10px;border-radius:8px;font-size:14px;margin-top:10px}
+.card{background:#1a331e;padding:14px;border-radius:12px;margin-bottom:12px;border:1px solid #2e5a33}
+.btn{background:#f1c40f;color:#000;border:0;padding:12px;width:100%;border-radius:10px;font-weight:bold;margin-top:8px;font-size:16px}
+.btn-g{background:#145a1e;color:#fff}
+input{width:100%;padding:12px;margin-top:8px;border-radius:8px;border:1px solid #555;box-sizing:border-box;font-size:16px;background:#111;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.grid button{background:#fff;color:#000;border:0;padding:10px;border-radius:8px;font-size:13px}
+.yellow{background:#f1c40f;color:#000;padding:10px;text-align:center;border-radius:8px;font-weight:bold;margin:10px 0;font-size:13px}
+.ad-row{display:flex;justify-content:space-between;align-items:center;background:#fff;color:#000;padding:10px;border-radius:8px;margin-top:8px}
+.ad-row button{background:#2ecc71;color:#fff;border:0;padding:6px 12px;border-radius:6px}
 </style>
 </head>
 <body>
-<div class="header"><h1>🌿 Green Task Earn</h1><p style="margin:4px;font-size:13px;">ઘરે બેઠા મોબાઈલથી કમાણી</p><button onclick="openContact()" style="background:#fff;color:#145a1e;border:0;padding:6px 14px;border-radius:20px;font-weight:bold;">📞 Contact Us</button></div>
-<div id="contactBox" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:999;padding:20px;">
-<div style="background:#fff;padding:16px;border-radius:12px;max-width:400px;margin:60px auto;">
-<h2>📞 Contact Us</h2>
-<p><b>Address:</b><br>Saijpur, Ahmedabad, Gujarat - 382345</p>
-<p style="font-size:13px;color:#555;">Pin FREE છે. Member એ કોઈ પૈસા આપવાના નથી.</p>
-<button onclick="closeContact()" style="background:#145a1e;color:#fff;border:0;padding:10px;width:100%;border-radius:8px;font-weight:bold;">બંધ કરો</button>
-</div></div>
-<div style="background:#FFF7ED;padding:14px;border-radius:12px;margin:12px;text-align:center;border:2px solid #EA580C;">
-<h2 style="color:#EA580C;margin:0;">Mini Survey - તમને શું ગમે છે?</h2>
-<p style="font-size:13px;">બટન દબાવો - Amazon ખુલશે</p>
-<button style="background:#EA580C;color:#fff;border:0;padding:12px;border-radius:10px;font-size:18px;width:100%;margin-top:10px;" onclick="window.open('https://www.amazon.in/?tag=greentaskearn-21','_blank')">🛒 મારી ગમતી વસ્તુ જુઓ - Amazon ખોલો 👆</button>
-</div>
+<div class="header"><h1>🌿 Green Task Earn</h1><p style="margin:4px;font-size:13px;">જુઓ, શીખો, કમાઓ, આગળ વધો અને Reward મેળવો</p><p style="font-size:12px;">● LIVE - Ahmedabad Team - Rameshkumar Patel</p><button onclick="openContact()" style="background:#fff;color:#145a1e;border:0;padding:6px 14px;border-radius:20px;font-weight:bold;">📞 Contact Us</button></div>
+<div id="contactBox" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:999;padding:20px;"><div style="background:#fff;color:#000;padding:16px;border-radius:12px;max-width:400px;margin:60px auto;"><h2>📞 Contact Us</h2><p><b>Address:</b><br>Saijpur, Ahmedabad, Gujarat - 382345</p><button onclick="closeContact()" style="background:#145a1e;color:#fff;border:0;padding:10px;width:100%;border-radius:8px;font-weight:bold;">બંધ કરો</button></div></div>
 <div class="menu"><button onclick="show('home')" id="m-home" class="active">🏠 Home</button><button onclick="show('pin')" id="m-pin">🔑 PIN</button><button onclick="show('income')" id="m-income">💰 Income</button><button onclick="show('work')" id="m-work">💼 Work</button><button onclick="show('more')" id="m-more">⋮ More</button></div>
 <div id="home" class="page">
-<div class="topbar"><button style="background:#f1c40f" onclick="show('pin')">🔑 PIN મેળવો</button><button style="background:#2ecc71;color:#fff" onclick="show('work')">💼 કામ શરુ કરો</button></div>
-<div class="card"><h3>🎁 નવા Member માટે</h3><p>Login કરો અને તમારો FREE PIN મેળવો. PIN થી જ તમારું Income શરુ થશે.</p><button class="btn" onclick="show('pin')">🔑 PIN મેળવો - FREE</button><button class="btn btn-y" onclick="show('work')">💼 કામ શરુ કરો</button></div>
-<div class="card"><h3>📢 આજનો Offer</h3><p>આજે 5 Ad જુઓ અને ₹5 Bonus મેળવો!</p><button class="btn" onclick="show('work')">👉 Offer લો</button></div>
-<div class="card"><h3>🏆 Top Earners</h3><p>🥇 Ramesh - ₹1250<br>🥈 Geeta - ₹980<br>🥉 Suresh - ₹750</p></div>
-<div class="card"><h3>📖 આજનો લેખ</h3><p>ઘરે બેઠા મોબાઈલથી કમાણી કેવી રીતે કરવી? રોજ 10 મિનિટ આપો, Ad જુઓ અને Income વધારો.</p><button class="btn" onclick="show('more')">📖 વધુ વાંચો</button></div>
+<div class="card" style="background:#FFF7ED;color:#000;"><h2 style="color:#EA580C;text-align:center;margin:0;">Mini Survey - તમને શું ગમે છે?</h2><p style="text-align:center;font-size:12px;">બટન દબાવો - Amazon ખુલશે</p><div class="grid"><button onclick="openAmz()">📱<br>Mobile</button><button onclick="openAmz()">👕<br>Clothes</button><button onclick="openAmz()">🏠<br>Home</button><button onclick="openAmz()">🍔<br>Food</button><button onclick="openAmz()">✈️<br>Travel</button><button onclick="openAmz()">💻<br>Electronics</button><button onclick="openAmz()">🎪<br>Exhibition</button><button onclick="openAmz()">👗<br>Fashion</button><button onclick="openAmz()">🛒<br>Kirana</button></div><button style="background:#EA580C;color:#fff;border:0;padding:12px;border-radius:10px;width:100%;margin-top:10px;font-weight:bold;" onclick="openAmz()">🛒 મારી ગમતી વસ્તુ જુઓ - Amazon ખોલો 👆</button></div>
+<div class="yellow">PLAN ₹502 | Level Income ₹50-₹50-₹100-₹50-₹50 = ₹300 | 15% પછી ₹255</div>
+<div class="card"><h3 style="text-align:center;">🟢 ગુજરાત બિઝનેસ Ad - સાચું અને પરિવારલક્ષી</h3><p style="text-align:center;font-size:12px;">તમારી દુકાનની Ad અહીં આવશે</p><div class="ad-row"><span>🛍️ ભાવનગર કાપડ ભંડાર<br><small>નવી ડિઝાઇન - 20% Off</small></span><button>જુઓ</button></div><div class="ad-row"><span>🛒 શ્રી કરિયાણા સ્ટોર<br><small>ઘરે ડિલિવરી - Free</small></span><button>જુઓ</button></div><div class="ad-row"><span>📱 મોબાઈલ પોઈન્ટ અમદાવાદ<br><small>નવા મોબાઈલ - સસ્તા ભાવે</small></span><button>જુઓ</button></div></div>
+<div class="yellow">15 દિવસ Ad = ₹0.00 | રોજ 30 Ad = ₹0.00 | પહેલા 2 Ad FREE | Pin ₹502</div>
+<div class="card"><h3>💰 Offerwall - Survey + Game Task - Extra Kamao</h3><button class="btn" style="background:#ff6b00;color:#fff;" onclick="alert('Torox Offerwall ટૂંક સમયમાં')">🎯 Torox Offerwall<br><small>App Install + Game + Offer</small></button><button class="btn" style="background:#ff9900;color:#000;" onclick="openAmz()">Amazon Shopping<br><small>Shopping કરો - Offer મેળવો</small></button><button class="btn" style="background:#1e90ff;color:#fff;">📋 Lootably Offerwall<br><small>Survey + Game Task</small></button><p style="font-size:12px;">Survey પૂરો કરો - 65% તમને, 35% અમને મળશે.</p><div style="display:flex;gap:8px;"><button class="btn" style="background:#2ecc71;" onclick="alert('Cpx Research')">⭐ Cpx Research<br><small>Survey - 65% તમને</small></button><button class="btn" style="background:#9b59b6;color:#fff;" onclick="alert('RevU')">⭐ RevU<br><small>Offer - 65% તમને</small></button></div></div>
+<div class="card"><h3>🎬 Video જુઓ - Trailer + Song + Promo - Happylife Channel</h3><div style="display:flex;gap:8px;"><button class="btn" style="background:#e74c3c;color:#fff;" onclick="alert('Film Trailer')">🎬 Film Trailer</button><button class="btn" style="background:#ff2e88;color:#fff;" onclick="alert('Song')">🎵 Song</button><button class="btn" style="background:#00bfff;color:#fff;" onclick="alert('TV Promo')">📺 TV Promo</button></div></div>
 </div>
 <div id="pin" class="page hidden">
-<div class="card"><h3>🔑 તમારો FREE PIN</h3>
-<p>નીચે તમારું નામ અને મોબાઈલ લખો, PIN મળશે.</p>
+<div class="card"><h3>🔑 તમારો FREE PIN</h3><p>નીચે તમારું નામ અને મોબાઈલ લખો, PIN મળશે.</p>
 <input id="pinName" placeholder="તમારું નામ લખો">
 <input id="pinMobile" placeholder="મોબાઈલ નંબર લખો" type="tel">
 <button class="btn" onclick="getPin()">🔑 PIN મેળવો</button>
-<p id="pinResult" style="font-weight:bold;color:#145a1e;"></p>
-<div class="pin-list" id="pinList">PIN List અહીં દેખાશે...</div>
-</div>
+<p id="pinResult" style="font-weight:bold;color:#f1c40f;"></p>
+<div id="pinList" style="background:#fff;color:#000;padding:10px;border-radius:8px;margin-top:10px;">PIN List અહીં દેખાશે...</div></div>
 <div class="card"><h3>📋 PIN નિયમ</h3><p>1 Member = 1 PIN<br>PIN કોઈને આપવો નહીં.<br>PIN FREE છે.</p></div>
 </div>
 <div id="income" class="page hidden">
-<div class="card"><h3>💰 મારી Income</h3>
-<p>તમારો PIN નાખો અને Income જુઓ.</p>
-<input id="incPin" placeholder="તમારો PIN લખો">
-<button class="btn" onclick="checkIncome()">💰 Income જુઓ</button>
-<p id="incResult" style="font-weight:bold;"></p>
-</div>
-<div class="card"><h3>💸 Withdraw</h3><p>₹100 થાય એટલે Withdraw કરી શકાશે.</p><button class="btn btn-y" onclick="alert('Withdraw માટે ₹100 Income જોઈએ.')">💸 Withdraw કરો</button></div>
+<div class="card"><h3>💰 મારી Income</h3><p>તમારો PIN નાખો અને Income જુઓ.</p><input id="incPin" placeholder="તમારો PIN લખો"><button class="btn" onclick="checkIncome()">💰 Income જુઓ</button><p id="incResult" style="font-weight:bold;"></p></div>
+<div class="card"><h3>💸 Withdraw</h3><p>₹100 થાય એટલે Withdraw કરી શકાશે.</p><button class="btn" onclick="alert('Withdraw માટે ₹100 Income જોઈએ.')">💸 Withdraw કરો</button></div>
 </div>
 <div id="work" class="page hidden">
-<div class="card"><h3>💼 આજનું કામ</h3><p>Ad જુઓ, 10 સેકન્ડ રાહ જુઓ, ₹1 મેળવો.</p><p>તમારી Income: <b id="workBal">₹0</b></p><button class="btn" onclick="doWork()">▶️ Ad જુઓ - ₹1 કમાઓ</button><p id="workMsg" style="font-size:14px;"></p></div>
-<div class="card"><h3>📖 આજનો લેખ વાંચો</h3><p>લેખ વાંચીને પણ Income વધારો.</p><button class="btn" onclick="alert('લેખ વાંચવા બદલ આભાર!')">📖 લેખ વાંચો</button></div>
+<div class="card"><h3>💼 આજનું કામ</h3><p>Ad જુઓ, 10 સેકન્ડ રાહ જુઓ, ₹1 મેળવો.</p><p>તમારી Income: <b id="workBal">₹0</b></p><button class="btn" onclick="doWork()">▶️ Ad જુઓ - ₹1 કમાઓ</button><p id="workMsg"></p></div>
+<div class="card"><h3>📖 આજનો લેખ</h3><p>ઘરે બેઠા મોબાઈલથી કમાણી કેવી રીતે કરવી? રોજ 10 મિનિટ આપો.</p><button class="btn" onclick="alert('લેખ વાંચવા બદલ આભાર!')">📖 લેખ વાંચો</button></div>
 </div>
 <div id="more" class="page hidden">
 <div class="card"><h3>⋮ More</h3><button class="btn" onclick="show('home')">🏠 Home</button><button class="btn" onclick="show('pin')">🔑 PIN</button><button class="btn" onclick="openContact()">📞 Contact Us</button></div>
 <div class="card"><h3>ℹ️ About Us</h3><p>Green Task Earn - Saijpur, Ahmedabad. ઘરે બેઠા નાની કમાણી માટે બનાવેલ Website છે.</p></div>
 </div>
+<div class="page" id="extraHome" style="padding-top:0;">
+<div class="card"><h3>🎧 Amazon Audible - FREE Audio Book સાંભળો</h3><p style="font-size:13px;">Amazon Audible પર પહેલી Audiobook એકદમ FREE મળે છે. ઘરે બેઠા મોબાઈલ પર સાંભળો - વાર્તા, જ્ઞાન, મોટિવેશન.</p><button class="btn" style="background:#ff9900;" onclick="window.open('https://www.audible.in/','_blank')">🎧 FREE Audiobook મેળવો</button><p style="font-size:11px;text-align:center;">Audible Trial - પહેલું પુસ્તક FREE - પછી જોઈએ તો જ ચાલુ રાખો</p></div>
+<div class="card"><h3>🔐 User Login / Register</h3><input id="uName" placeholder="નામ - PATEL RAMESHKUMAR"><input id="uMob" placeholder="મોબાઈલ - 9904078804" type="tel"><input id="uPass" placeholder="Password - ઓછામાં ઓછા 4 અંક" type="password"><input id="uRef" placeholder="Refer Code - કોઈએ આપ્યો હોય તો લખો (Optional)"><button class="btn" onclick="doLogin()">Login / Register કરો</button><button class="btn btn-g" onclick="alert('Password ભૂલી ગયા? Contact Us માં સંપર્ક કરો.')">🔑 Password ભૂલી ગયા?</button><p id="loginMsg" style="font-size:13px;"></p></div>
+</div>
 <script>
 function show(id){
-var pages=document.querySelectorAll('.page');
-for(var i=0;i<pages.length;i++){pages[i].classList.add('hidden');}
-document.getElementById(id).classList.remove('hidden');
+var all=document.querySelectorAll('.page');
+for(var i=0;i<all.length;i++){all[i].classList.add('hidden');}
+var el=document.getElementById(id);
+if(el){el.classList.remove('hidden');}
 var btns=document.querySelectorAll('.menu button');
 for(var j=0;j<btns.length;j++){btns[j].classList.remove('active');}
-document.getElementById('m-'+id).classList.add('active');
+var mb=document.getElementById('m-'+id);
+if(mb){mb.classList.add('active');}
 window.scrollTo(0,0);
 }
 function openContact(){document.getElementById('contactBox').style.display='block';}
 function closeContact(){document.getElementById('contactBox').style.display='none';}
+function openAmz(){window.open('https://www.amazon.in/?tag=greentaskearn-21','_blank');}
 function getPin(){
 var n=document.getElementById('pinName').value;
 var m=document.getElementById('pinMobile').value;
@@ -91,8 +83,7 @@ if(n==''||m==''){alert('નામ અને મોબાઈલ લખો');retur
 var pin='GT'+Math.floor(1000+Math.random()*9000);
 document.getElementById('pinResult').innerText='તમારો PIN: '+pin+' - આ PIN સાચવી રાખો';
 document.getElementById('pinList').innerText=n+' - '+m+' - PIN: '+pin;
-localStorage.setItem('myPin',pin);
-localStorage.setItem('myBal','0');
+localStorage.setItem('myPin',pin);localStorage.setItem('myBal','0');
 }
 function checkIncome(){
 var p=document.getElementById('incPin').value;
@@ -102,13 +93,20 @@ if(p==saved && p!=''){document.getElementById('incResult').innerText='તમા�
 else{document.getElementById('incResult').innerText='PIN ખોટો છે. પહેલા PIN મેળવો.';}
 }
 function doWork(){
-document.getElementById('workMsg').innerText='Ad ચાલે છે... 10 સેકન્ડ રાહ જુઓ...';
+document.getElementById('workMsg').innerText='Ad ચાલે છે... 3 સેકન્ડ રાહ જુઓ...';
 setTimeout(function(){
 var b=parseInt(localStorage.getItem('myBal')||'0')+1;
 localStorage.setItem('myBal',b);
 document.getElementById('workBal').innerText='₹'+b;
 document.getElementById('workMsg').innerText='✅ ₹1 મળી ગયો! ફરી Ad જુઓ.';
 },3000);
+}
+function doLogin(){
+var n=document.getElementById('uName').value;
+var m=document.getElementById('uMob').value;
+if(n==''||m==''){alert('નામ અને મોબાઈલ લખો');return;}
+document.getElementById('loginMsg').innerText='✅ નમસ્તે '+n+'! Login થઈ ગયું. હવે PIN મેળવો.';
+show('pin');
 }
 </script>
 </body>
